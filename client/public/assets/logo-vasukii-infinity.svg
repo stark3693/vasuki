@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" class="vasukii-infinity-logo">
+  <defs>
+    <!-- Custom Color Palette -->
+    <style>
+      :root {
+        --serpent-dark: hsl(262 90% 15%);
+        --serpent-mid: hsl(262 80% 55%);
+        --serpent-bright: hsl(262 70% 75%);
+        --serpent-cyan-dark: hsl(192 90% 25%);
+        --serpent-cyan-mid: hsl(192 80% 55%);
+        --serpent-cyan-bright: hsl(192 70% 75%);
+        --serpent-gold: hsl(45 100% 60%);
+        --serpent-gold-glow: hsl(45 100% 80%);
+      }
+    </style>
+    
+    <!-- Gradients -->
+    <linearGradient id="headGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:hsl(262 80% 55%);stop-opacity:1" />
+      <stop offset="50%" style="stop-color:hsl(45 100% 60%);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:hsl(45 100% 80%);stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="bodyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:hsl(262 80% 55%);stop-opacity:1" />
+      <stop offset="50%" style="stop-color:hsl(192 80% 55%);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:hsl(192 70% 75%);stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="tailGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:hsl(192 80% 55%);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:hsl(262 80% 55%);stop-opacity:1" />
+    </linearGradient>
+    
+    <radialGradient id="eyeGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:hsl(45 100% 80%);stop-opacity:1" />
+      <stop offset="70%" style="stop-color:hsl(192 80% 55%);stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:hsl(45 100% 60%);stop-opacity:0.3" />
+    </radialGradient>
+    
+    <radialGradient id="orbGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:hsl(192 70% 75%);stop-opacity:1" />
+      <stop offset="70%" style="stop-color:hsl(262 80% 55%);stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:hsl(192 80% 55%);stop-opacity:0.2" />
+    </radialGradient>
+    
+    <!-- Filters for glow effects -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <filter id="strongGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Title and Description for Accessibility -->
+  <title>Vasukii Infinity Serpent Logo</title>
+  <desc>A unique infinity-shaped serpent logo representing Vasukii's blockchain identity with hexagonal scales, three-pronged crown, and trinity tail</desc>
+  
+  <!-- Background Circle for Context -->
+  <circle cx="256" cy="256" r="240" fill="none" stroke="hsl(262 20% 20%)" stroke-width="1" opacity="0.3"/>
+  
+  <!-- Main Infinity Serpent Body -->
+  <g id="infinity-body">
+    <!-- Infinity path with custom serpent shape -->
+    <path d="M256 256 
+      C 180 256, 120 200, 120 140
+      C 120 80, 180 24, 256 24
+      C 332 24, 392 80, 392 140
+      C 392 200, 332 256, 256 256
+      
+      C 332 256, 392 312, 392 372
+      C 392 432, 332 488, 256 488
+      C 180 488, 120 432, 120 372
+      C 120 312, 180 256, 256 256 Z" 
+      fill="url(#bodyGradient)" 
+      stroke="hsl(262 80% 55%)" 
+      stroke-width="2" 
+      opacity="0.8"
+      class="infinity-flow"/>
+  </g>
+  
+  <!-- Hexagonal Scales (40 scales along the body) -->
+  <g id="hexagonal-scales">
+    <!-- Scale 1-10 (Top loop) -->
+    <g class="scale" transform="translate(200, 80)">
+      <polygon points="0,-8 6.93,-4 6.93,4 0,8 -6.93,4 -6.93,-4" fill="hsl(262 80% 55%)" opacity="0.6"/>
+      <path d="M0,-4 L0,4 M-3,0 L3,0" stroke="hsl(192 80% 55%)" stroke-width="0.5" class="circuit"/>
+    </g>
+    <g class="scale" transform="translate(180, 100)">
+      <polygon points="0,-8 6.93,-4 6.93,4 0,8 -6.93,4 -6.93,-4" fill="hsl(262 80% 55%)" opacity="0.6"/>
+      <path d="M0,-4 L0,4 M-3,0 L3,0" stroke="hsl(192 80% 55%)" stroke-width="0.5" class="circuit"/>
+    </g>
+    <g class="scale" transform="translate(160, 120)">
+      <polygon points="0,-8 6.93,-4 6.93,4 0,8 -6.93,4 -6.93,-4" fill="hsl(262 80% 55%)" opacity="0.6"/>
+      <path d="M0,-4 L0,4 M-3,0 L3,0" stroke="hsl(192 80% 55%)" stroke-width="0.5" class="circuit"/>
+    </g>
+    <g class="scale" transform="translate(140, 140)">
+      <polygon points="0,-8 6.93,-4 6.93,4 0,8 -6.93,4 -6.93,-4" fill="hsl(262 80% 55%)" opacity="0.6"/>
+      <path d="M0,-4 L0,4 M-3,0 L3,0" stroke="hsl(192 80% 55%)" stroke-width="0.5" class="circuit"/>
+    </g>
+    <g class="scale" transform="translate(120, 160)">
+      <polygon points="0,-8 6.93,-4 6.93,4 0,8 -6.93,4 -6.93,-4" fill="hsl(262 80% 55%)" opacity="0.6"/>
+      <path d="M0,-4 L0,4 M-3,0 L3,0" stroke="hsl(192 80% 55%)" stroke-width="0.5" class="circuit"/>
+    </g>
+    
+    <!-- Scale 11-20 (Center transition) -->
+    <g class="scale" transform="translate(100, 180)">
+      <polygon points="0,-8 6.93,-4 6.93,4 0,8 -6.93,4 -6.93,-4" fill="hsl(192 80% 55%)" opacity="0.7"/>
+      <path d="M0,-4 L0,4 M-3,0 L3,0" stroke="hsl(262 80% 55%)" stroke-width="0.5" class="circuit"/>
+    </g>
+    <g class="scale" transform="translate(80, 200)">
+      <polygon points="0,-8 6.93,-4 6.93,4 0,8 -6.93,4 -6.93,-4" fill="hsl(192 80% 55%)" opacity="0.7"/>
+      <path d="M0,-4 L0,4 M-3,0 L3,0" stroke="hsl(262 80% 55%)" stroke-width="0.5" class="circuit"/>
+    </g>
+    <g class="scale" transform="translate(60, 220)">
+      <polygon points="0,-8 6.93,-4 6.93,4 0,8 -6.93,4 -6.93,-4" fill="hsl(192 80% 55%)" opacity="0.7"/>
+      <path d="M0,-4 L0,4 M-3,0 L3,0" stroke="hsl(262 80% 55%)" stroke-width="0.5" class="circuit"/>
+    </g>
+    <g class="scale" transform="translate(40, 240)">
+      <polygon points="0,-8 6.93,-4 6.93,4 0,8 -6.93,4 -6.93,-4" fill="hsl(192 80% 55%)" opacity="0.7"/>
+      <path d="M0,-4 L0,4 M-3,0 L3,0" stroke="hsl(262 80% 55%)" stroke-width="0.5" class="circuit"/>
+    </g>
+    <g class="scale" transform="translate(20, 260)">
+      <polygon points="0,-8 6.93,-4 6.93,4 0,8 -6.93,4 -6.93,-4" fill="hsl(192 80% 55%)" opacity="0.7"/>
+      <path d="M0,-4 L0,4 M-3,0 L3,0" stroke="hsl(262 80% 55%)" stroke-width="0.5" class="circuit"/>
+    </g>
+    
+    <!-- Scale 21-30 (Bottom loop) -->
+    <g class="scale" transform="translate(40, 300)">
+      <polygon points="0,-8 6.93,-4 6.93,4 0,8 -6.93,4 -6.93,-4" fill="hsl(192 80% 55%)" opacity="0.6"/>
+      <path d="M0,-4 L0,4 M-3,0 L3,0" stroke="hsl(262 80% 55%)" stroke-width="0.5" class="circuit"/>
+    </g>
+    <g class="scale" transform="translate(60, 320)">
+      <polygon points="0,-8 6.93,-4 6.93,4 0,8 -6.93,4 -6.93,-4" fill="hsl(192 80% 55%)" opacity="0.6"/>
+      <path d="M0,-4 L0,4 M-3,0 L3,0" stroke="hsl(262 80% 55%)" stroke-width="0.5" class="circuit"/>
+    </g>
+    <g class="scale" transform="translate(80, 340)">
+      <polygon points="0,-8 6.93,-4 6.93,4 0,8 -6.93,4 -6.93,-4" fill="hsl(192 80% 55%)" opacity="0.6"/>
+      <path d="M0,-4 L0,4 M-3,0 L3,0" stroke="hsl(262 80% 55%)" stroke-width="0.5" class="circuit"/>
+    </g>
+    <g class="scale" transform="translate(100, 360)">
+      <polygon points="0,-8 6.93,-4 6.93,4 0,8 -6.93,4 -6.93,-4" fill="hsl(192 80% 55%)" opacity="0.6"/>
+      <path d="M0,-4 L0,4 M-3,0 L3,0" stroke="hsl(262 80% 55%)" stroke-width="0.5" class="circuit"/>
+    </g>
+    <g class="scale" transform="translate(120, 380)">
+      <polygon points="0,-8 6.93,-4 6.93,4 0,8 -6.93,4 -6.93,-4" fill="hsl(192 80% 55%)" opacity="0.6"/>
+      <path d="M0,-4 L0,4 M-3,0 L3,0" stroke="hsl(262 80% 55%)" stroke-width="0.5" class="circuit"/>
+    </g>
+    
+    <!-- Scale 31-40 (Right side) -->
+    <g class="scale" transform="translate(160, 400)">
+      <polygon points="0,-8 6.93,-4 6.93,4 0,8 -6.93,4 -6.93,-4" fill="hsl(192 80% 55%)" opacity="0.6"/>
+      <path d="M0,-4 L0,4 M-3,0 L3,0" stroke="hsl(262 80% 55%)" stroke-width="0.5" class="circuit"/>
+    </g>
+    <g class="scale" transform="translate(200, 420)">
+      <polygon points="0,-8 6.93,-4 6.93,4 0,8 -6.93,4 -6.93,-4" fill="hsl(192 80% 55%)" opacity="0.6"/>
+      <path d="M0,-4 L0,4 M-3,0 L3,0" stroke="hsl(262 80% 55%)" stroke-width="0.5" class="circuit"/>
+    </g>
+    <g class="scale" transform="translate(240, 440)">
+      <polygon points="0,-8 6.93,-4 6.93,4 0,8 -6.93,4 -6.93,-4" fill="hsl(192 80% 55%)" opacity="0.6"/>
+      <path d="M0,-4 L0,4 M-3,0 L3,0" stroke="hsl(262 80% 55%)" stroke-width="0.5" class="circuit"/>
+    </g>
+    <g class="scale" transform="translate(280, 460)">
+      <polygon points="0,-8 6.93,-4 6.93,4 0,8 -6.93,4 -6.93,-4" fill="hsl(192 80% 55%)" opacity="0.6"/>
+      <path d="M0,-4 L0,4 M-3,0 L3,0" stroke="hsl(262 80% 55%)" stroke-width="0.5" class="circuit"/>
+    </g>
+    <g class="scale" transform="translate(320, 480)">
+      <polygon points="0,-8 6.93,-4 6.93,4 0,8 -6.93,4 -6.93,-4" fill="hsl(192 80% 55%)" opacity="0.6"/>
+      <path d="M0,-4 L0,4 M-3,0 L3,0" stroke="hsl(262 80% 55%)" stroke-width="0.5" class="circuit"/>
+    </g>
+  </g>
+  
+  <!-- Custom Serpent Head -->
+  <g id="serpent-head">
+    <!-- Angular head shape -->
+    <path d="M240 20 L256 0 L272 20 L268 40 L244 40 Z" 
+          fill="url(#headGradient)" 
+          stroke="hsl(45 100% 60%)" 
+          stroke-width="1.5" 
+          filter="url(#glow)"/>
+    
+    <!-- Three-pronged crown (Shiva reference) -->
+    <g class="crown">
+      <path d="M244 10 L246 0 L248 10" stroke="hsl(45 100% 60%)" stroke-width="2" fill="none" filter="url(#glow)"/>
+      <path d="M254 10 L256 -5 L258 10" stroke="hsl(45 100% 60%)" stroke-width="2" fill="none" filter="url(#glow)"/>
+      <path d="M264 10 L266 0 L268 10" stroke="hsl(45 100% 60%)" stroke-width="2" fill="none" filter="url(#glow)"/>
+    </g>
+    
+    <!-- Third eye (wisdom/vision) -->
+    <circle cx="256" cy="15" r="3" fill="url(#eyeGlow)" class="third-eye" filter="url(#strongGlow)"/>
+    
+    <!-- Main eyes -->
+    <circle cx="248" cy="25" r="2" fill="hsl(45 100% 60%)" class="eye-left" filter="url(#glow)"/>
+    <circle cx="264" cy="25" r="2" fill="hsl(45 100% 60%)" class="eye-right" filter="url(#glow)"/>
+    
+    <!-- Forked tongue forming "V" -->
+    <path d="M256 40 L250 50 M256 40 L262 50" 
+          stroke="hsl(45 100% 60%)" 
+          stroke-width="2" 
+          fill="none" 
+          class="tongue" 
+          filter="url(#glow)"/>
+  </g>
+  
+  <!-- Trinity Tail (Three-pointed) -->
+  <g id="trinity-tail">
+    <!-- Three-pointed tail -->
+    <path d="M256 488 L240 510 L236 500" 
+          stroke="url(#tailGradient)" 
+          stroke-width="3" 
+          fill="none" 
+          class="tail-point"/>
+    <path d="M256 488 L256 515 L256 505" 
+          stroke="url(#tailGradient)" 
+          stroke-width="3" 
+          fill="none" 
+          class="tail-point"/>
+    <path d="M256 488 L272 510 L276 500" 
+          stroke="url(#tailGradient)" 
+          stroke-width="3" 
+          fill="none" 
+          class="tail-point"/>
+    
+    <!-- Glowing orbs at tips (past, present, future) -->
+    <circle cx="236" cy="505" r="4" fill="url(#orbGlow)" class="orb-past" filter="url(#strongGlow)"/>
+    <circle cx="256" cy="510" r="4" fill="url(#orbGlow)" class="orb-present" filter="url(#strongGlow)"/>
+    <circle cx="276" cy="505" r="4" fill="url(#orbGlow)" class="orb-future" filter="url(#strongGlow)"/>
+  </g>
+  
+  <!-- Data Flow Particles -->
+  <g id="data-particles">
+    <circle cx="200" cy="100" r="1" fill="hsl(192 80% 55%)" opacity="0.8" class="particle"/>
+    <circle cx="180" cy="120" r="1" fill="hsl(192 80% 55%)" opacity="0.6" class="particle"/>
+    <circle cx="160" cy="140" r="1" fill="hsl(192 80% 55%)" opacity="0.8" class="particle"/>
+    <circle cx="140" cy="160" r="1" fill="hsl(192 80% 55%)" opacity="0.4" class="particle"/>
+    <circle cx="120" cy="180" r="1" fill="hsl(192 80% 55%)" opacity="0.8" class="particle"/>
+    <circle cx="100" cy="200" r="1" fill="hsl(192 80% 55%)" opacity="0.6" class="particle"/>
+    <circle cx="80" cy="220" r="1" fill="hsl(192 80% 55%)" opacity="0.8" class="particle"/>
+    <circle cx="60" cy="240" r="1" fill="hsl(192 80% 55%)" opacity="0.4" class="particle"/>
+    <circle cx="40" cy="260" r="1" fill="hsl(192 80% 55%)" opacity="0.8" class="particle"/>
+    <circle cx="20" cy="280" r="1" fill="hsl(192 80% 55%)" opacity="0.6" class="particle"/>
+  </g>
+  
+  <!-- Sacred Geometry Patterns -->
+  <g id="sacred-geometry" opacity="0.3">
+    <!-- Mandala-inspired center pattern -->
+    <circle cx="256" cy="256" r="20" fill="none" stroke="hsl(45 100% 60%)" stroke-width="1"/>
+    <circle cx="256" cy="256" r="40" fill="none" stroke="hsl(45 100% 60%)" stroke-width="0.5"/>
+    <circle cx="256" cy="256" r="60" fill="none" stroke="hsl(45 100% 60%)" stroke-width="0.3"/>
+    
+    <!-- Connecting lines -->
+    <line x1="256" y1="256" x2="200" y2="100" stroke="hsl(45 100% 60%)" stroke-width="0.5" opacity="0.4"/>
+    <line x1="256" y1="256" x2="320" y2="480" stroke="hsl(45 100% 60%)" stroke-width="0.5" opacity="0.4"/>
+    <line x1="256" y1="256" x2="120" y2="200" stroke="hsl(45 100% 60%)" stroke-width="0.5" opacity="0.4"/>
+    <line x1="256" y1="256" x2="392" y2="312" stroke="hsl(45 100% 60%)" stroke-width="0.5" opacity="0.4"/>
+  </g>
+</svg>

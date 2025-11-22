@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" class="vasukii-infinity-logo-minimal">
+  <defs>
+    <!-- Simplified Color Palette -->
+    <style>
+      :root {
+        --serpent-primary: hsl(262 80% 55%);
+        --serpent-secondary: hsl(192 80% 55%);
+        --serpent-accent: hsl(45 100% 60%);
+      }
+    </style>
+    
+    <!-- Simple Gradients -->
+    <linearGradient id="simpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:hsl(262 80% 55%);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:hsl(192 80% 55%);stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Title and Description for Accessibility -->
+  <title>Vasukii Infinity Serpent Logo (Minimal)</title>
+  <desc>A minimal infinity-shaped serpent logo for mobile and small displays</desc>
+  
+  <!-- Main Infinity Serpent Body (Simplified) -->
+  <g id="infinity-body">
+    <path d="M256 256 
+      C 180 256, 120 200, 120 140
+      C 120 80, 180 24, 256 24
+      C 332 24, 392 80, 392 140
+      C 392 200, 332 256, 256 256
+      
+      C 332 256, 392 312, 392 372
+      C 392 432, 332 488, 256 488
+      C 180 488, 120 432, 120 372
+      C 120 312, 180 256, 256 256 Z" 
+      fill="url(#simpleGradient)" 
+      stroke="hsl(262 80% 55%)" 
+      stroke-width="3" 
+      opacity="0.8"/>
+  </g>
+  
+  <!-- Minimal Hexagonal Scales (10 scales) -->
+  <g id="hexagonal-scales">
+    <!-- Key scales only -->
+    <g transform="translate(200, 80)">
+      <polygon points="0,-4 3.46,-2 3.46,2 0,4 -3.46,2 -3.46,-2" fill="hsl(262 80% 55%)" opacity="0.6"/>
+    </g>
+    <g transform="translate(160, 120)">
+      <polygon points="0,-4 3.46,-2 3.46,2 0,4 -3.46,2 -3.46,-2" fill="hsl(262 80% 55%)" opacity="0.6"/>
+    </g>
+    <g transform="translate(120, 160)">
+      <polygon points="0,-4 3.46,-2 3.46,2 0,4 -3.46,2 -3.46,-2" fill="hsl(262 80% 55%)" opacity="0.6"/>
+    </g>
+    <g transform="translate(80, 200)">
+      <polygon points="0,-4 3.46,-2 3.46,2 0,4 -3.46,2 -3.46,-2" fill="hsl(192 80% 55%)" opacity="0.7"/>
+    </g>
+    <g transform="translate(40, 240)">
+      <polygon points="0,-4 3.46,-2 3.46,2 0,4 -3.46,2 -3.46,-2" fill="hsl(192 80% 55%)" opacity="0.7"/>
+    </g>
+    <g transform="translate(40, 300)">
+      <polygon points="0,-4 3.46,-2 3.46,2 0,4 -3.46,2 -3.46,-2" fill="hsl(192 80% 55%)" opacity="0.6"/>
+    </g>
+    <g transform="translate(80, 340)">
+      <polygon points="0,-4 3.46,-2 3.46,2 0,4 -3.46,2 -3.46,-2" fill="hsl(192 80% 55%)" opacity="0.6"/>
+    </g>
+    <g transform="translate(120, 380)">
+      <polygon points="0,-4 3.46,-2 3.46,2 0,4 -3.46,2 -3.46,-2" fill="hsl(192 80% 55%)" opacity="0.6"/>
+    </g>
+    <g transform="translate(160, 420)">
+      <polygon points="0,-4 3.46,-2 3.46,2 0,4 -3.46,2 -3.46,-2" fill="hsl(192 80% 55%)" opacity="0.6"/>
+    </g>
+    <g transform="translate(200, 460)">
+      <polygon points="0,-4 3.46,-2 3.46,2 0,4 -3.46,2 -3.46,-2" fill="hsl(192 80% 55%)" opacity="0.6"/>
+    </g>
+  </g>
+  
+  <!-- Simplified Serpent Head -->
+  <g id="serpent-head">
+    <!-- Angular head shape -->
+    <path d="M240 20 L256 0 L272 20 L268 40 L244 40 Z" 
+          fill="url(#simpleGradient)" 
+          stroke="hsl(45 100% 60%)" 
+          stroke-width="2"/>
+    
+    <!-- Simple crown -->
+    <path d="M254 10 L256 -5 L258 10" stroke="hsl(45 100% 60%)" stroke-width="2" fill="none"/>
+    
+    <!-- Third eye -->
+    <circle cx="256" cy="15" r="2" fill="hsl(45 100% 60%)"/>
+    
+    <!-- Main eyes -->
+    <circle cx="248" cy="25" r="1.5" fill="hsl(45 100% 60%)"/>
+    <circle cx="264" cy="25" r="1.5" fill="hsl(45 100% 60%)"/>
+    
+    <!-- Forked tongue -->
+    <path d="M256 40 L250 50 M256 40 L262 50" 
+          stroke="hsl(45 100% 60%)" 
+          stroke-width="2" 
+          fill="none"/>
+  </g>
+  
+  <!-- Simplified Trinity Tail -->
+  <g id="trinity-tail">
+    <!-- Three-pointed tail -->
+    <path d="M256 488 L240 510 L236 500" 
+          stroke="url(#simpleGradient)" 
+          stroke-width="3" 
+          fill="none"/>
+    <path d="M256 488 L256 515 L256 505" 
+          stroke="url(#simpleGradient)" 
+          stroke-width="3" 
+          fill="none"/>
+    <path d="M256 488 L272 510 L276 500" 
+          stroke="url(#simpleGradient)" 
+          stroke-width="3" 
+          fill="none"/>
+    
+    <!-- Simple orbs -->
+    <circle cx="236" cy="505" r="3" fill="hsl(192 80% 55%)"/>
+    <circle cx="256" cy="510" r="3" fill="hsl(192 80% 55%)"/>
+    <circle cx="276" cy="505" r="3" fill="hsl(192 80% 55%)"/>
+  </g>
+</svg>

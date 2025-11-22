@@ -1,0 +1,259 @@
+/* Enhanced Serpent Logo Animations */
+
+/* Animation 1: Serpent Detailed Glow Pulse */
+@keyframes serpent-detailed-glow {
+  0%, 100% { 
+    filter: drop-shadow(0 0 15px rgba(139, 92, 246, 0.4)) 
+            drop-shadow(0 0 25px rgba(6, 182, 212, 0.3));
+  }
+  50% { 
+    filter: drop-shadow(0 0 30px rgba(139, 92, 246, 0.7)) 
+            drop-shadow(0 0 40px rgba(6, 182, 212, 0.5));
+  }
+}
+
+/* Animation 2: Scale Shimmer */
+@keyframes scale-shimmer {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+/* Animation 3: Node Pulse */
+@keyframes node-pulse {
+  0%, 100% { 
+    transform: scale(1); 
+    opacity: 1; 
+  }
+  50% { 
+    transform: scale(1.15); 
+    opacity: 0.8; 
+  }
+}
+
+/* Animation 4: Particle Flow */
+@keyframes particle-flow {
+  0% { 
+    transform: translateX(0) translateY(0);
+    opacity: 0; 
+  }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { 
+    transform: translateX(20px) translateY(-10px);
+    opacity: 0; 
+  }
+}
+
+/* Animation 5: Ring Rotation */
+@keyframes ring-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Animation 6: Eye Glow */
+@keyframes eye-glow {
+  0%, 100% { 
+    fill: #FFD700; 
+    opacity: 0.8; 
+  }
+  50% { 
+    fill: #FFA500; 
+    opacity: 1; 
+  }
+}
+
+/* Animation 7: Crown Jewel Pulse */
+@keyframes crown-pulse {
+  0%, 100% { 
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% { 
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+/* Animation 8: Connection Flow */
+@keyframes connection-flow {
+  0% { 
+    stroke-dashoffset: 0;
+    opacity: 0.6;
+  }
+  50% { 
+    stroke-dashoffset: -10;
+    opacity: 1;
+  }
+  100% { 
+    stroke-dashoffset: -20;
+    opacity: 0.6;
+  }
+}
+
+/* Animation 9: Hub Rotation */
+@keyframes hub-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Animation 10: Particle Burst */
+@keyframes particle-burst {
+  0% { 
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% { 
+    transform: scale(1.5);
+    opacity: 1;
+  }
+  100% { 
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+/* Animation Classes */
+.serpent-main-body {
+  animation: serpent-detailed-glow 3s ease-in-out infinite;
+}
+
+.scale {
+  animation: scale-shimmer 2s ease-in-out infinite;
+}
+
+.node-outer-ring {
+  animation: ring-rotate 4s linear infinite;
+}
+
+.node-middle-glow {
+  animation: node-pulse 2s ease-in-out infinite;
+}
+
+.node-inner-core {
+  animation: node-pulse 1.5s ease-in-out infinite;
+}
+
+.particle {
+  animation: particle-flow 3s ease-in-out infinite;
+}
+
+.eye {
+  animation: eye-glow 2s ease-in-out infinite;
+}
+
+.crown-jewel {
+  animation: crown-pulse 2.5s ease-in-out infinite;
+}
+
+.connection-line {
+  animation: connection-flow 4s ease-in-out infinite;
+}
+
+.hub-outer {
+  animation: hub-rotate 6s linear infinite;
+}
+
+.hub-middle {
+  animation: node-pulse 2s ease-in-out infinite;
+}
+
+.hub-core {
+  animation: node-pulse 1s ease-in-out infinite;
+}
+
+.hub-center {
+  animation: crown-pulse 1.5s ease-in-out infinite;
+}
+
+/* Hover Effects */
+.logo-hover:hover .serpent-main-body {
+  animation-duration: 1.5s;
+  filter: drop-shadow(0 0 40px rgba(139, 92, 246, 0.8)) 
+          drop-shadow(0 0 50px rgba(6, 182, 212, 0.6));
+}
+
+.logo-hover:hover .particle {
+  animation-duration: 1.5s;
+  animation-name: particle-burst;
+}
+
+.logo-hover:hover .node-inner-core {
+  animation-duration: 0.8s;
+  transform: scale(1.2);
+}
+
+.logo-hover:hover .hub-center {
+  animation-duration: 0.8s;
+  transform: scale(1.3);
+}
+
+/* Performance Optimizations */
+.serpent-main-body,
+.scale,
+.node-outer-ring,
+.node-middle-glow,
+.node-inner-core,
+.particle,
+.eye,
+.crown-jewel,
+.connection-line,
+.hub-outer,
+.hub-middle,
+.hub-core,
+.hub-center {
+  will-change: transform, opacity, filter;
+  transform-origin: center;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .serpent-main-body,
+  .scale,
+  .node-outer-ring,
+  .node-middle-glow,
+  .node-inner-core,
+  .particle,
+  .eye,
+  .crown-jewel,
+  .connection-line,
+  .hub-outer,
+  .hub-middle,
+  .hub-core,
+  .hub-center {
+    animation: none;
+  }
+  
+  .serpent-main-body {
+    filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.4));
+  }
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .particle {
+    animation-duration: 4s;
+  }
+  
+  .node-outer-ring {
+    animation-duration: 6s;
+  }
+  
+  .hub-outer {
+    animation-duration: 8s;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .serpent-main-body {
+    stroke-width: 6;
+  }
+  
+  .node-outer-ring {
+    stroke-width: 3;
+  }
+  
+  .connection-line {
+    stroke-width: 3;
+  }
+}

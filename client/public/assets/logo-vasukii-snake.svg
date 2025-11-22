@@ -1,0 +1,64 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradient definitions for mystical theme -->
+    <linearGradient id="snakeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B5CF6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#F59E0B;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06B6D4;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="snakeGradientLight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#A855F7;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#FBBF24;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0EA5E9;stop-opacity:1" />
+    </linearGradient>
+    
+    <radialGradient id="eyeGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#FEF3C7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F59E0B;stop-opacity:1" />
+    </radialGradient>
+    
+    <!-- Shadow filter -->
+    <filter id="snakeShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+  
+  <!-- Main snake body - coiled in infinity symbol -->
+  <path d="M32 8 C20 8, 12 16, 12 28 C12 40, 20 48, 32 48 C44 48, 52 40, 52 28 C52 16, 44 8, 32 8 Z" 
+        fill="url(#snakeGradient)" 
+        stroke="url(#snakeGradientLight)" 
+        stroke-width="1.5" 
+        filter="url(#snakeShadow)"/>
+  
+  <!-- Snake head - majestic hood -->
+  <ellipse cx="32" cy="20" rx="8" ry="6" 
+           fill="url(#snakeGradient)" 
+           stroke="url(#snakeGradientLight)" 
+           stroke-width="1.5" 
+           filter="url(#snakeShadow)"/>
+  
+  <!-- Snake eyes -->
+  <circle cx="28" cy="18" r="2" fill="url(#eyeGradient)"/>
+  <circle cx="36" cy="18" r="2" fill="url(#eyeGradient)"/>
+  
+  <!-- Snake pupils -->
+  <circle cx="28" cy="18" r="1" fill="#1F2937"/>
+  <circle cx="36" cy="18" r="1" fill="#1F2937"/>
+  
+  <!-- Snake scales pattern -->
+  <g opacity="0.3">
+    <circle cx="24" cy="32" r="1.5" fill="url(#snakeGradientLight)"/>
+    <circle cx="32" cy="36" r="1.5" fill="url(#snakeGradientLight)"/>
+    <circle cx="40" cy="32" r="1.5" fill="url(#snakeGradientLight)"/>
+    <circle cx="28" cy="40" r="1.5" fill="url(#snakeGradientLight)"/>
+    <circle cx="36" cy="44" r="1.5" fill="url(#snakeGradientLight)"/>
+  </g>
+  
+  <!-- Mystical aura effect -->
+  <circle cx="32" cy="32" r="30" 
+          fill="none" 
+          stroke="url(#snakeGradient)" 
+          stroke-width="0.5" 
+          opacity="0.2"/>
+</svg>

@@ -1,0 +1,56 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="serpentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="50%" stop-color="#A855F7"/>
+      <stop offset="100%" stop-color="#06B6D4"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="innerGlow">
+      <feGaussianBlur stdDeviation="2" result="innerBlur"/>
+      <feMerge>
+        <feMergeNode in="innerBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Serpent body forming circular network pattern -->
+  <path d="M256 80 C 180 80, 120 140, 120 216 C 120 240, 130 262, 146 280 C 160 296, 180 304, 200 304 C 220 304, 240 296, 254 280 C 270 262, 280 240, 280 216 C 280 140, 220 80, 256 80 Z M 256 432 C 332 432, 392 372, 392 296 C 392 272, 382 250, 366 232 C 352 216, 332 208, 312 208 C 292 208, 272 216, 258 232 C 242 250, 232 272, 232 296 C 232 372, 292 432, 256 432 Z" 
+        fill="url(#serpentGradient)" 
+        stroke="url(#serpentGradient)" 
+        stroke-width="3" 
+        filter="url(#glow)"
+        class="serpent-body"/>
+  
+  <!-- Network nodes -->
+  <circle cx="200" cy="200" r="8" fill="url(#serpentGradient)" filter="url(#innerGlow)" class="network-node"/>
+  <circle cx="312" cy="200" r="8" fill="url(#serpentGradient)" filter="url(#innerGlow)" class="network-node"/>
+  <circle cx="256" cy="150" r="8" fill="url(#serpentGradient)" filter="url(#innerGlow)" class="network-node"/>
+  <circle cx="256" cy="250" r="8" fill="url(#serpentGradient)" filter="url(#innerGlow)" class="network-node"/>
+  <circle cx="200" cy="312" r="8" fill="url(#serpentGradient)" filter="url(#innerGlow)" class="network-node"/>
+  <circle cx="312" cy="312" r="8" fill="url(#serpentGradient)" filter="url(#innerGlow)" class="network-node"/>
+  
+  <!-- Connection lines between nodes -->
+  <line x1="200" y1="200" x2="256" y2="150" stroke="url(#serpentGradient)" stroke-width="2" opacity="0.6" class="connection-line"/>
+  <line x1="256" y1="150" x2="312" y2="200" stroke="url(#serpentGradient)" stroke-width="2" opacity="0.6" class="connection-line"/>
+  <line x1="312" y1="200" x2="312" y2="312" stroke="url(#serpentGradient)" stroke-width="2" opacity="0.6" class="connection-line"/>
+  <line x1="312" y1="312" x2="256" y2="250" stroke="url(#serpentGradient)" stroke-width="2" opacity="0.6" class="connection-line"/>
+  <line x1="256" y1="250" x2="200" y2="312" stroke="url(#serpentGradient)" stroke-width="2" opacity="0.6" class="connection-line"/>
+  <line x1="200" y1="312" x2="200" y2="200" stroke="url(#serpentGradient)" stroke-width="2" opacity="0.6" class="connection-line"/>
+  
+  <!-- Central hub node -->
+  <circle cx="256" cy="256" r="12" fill="url(#serpentGradient)" filter="url(#glow)" class="central-hub"/>
+  
+  <!-- Serpent head (stylized V) -->
+  <path d="M 240 100 L 256 120 L 272 100 L 256 80 Z" fill="url(#serpentGradient)" filter="url(#glow)" class="serpent-head"/>
+  
+  <!-- Serpent tail -->
+  <path d="M 240 412 L 256 432 L 272 412 L 256 392 Z" fill="url(#serpentGradient)" filter="url(#glow)" class="serpent-tail"/>
+</svg>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" class="vasukii-icon-logo">
+  <defs>
+    <!-- Icon Color Palette -->
+    <style>
+      :root {
+        --icon-primary: hsl(262 80% 55%);
+        --icon-secondary: hsl(192 80% 55%);
+        --icon-accent: hsl(45 100% 60%);
+      }
+    </style>
+    
+    <!-- Icon Gradients -->
+    <linearGradient id="iconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:hsl(262 80% 55%);stop-opacity:1" />
+      <stop offset="50%" style="stop-color:hsl(45 100% 60%);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:hsl(192 80% 55%);stop-opacity:1" />
+    </linearGradient>
+    
+    <radialGradient id="iconGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:hsl(45 100% 80%);stop-opacity:1" />
+      <stop offset="70%" style="stop-color:hsl(192 80% 55%);stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:hsl(262 80% 55%);stop-opacity:0.3" />
+    </radialGradient>
+    
+    <!-- Icon filter -->
+    <filter id="iconGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Title and Description for Accessibility -->
+  <title>Vasukii Icon</title>
+  <desc>Square icon version of the Vasukii infinity serpent logo</desc>
+  
+  <!-- Background Square -->
+  <rect x="32" y="32" width="448" height="448" rx="64" fill="url(#iconGradient)" opacity="0.1"/>
+  
+  <!-- Centered Infinity Serpent -->
+  <g id="icon-infinity" transform="translate(256, 256)">
+    <!-- Infinity path -->
+    <path d="M0 0 
+      C -60 0, -100 -40, -100 -100
+      C -100 -160, -60 -200, 0 -200
+      C 60 -200, 100 -160, 100 -100
+      C 100 -40, 60 0, 0 0
+      
+      C 60 0, 100 40, 100 100
+      C 100 160, 60 200, 0 200
+      C -60 200, -100 160, -100 100
+      C -100 40, -60 0, 0 0 Z" 
+      fill="url(#iconGradient)" 
+      stroke="hsl(45 100% 60%)" 
+      stroke-width="4" 
+      opacity="0.9"/>
+    
+    <!-- Key hexagonal scales (8 scales) -->
+    <g transform="translate(-80, -80)">
+      <polygon points="0,-6 5.2,-3 5.2,3 0,6 -5.2,3 -5.2,-3" fill="hsl(262 80% 55%)" opacity="0.7"/>
+    </g>
+    <g transform="translate(-40, -40)">
+      <polygon points="0,-6 5.2,-3 5.2,3 0,6 -5.2,3 -5.2,-3" fill="hsl(262 80% 55%)" opacity="0.7"/>
+    </g>
+    <g transform="translate(0, 0)">
+      <polygon points="0,-6 5.2,-3 5.2,3 0,6 -5.2,3 -5.2,-3" fill="hsl(192 80% 55%)" opacity="0.8"/>
+    </g>
+    <g transform="translate(40, 40)">
+      <polygon points="0,-6 5.2,-3 5.2,3 0,6 -5.2,3 -5.2,-3" fill="hsl(192 80% 55%)" opacity="0.7"/>
+    </g>
+    <g transform="translate(80, 80)">
+      <polygon points="0,-6 5.2,-3 5.2,3 0,6 -5.2,3 -5.2,-3" fill="hsl(192 80% 55%)" opacity="0.6"/>
+    </g>
+    <g transform="translate(-80, 80)">
+      <polygon points="0,-6 5.2,-3 5.2,3 0,6 -5.2,3 -5.2,-3" fill="hsl(192 80% 55%)" opacity="0.6"/>
+    </g>
+    <g transform="translate(-40, 40)">
+      <polygon points="0,-6 5.2,-3 5.2,3 0,6 -5.2,3 -5.2,-3" fill="hsl(192 80% 55%)" opacity="0.7"/>
+    </g>
+    <g transform="translate(40, -40)">
+      <polygon points="0,-6 5.2,-3 5.2,3 0,6 -5.2,3 -5.2,-3" fill="hsl(192 80% 55%)" opacity="0.7"/>
+    </g>
+  </g>
+  
+  <!-- Icon Head (Top center) -->
+  <g id="icon-head" transform="translate(256, 80)">
+    <!-- Angular head -->
+    <path d="M-16 -20 L0 -40 L16 -20 L12 0 L-12 0 Z" fill="url(#iconGradient)" stroke="hsl(45 100% 60%)" stroke-width="2"/>
+    
+    <!-- Crown -->
+    <path d="M-4 -10 L0 -20 L4 -10" stroke="hsl(45 100% 60%)" stroke-width="2" fill="none"/>
+    
+    <!-- Third eye -->
+    <circle cx="0" cy="-15" r="2" fill="url(#iconGlow)" filter="url(#iconGlow)"/>
+    
+    <!-- Eyes -->
+    <circle cx="-8" cy="-5" r="1.5" fill="hsl(45 100% 60%)"/>
+    <circle cx="8" cy="-5" r="1.5" fill="hsl(45 100% 60%)"/>
+    
+    <!-- Tongue -->
+    <path d="M0 0 L-6 10 M0 0 L6 10" stroke="hsl(45 100% 60%)" stroke-width="2" fill="none"/>
+  </g>
+  
+  <!-- Icon Trinity Tail (Bottom center) -->
+  <g id="icon-tail" transform="translate(256, 432)">
+    <!-- Three points -->
+    <path d="M0 0 L-16 22 L-20 12" stroke="url(#iconGradient)" stroke-width="4" fill="none"/>
+    <path d="M0 0 L0 25 L0 15" stroke="url(#iconGradient)" stroke-width="4" fill="none"/>
+    <path d="M0 0 L16 22 L20 12" stroke="url(#iconGradient)" stroke-width="4" fill="none"/>
+    
+    <!-- Orbs -->
+    <circle cx="-20" cy="12" r="3" fill="url(#iconGlow)" filter="url(#iconGlow)"/>
+    <circle cx="0" cy="15" r="3" fill="url(#iconGlow)" filter="url(#iconGlow)"/>
+    <circle cx="20" cy="12" r="3" fill="url(#iconGlow)" filter="url(#iconGlow)"/>
+  </g>
+  
+  <!-- Center Sacred Geometry -->
+  <g id="icon-sacred" transform="translate(256, 256)" opacity="0.4">
+    <circle r="20" fill="none" stroke="hsl(45 100% 60%)" stroke-width="1"/>
+    <circle r="40" fill="none" stroke="hsl(45 100% 60%)" stroke-width="0.5"/>
+  </g>
+</svg>

@@ -1,0 +1,241 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vasukii Blockchain Network Logo">
+  <defs>
+    <!-- Enhanced gradients -->
+    <linearGradient id="serpentBodyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="50%" stop-color="#A855F7"/>
+      <stop offset="100%" stop-color="#06B6D4"/>
+    </linearGradient>
+    
+    <radialGradient id="nodeGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#06B6D4" stop-opacity="1"/>
+      <stop offset="50%" stop-color="#A855F7" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0.3"/>
+    </radialGradient>
+    
+    <linearGradient id="goldAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFD700"/>
+      <stop offset="100%" stop-color="#FFA500"/>
+    </linearGradient>
+    
+    <linearGradient id="scaleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#06B6D4" stop-opacity="0.4"/>
+    </linearGradient>
+    
+    <!-- Enhanced filters -->
+    <filter id="detailedGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <filter id="innerShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3"/>
+      <feOffset dx="0" dy="2"/>
+      <feComposite operator="arithmetic" k2="-1" k3="1"/>
+    </filter>
+    
+    <filter id="nodeGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <title>Vasukii Blockchain Network Logo</title>
+  <desc>A detailed serpent forming a circular network pattern with blockchain nodes, representing decentralized technology and connectivity</desc>
+  
+  <!-- Background pattern (subtle hex grid) -->
+  <g id="background-pattern" opacity="0.05">
+    <defs>
+      <pattern id="hexPattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+        <path d="M20 0 L30 10 L30 30 L20 40 L10 30 L10 10 Z" fill="none" stroke="url(#serpentBodyGradient)" stroke-width="0.5"/>
+      </pattern>
+    </defs>
+    <rect width="512" height="512" fill="url(#hexPattern)"/>
+  </g>
+  
+  <!-- Serpent body with detailed path -->
+  <g id="serpent-body">
+    <!-- Main serpent body path -->
+    <path d="M256 80 C 180 80, 120 140, 120 216 C 120 240, 130 262, 146 280 C 160 296, 180 304, 200 304 C 220 304, 240 296, 254 280 C 270 262, 280 240, 280 216 C 280 140, 220 80, 256 80 Z M 256 432 C 332 432, 392 372, 392 296 C 392 272, 382 250, 366 232 C 352 216, 332 208, 312 208 C 292 208, 272 216, 258 232 C 242 250, 232 272, 232 296 C 232 372, 292 432, 256 432 Z" 
+          fill="url(#serpentBodyGradient)" 
+          stroke="url(#serpentBodyGradient)" 
+          stroke-width="4" 
+          filter="url(#detailedGlow)"
+          class="serpent-main-body"/>
+    
+    <!-- Scale pattern overlay (25 individual scales) -->
+    <g id="scales" class="scale-pattern">
+      <!-- Scale 1 -->
+      <ellipse cx="200" cy="200" rx="8" ry="4" fill="url(#scaleGradient)" opacity="0.6" class="scale" style="animation-delay: 0s"/>
+      <!-- Scale 2 -->
+      <ellipse cx="220" cy="190" rx="7" ry="3" fill="url(#scaleGradient)" opacity="0.5" class="scale" style="animation-delay: 0.1s"/>
+      <!-- Scale 3 -->
+      <ellipse cx="240" cy="185" rx="6" ry="3" fill="url(#scaleGradient)" opacity="0.7" class="scale" style="animation-delay: 0.2s"/>
+      <!-- Scale 4 -->
+      <ellipse cx="260" cy="180" rx="7" ry="3" fill="url(#scaleGradient)" opacity="0.4" class="scale" style="animation-delay: 0.3s"/>
+      <!-- Scale 5 -->
+      <ellipse cx="280" cy="185" rx="6" ry="3" fill="url(#scaleGradient)" opacity="0.6" class="scale" style="animation-delay: 0.4s"/>
+      <!-- Scale 6 -->
+      <ellipse cx="290" cy="200" rx="8" ry="4" fill="url(#scaleGradient)" opacity="0.5" class="scale" style="animation-delay: 0.5s"/>
+      <!-- Scale 7 -->
+      <ellipse cx="285" cy="220" rx="7" ry="3" fill="url(#scaleGradient)" opacity="0.7" class="scale" style="animation-delay: 0.6s"/>
+      <!-- Scale 8 -->
+      <ellipse cx="270" cy="235" rx="6" ry="3" fill="url(#scaleGradient)" opacity="0.4" class="scale" style="animation-delay: 0.7s"/>
+      <!-- Scale 9 -->
+      <ellipse cx="250" cy="240" rx="7" ry="3" fill="url(#scaleGradient)" opacity="0.6" class="scale" style="animation-delay: 0.8s"/>
+      <!-- Scale 10 -->
+      <ellipse cx="230" cy="235" rx="6" ry="3" fill="url(#scaleGradient)" opacity="0.5" class="scale" style="animation-delay: 0.9s"/>
+      <!-- Scale 11 -->
+      <ellipse cx="210" cy="220" rx="8" ry="4" fill="url(#scaleGradient)" opacity="0.7" class="scale" style="animation-delay: 1.0s"/>
+      <!-- Scale 12 -->
+      <ellipse cx="190" cy="210" rx="7" ry="3" fill="url(#scaleGradient)" opacity="0.4" class="scale" style="animation-delay: 1.1s"/>
+      <!-- Scale 13 -->
+      <ellipse cx="180" cy="230" rx="6" ry="3" fill="url(#scaleGradient)" opacity="0.6" class="scale" style="animation-delay: 1.2s"/>
+      <!-- Scale 14 -->
+      <ellipse cx="190" cy="250" rx="7" ry="3" fill="url(#scaleGradient)" opacity="0.5" class="scale" style="animation-delay: 1.3s"/>
+      <!-- Scale 15 -->
+      <ellipse cx="210" cy="260" rx="6" ry="3" fill="url(#scaleGradient)" opacity="0.7" class="scale" style="animation-delay: 1.4s"/>
+      <!-- Scale 16 -->
+      <ellipse cx="230" cy="255" rx="8" ry="4" fill="url(#scaleGradient)" opacity="0.4" class="scale" style="animation-delay: 1.5s"/>
+      <!-- Scale 17 -->
+      <ellipse cx="250" cy="250" rx="7" ry="3" fill="url(#scaleGradient)" opacity="0.6" class="scale" style="animation-delay: 1.6s"/>
+      <!-- Scale 18 -->
+      <ellipse cx="270" cy="255" rx="6" ry="3" fill="url(#scaleGradient)" opacity="0.5" class="scale" style="animation-delay: 1.7s"/>
+      <!-- Scale 19 -->
+      <ellipse cx="290" cy="250" rx="7" ry="3" fill="url(#scaleGradient)" opacity="0.7" class="scale" style="animation-delay: 1.8s"/>
+      <!-- Scale 20 -->
+      <ellipse cx="300" cy="230" rx="6" ry="3" fill="url(#scaleGradient)" opacity="0.4" class="scale" style="animation-delay: 1.9s"/>
+      <!-- Scale 21 -->
+      <ellipse cx="295" cy="210" rx="8" ry="4" fill="url(#scaleGradient)" opacity="0.6" class="scale" style="animation-delay: 2.0s"/>
+      <!-- Scale 22 -->
+      <ellipse cx="280" cy="195" rx="7" ry="3" fill="url(#scaleGradient)" opacity="0.5" class="scale" style="animation-delay: 2.1s"/>
+      <!-- Scale 23 -->
+      <ellipse cx="260" cy="190" rx="6" ry="3" fill="url(#scaleGradient)" opacity="0.7" class="scale" style="animation-delay: 2.2s"/>
+      <!-- Scale 24 -->
+      <ellipse cx="240" cy="195" rx="7" ry="3" fill="url(#scaleGradient)" opacity="0.4" class="scale" style="animation-delay: 2.3s"/>
+      <!-- Scale 25 -->
+      <ellipse cx="220" cy="200" rx="6" ry="3" fill="url(#scaleGradient)" opacity="0.6" class="scale" style="animation-delay: 2.4s"/>
+    </g>
+  </g>
+  
+  <!-- Detailed serpent head -->
+  <g id="serpent-head">
+    <!-- Head shape -->
+    <path d="M 240 100 L 256 120 L 272 100 L 256 80 Z" 
+          fill="url(#serpentBodyGradient)" 
+          filter="url(#detailedGlow)" 
+          class="serpent-head"/>
+    
+    <!-- Crown/jewel -->
+    <circle cx="256" cy="90" r="4" fill="url(#goldAccent)" class="crown-jewel"/>
+    
+    <!-- Eyes -->
+    <circle cx="248" cy="105" r="2" fill="url(#goldAccent)" class="eye" style="animation-delay: 0s"/>
+    <circle cx="264" cy="105" r="2" fill="url(#goldAccent)" class="eye" style="animation-delay: 0.5s"/>
+    
+    <!-- Fangs -->
+    <path d="M 250 110 L 252 115 L 250 115 Z" fill="#FFFFFF" opacity="0.8"/>
+    <path d="M 262 110 L 264 115 L 262 115 Z" fill="#FFFFFF" opacity="0.8"/>
+  </g>
+  
+  <!-- Detailed serpent tail -->
+  <g id="serpent-tail">
+    <path d="M 240 412 L 256 432 L 272 412 L 256 392 Z" 
+          fill="url(#serpentBodyGradient)" 
+          filter="url(#detailedGlow)" 
+          class="serpent-tail"/>
+    
+    <!-- Tail tip glow -->
+    <circle cx="256" cy="412" r="3" fill="url(#serpentBodyGradient)" opacity="0.6"/>
+  </g>
+  
+  <!-- Enhanced network nodes (6 multi-layer nodes) -->
+  <g id="network-nodes">
+    <!-- Node 1 -->
+    <g class="node" style="transform-origin: 200px 200px;">
+      <circle cx="200" cy="200" r="12" fill="none" stroke="url(#nodeGradient)" stroke-width="2" class="node-outer-ring"/>
+      <circle cx="200" cy="200" r="10" fill="url(#nodeGradient)" opacity="0.6" class="node-middle-glow"/>
+      <circle cx="200" cy="200" r="6" fill="url(#nodeGradient)" class="node-inner-core"/>
+    </g>
+    
+    <!-- Node 2 -->
+    <g class="node" style="transform-origin: 312px 200px;">
+      <circle cx="312" cy="200" r="12" fill="none" stroke="url(#nodeGradient)" stroke-width="2" class="node-outer-ring"/>
+      <circle cx="312" cy="200" r="10" fill="url(#nodeGradient)" opacity="0.6" class="node-middle-glow"/>
+      <circle cx="312" cy="200" r="6" fill="url(#nodeGradient)" class="node-inner-core"/>
+    </g>
+    
+    <!-- Node 3 -->
+    <g class="node" style="transform-origin: 256px 150px;">
+      <circle cx="256" cy="150" r="12" fill="none" stroke="url(#nodeGradient)" stroke-width="2" class="node-outer-ring"/>
+      <circle cx="256" cy="150" r="10" fill="url(#nodeGradient)" opacity="0.6" class="node-middle-glow"/>
+      <circle cx="256" cy="150" r="6" fill="url(#nodeGradient)" class="node-inner-core"/>
+    </g>
+    
+    <!-- Node 4 -->
+    <g class="node" style="transform-origin: 256px 250px;">
+      <circle cx="256" cy="250" r="12" fill="none" stroke="url(#nodeGradient)" stroke-width="2" class="node-outer-ring"/>
+      <circle cx="256" cy="250" r="10" fill="url(#nodeGradient)" opacity="0.6" class="node-middle-glow"/>
+      <circle cx="256" cy="250" r="6" fill="url(#nodeGradient)" class="node-inner-core"/>
+    </g>
+    
+    <!-- Node 5 -->
+    <g class="node" style="transform-origin: 200px 312px;">
+      <circle cx="200" cy="312" r="12" fill="none" stroke="url(#nodeGradient)" stroke-width="2" class="node-outer-ring"/>
+      <circle cx="200" cy="312" r="10" fill="url(#nodeGradient)" opacity="0.6" class="node-middle-glow"/>
+      <circle cx="200" cy="312" r="6" fill="url(#nodeGradient)" class="node-inner-core"/>
+    </g>
+    
+    <!-- Node 6 -->
+    <g class="node" style="transform-origin: 312px 312px;">
+      <circle cx="312" cy="312" r="12" fill="none" stroke="url(#nodeGradient)" stroke-width="2" class="node-outer-ring"/>
+      <circle cx="312" cy="312" r="10" fill="url(#nodeGradient)" opacity="0.6" class="node-middle-glow"/>
+      <circle cx="312" cy="312" r="6" fill="url(#nodeGradient)" class="node-inner-core"/>
+    </g>
+  </g>
+  
+  <!-- Connection lines with gradient -->
+  <g id="connection-lines">
+    <line x1="200" y1="200" x2="256" y2="150" stroke="url(#serpentBodyGradient)" stroke-width="2" opacity="0.6" stroke-dasharray="5,5" class="connection-line"/>
+    <line x1="256" y1="150" x2="312" y2="200" stroke="url(#serpentBodyGradient)" stroke-width="2" opacity="0.6" stroke-dasharray="5,5" class="connection-line"/>
+    <line x1="312" y1="200" x2="312" y2="312" stroke="url(#serpentBodyGradient)" stroke-width="2" opacity="0.6" stroke-dasharray="5,5" class="connection-line"/>
+    <line x1="312" y1="312" x2="256" y2="250" stroke="url(#serpentBodyGradient)" stroke-width="2" opacity="0.6" stroke-dasharray="5,5" class="connection-line"/>
+    <line x1="256" y1="250" x2="200" y2="312" stroke="url(#serpentBodyGradient)" stroke-width="2" opacity="0.6" stroke-dasharray="5,5" class="connection-line"/>
+    <line x1="200" y1="312" x2="200" y2="200" stroke="url(#serpentBodyGradient)" stroke-width="2" opacity="0.6" stroke-dasharray="5,5" class="connection-line"/>
+  </g>
+  
+  <!-- Animated particles (15 particles) -->
+  <g id="particles">
+    <circle cx="200" cy="200" r="2" fill="url(#goldAccent)" class="particle" style="animation-delay: 0s"/>
+    <circle cx="220" cy="190" r="1.5" fill="url(#goldAccent)" class="particle" style="animation-delay: 0.2s"/>
+    <circle cx="240" cy="185" r="2" fill="url(#goldAccent)" class="particle" style="animation-delay: 0.4s"/>
+    <circle cx="260" cy="180" r="1.5" fill="url(#goldAccent)" class="particle" style="animation-delay: 0.6s"/>
+    <circle cx="280" cy="185" r="2" fill="url(#goldAccent)" class="particle" style="animation-delay: 0.8s"/>
+    <circle cx="290" cy="200" r="1.5" fill="url(#goldAccent)" class="particle" style="animation-delay: 1.0s"/>
+    <circle cx="285" cy="220" r="2" fill="url(#goldAccent)" class="particle" style="animation-delay: 1.2s"/>
+    <circle cx="270" cy="235" r="1.5" fill="url(#goldAccent)" class="particle" style="animation-delay: 1.4s"/>
+    <circle cx="250" cy="240" r="2" fill="url(#goldAccent)" class="particle" style="animation-delay: 1.6s"/>
+    <circle cx="230" cy="235" r="1.5" fill="url(#goldAccent)" class="particle" style="animation-delay: 1.8s"/>
+    <circle cx="210" cy="220" r="2" fill="url(#goldAccent)" class="particle" style="animation-delay: 2.0s"/>
+    <circle cx="190" cy="210" r="1.5" fill="url(#goldAccent)" class="particle" style="animation-delay: 2.2s"/>
+    <circle cx="180" cy="230" r="2" fill="url(#goldAccent)" class="particle" style="animation-delay: 2.4s"/>
+    <circle cx="190" cy="250" r="1.5" fill="url(#goldAccent)" class="particle" style="animation-delay: 2.6s"/>
+    <circle cx="210" cy="260" r="2" fill="url(#goldAccent)" class="particle" style="animation-delay: 2.8s"/>
+  </g>
+  
+  <!-- Central hub (larger central node) -->
+  <g id="central-hub" style="transform-origin: 256px 256px;">
+    <circle cx="256" cy="256" r="16" fill="none" stroke="url(#nodeGradient)" stroke-width="3" class="hub-outer"/>
+    <circle cx="256" cy="256" r="14" fill="url(#nodeGradient)" opacity="0.8" class="hub-middle"/>
+    <circle cx="256" cy="256" r="10" fill="url(#nodeGradient)" class="hub-core"/>
+    <circle cx="256" cy="256" r="6" fill="url(#goldAccent)" opacity="0.8" class="hub-center"/>
+  </g>
+</svg>

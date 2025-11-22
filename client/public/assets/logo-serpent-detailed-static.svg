@@ -1,0 +1,159 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vasukii Blockchain Network Logo">
+  <defs>
+    <!-- Enhanced gradients -->
+    <linearGradient id="serpentBodyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="50%" stop-color="#A855F7"/>
+      <stop offset="100%" stop-color="#06B6D4"/>
+    </linearGradient>
+    
+    <radialGradient id="nodeGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#06B6D4" stop-opacity="1"/>
+      <stop offset="50%" stop-color="#A855F7" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0.3"/>
+    </radialGradient>
+    
+    <linearGradient id="goldAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFD700"/>
+      <stop offset="100%" stop-color="#FFA500"/>
+    </linearGradient>
+    
+    <linearGradient id="scaleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#06B6D4" stop-opacity="0.4"/>
+    </linearGradient>
+    
+    <!-- Enhanced filters -->
+    <filter id="detailedGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <title>Vasukii Blockchain Network Logo</title>
+  <desc>A detailed serpent forming a circular network pattern with blockchain nodes, representing decentralized technology and connectivity</desc>
+  
+  <!-- Serpent body with detailed path -->
+  <g id="serpent-body">
+    <!-- Main serpent body path -->
+    <path d="M256 80 C 180 80, 120 140, 120 216 C 120 240, 130 262, 146 280 C 160 296, 180 304, 200 304 C 220 304, 240 296, 254 280 C 270 262, 280 240, 280 216 C 280 140, 220 80, 256 80 Z M 256 432 C 332 432, 392 372, 392 296 C 392 272, 382 250, 366 232 C 352 216, 332 208, 312 208 C 292 208, 272 216, 258 232 C 242 250, 232 272, 232 296 C 232 372, 292 432, 256 432 Z" 
+          fill="url(#serpentBodyGradient)" 
+          stroke="url(#serpentBodyGradient)" 
+          stroke-width="4" 
+          filter="url(#detailedGlow)"/>
+    
+    <!-- Scale pattern overlay (15 scales for static version) -->
+    <g id="scales">
+      <ellipse cx="200" cy="200" rx="8" ry="4" fill="url(#scaleGradient)" opacity="0.6"/>
+      <ellipse cx="220" cy="190" rx="7" ry="3" fill="url(#scaleGradient)" opacity="0.5"/>
+      <ellipse cx="240" cy="185" rx="6" ry="3" fill="url(#scaleGradient)" opacity="0.7"/>
+      <ellipse cx="260" cy="180" rx="7" ry="3" fill="url(#scaleGradient)" opacity="0.4"/>
+      <ellipse cx="280" cy="185" rx="6" ry="3" fill="url(#scaleGradient)" opacity="0.6"/>
+      <ellipse cx="290" cy="200" rx="8" ry="4" fill="url(#scaleGradient)" opacity="0.5"/>
+      <ellipse cx="285" cy="220" rx="7" ry="3" fill="url(#scaleGradient)" opacity="0.7"/>
+      <ellipse cx="270" cy="235" rx="6" ry="3" fill="url(#scaleGradient)" opacity="0.4"/>
+      <ellipse cx="250" cy="240" rx="7" ry="3" fill="url(#scaleGradient)" opacity="0.6"/>
+      <ellipse cx="230" cy="235" rx="6" ry="3" fill="url(#scaleGradient)" opacity="0.5"/>
+      <ellipse cx="210" cy="220" rx="8" ry="4" fill="url(#scaleGradient)" opacity="0.7"/>
+      <ellipse cx="190" cy="210" rx="7" ry="3" fill="url(#scaleGradient)" opacity="0.4"/>
+      <ellipse cx="180" cy="230" rx="6" ry="3" fill="url(#scaleGradient)" opacity="0.6"/>
+      <ellipse cx="190" cy="250" rx="7" ry="3" fill="url(#scaleGradient)" opacity="0.5"/>
+      <ellipse cx="210" cy="260" rx="6" ry="3" fill="url(#scaleGradient)" opacity="0.7"/>
+    </g>
+  </g>
+  
+  <!-- Detailed serpent head -->
+  <g id="serpent-head">
+    <path d="M 240 100 L 256 120 L 272 100 L 256 80 Z" 
+          fill="url(#serpentBodyGradient)" 
+          filter="url(#detailedGlow)"/>
+    
+    <!-- Crown/jewel -->
+    <circle cx="256" cy="90" r="4" fill="url(#goldAccent)"/>
+    
+    <!-- Eyes -->
+    <circle cx="248" cy="105" r="2" fill="url(#goldAccent)"/>
+    <circle cx="264" cy="105" r="2" fill="url(#goldAccent)"/>
+    
+    <!-- Fangs -->
+    <path d="M 250 110 L 252 115 L 250 115 Z" fill="#FFFFFF" opacity="0.8"/>
+    <path d="M 262 110 L 264 115 L 262 115 Z" fill="#FFFFFF" opacity="0.8"/>
+  </g>
+  
+  <!-- Detailed serpent tail -->
+  <g id="serpent-tail">
+    <path d="M 240 412 L 256 432 L 272 412 L 256 392 Z" 
+          fill="url(#serpentBodyGradient)" 
+          filter="url(#detailedGlow)"/>
+    
+    <!-- Tail tip glow -->
+    <circle cx="256" cy="412" r="3" fill="url(#serpentBodyGradient)" opacity="0.6"/>
+  </g>
+  
+  <!-- Enhanced network nodes (6 multi-layer nodes) -->
+  <g id="network-nodes">
+    <!-- Node 1 -->
+    <g>
+      <circle cx="200" cy="200" r="12" fill="none" stroke="url(#nodeGradient)" stroke-width="2"/>
+      <circle cx="200" cy="200" r="10" fill="url(#nodeGradient)" opacity="0.6"/>
+      <circle cx="200" cy="200" r="6" fill="url(#nodeGradient)"/>
+    </g>
+    
+    <!-- Node 2 -->
+    <g>
+      <circle cx="312" cy="200" r="12" fill="none" stroke="url(#nodeGradient)" stroke-width="2"/>
+      <circle cx="312" cy="200" r="10" fill="url(#nodeGradient)" opacity="0.6"/>
+      <circle cx="312" cy="200" r="6" fill="url(#nodeGradient)"/>
+    </g>
+    
+    <!-- Node 3 -->
+    <g>
+      <circle cx="256" cy="150" r="12" fill="none" stroke="url(#nodeGradient)" stroke-width="2"/>
+      <circle cx="256" cy="150" r="10" fill="url(#nodeGradient)" opacity="0.6"/>
+      <circle cx="256" cy="150" r="6" fill="url(#nodeGradient)"/>
+    </g>
+    
+    <!-- Node 4 -->
+    <g>
+      <circle cx="256" cy="250" r="12" fill="none" stroke="url(#nodeGradient)" stroke-width="2"/>
+      <circle cx="256" cy="250" r="10" fill="url(#nodeGradient)" opacity="0.6"/>
+      <circle cx="256" cy="250" r="6" fill="url(#nodeGradient)"/>
+    </g>
+    
+    <!-- Node 5 -->
+    <g>
+      <circle cx="200" cy="312" r="12" fill="none" stroke="url(#nodeGradient)" stroke-width="2"/>
+      <circle cx="200" cy="312" r="10" fill="url(#nodeGradient)" opacity="0.6"/>
+      <circle cx="200" cy="312" r="6" fill="url(#nodeGradient)"/>
+    </g>
+    
+    <!-- Node 6 -->
+    <g>
+      <circle cx="312" cy="312" r="12" fill="none" stroke="url(#nodeGradient)" stroke-width="2"/>
+      <circle cx="312" cy="312" r="10" fill="url(#nodeGradient)" opacity="0.6"/>
+      <circle cx="312" cy="312" r="6" fill="url(#nodeGradient)"/>
+    </g>
+  </g>
+  
+  <!-- Connection lines with gradient -->
+  <g id="connection-lines">
+    <line x1="200" y1="200" x2="256" y2="150" stroke="url(#serpentBodyGradient)" stroke-width="2" opacity="0.6" stroke-dasharray="5,5"/>
+    <line x1="256" y1="150" x2="312" y2="200" stroke="url(#serpentBodyGradient)" stroke-width="2" opacity="0.6" stroke-dasharray="5,5"/>
+    <line x1="312" y1="200" x2="312" y2="312" stroke="url(#serpentBodyGradient)" stroke-width="2" opacity="0.6" stroke-dasharray="5,5"/>
+    <line x1="312" y1="312" x2="256" y2="250" stroke="url(#serpentBodyGradient)" stroke-width="2" opacity="0.6" stroke-dasharray="5,5"/>
+    <line x1="256" y1="250" x2="200" y2="312" stroke="url(#serpentBodyGradient)" stroke-width="2" opacity="0.6" stroke-dasharray="5,5"/>
+    <line x1="200" y1="312" x2="200" y2="200" stroke="url(#serpentBodyGradient)" stroke-width="2" opacity="0.6" stroke-dasharray="5,5"/>
+  </g>
+  
+  <!-- Central hub (larger central node) -->
+  <g id="central-hub">
+    <circle cx="256" cy="256" r="16" fill="none" stroke="url(#nodeGradient)" stroke-width="3"/>
+    <circle cx="256" cy="256" r="14" fill="url(#nodeGradient)" opacity="0.8"/>
+    <circle cx="256" cy="256" r="10" fill="url(#nodeGradient)"/>
+    <circle cx="256" cy="256" r="6" fill="url(#goldAccent)" opacity="0.8"/>
+  </g>
+</svg>

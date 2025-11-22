@@ -1,0 +1,22 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="snakeGradientFavicon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B5CF6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#F59E0B;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06B6D4;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Minimalist snake for favicon -->
+  <path d="M16 4 C10 4, 4 10, 4 16 C4 22, 10 28, 16 28 C22 28, 28 22, 28 16 C28 10, 22 4, 16 4 Z" 
+        fill="url(#snakeGradientFavicon)"/>
+  
+  <!-- Snake head -->
+  <ellipse cx="16" cy="10" rx="4" ry="3" fill="url(#snakeGradientFavicon)"/>
+  
+  <!-- Snake eyes -->
+  <circle cx="14" cy="9" r="1" fill="#FEF3C7"/>
+  <circle cx="18" cy="9" r="1" fill="#FEF3C7"/>
+  <circle cx="14" cy="9" r="0.5" fill="#1F2937"/>
+  <circle cx="18" cy="9" r="0.5" fill="#1F2937"/>
+</svg>

@@ -1,0 +1,309 @@
+/* Vasukii Infinity Serpent Logo Animations */
+
+/* Infinity Flow Animation - Energy flows through the serpent body */
+@keyframes infinity-flow {
+  0% {
+    stroke-dashoffset: 0;
+    opacity: 0.5;
+    filter: drop-shadow(0 0 5px hsl(262 80% 55%));
+  }
+  25% {
+    stroke-dashoffset: -50;
+    opacity: 0.8;
+    filter: drop-shadow(0 0 10px hsl(192 80% 55%));
+  }
+  50% {
+    stroke-dashoffset: -100;
+    opacity: 1;
+    filter: drop-shadow(0 0 15px hsl(45 100% 60%));
+  }
+  75% {
+    stroke-dashoffset: -150;
+    opacity: 0.8;
+    filter: drop-shadow(0 0 10px hsl(192 80% 55%));
+  }
+  100% {
+    stroke-dashoffset: -200;
+    opacity: 0.5;
+    filter: drop-shadow(0 0 5px hsl(262 80% 55%));
+  }
+}
+
+/* Scale Pulse - Sequential lighting of hexagonal scales */
+@keyframes scale-pulse {
+  0%, 90%, 100% { 
+    opacity: 0.3; 
+    transform: scale(1);
+    filter: drop-shadow(0 0 2px hsl(192 80% 55%));
+  }
+  45% { 
+    opacity: 1; 
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 8px hsl(192 80% 75%));
+  }
+}
+
+/* Third Eye Glow - Divine wisdom activation */
+@keyframes third-eye-glow {
+  0%, 100% { 
+    fill: hsl(45 100% 60%);
+    filter: drop-shadow(0 0 5px hsl(45 100% 80%));
+    transform: scale(1);
+  }
+  50% { 
+    fill: hsl(192 80% 55%);
+    filter: drop-shadow(0 0 15px hsl(192 80% 75%));
+    transform: scale(1.2);
+  }
+}
+
+/* Crown Shimmer - Divine authority */
+@keyframes crown-shimmer {
+  0%, 100% { 
+    opacity: 0.8; 
+    stroke: hsl(45 100% 60%);
+    filter: drop-shadow(0 0 3px hsl(45 100% 80%));
+  }
+  50% { 
+    opacity: 1; 
+    stroke: hsl(45 100% 80%);
+    filter: drop-shadow(0 0 8px hsl(45 100% 90%));
+  }
+}
+
+/* Data Flow Particles - Blockchain data streaming */
+@keyframes data-flow {
+  0% { 
+    opacity: 0; 
+    transform: scale(0.5);
+    fill: hsl(192 80% 55%);
+  }
+  10% { 
+    opacity: 1; 
+    transform: scale(1);
+    fill: hsl(192 80% 75%);
+  }
+  90% { 
+    opacity: 1; 
+    transform: scale(1);
+    fill: hsl(192 80% 75%);
+  }
+  100% { 
+    opacity: 0; 
+    transform: scale(0.5);
+    fill: hsl(192 80% 55%);
+  }
+}
+
+/* Orb Pulse - Trinity orbs representing time */
+@keyframes orb-pulse {
+  0%, 100% { 
+    opacity: 0.6; 
+    transform: scale(1);
+    filter: drop-shadow(0 0 5px hsl(192 70% 75%));
+  }
+  50% { 
+    opacity: 1; 
+    transform: scale(1.3);
+    filter: drop-shadow(0 0 10px hsl(192 70% 85%));
+  }
+}
+
+/* Tongue Flicker - V-shaped tongue animation */
+@keyframes tongue-flicker {
+  0%, 100% { 
+    opacity: 0.8; 
+    stroke: hsl(45 100% 60%);
+    stroke-width: 2;
+  }
+  50% { 
+    opacity: 1; 
+    stroke: hsl(45 100% 80%);
+    stroke-width: 3;
+  }
+}
+
+/* Sacred Geometry Rotation - Mandala center */
+@keyframes sacred-rotation {
+  0% { 
+    transform: rotate(0deg); 
+    opacity: 0.3;
+  }
+  50% { 
+    opacity: 0.6;
+  }
+  100% { 
+    transform: rotate(360deg); 
+    opacity: 0.3;
+  }
+}
+
+/* Serpent Glow Pulse - Overall logo breathing */
+@keyframes serpent-glow-pulse {
+  0%, 100% { 
+    filter: drop-shadow(0 0 10px hsl(262 80% 55%)) drop-shadow(0 0 20px hsl(192 80% 55%));
+    transform: scale(1);
+  }
+  50% { 
+    filter: drop-shadow(0 0 20px hsl(262 80% 75%)) drop-shadow(0 0 30px hsl(192 80% 75%));
+    transform: scale(1.02);
+  }
+}
+
+/* Circuit Pattern Animation - Blockchain connections */
+@keyframes circuit-pattern {
+  0%, 100% { 
+    stroke-dasharray: 0 10;
+    opacity: 0.5;
+  }
+  50% { 
+    stroke-dasharray: 10 0;
+    opacity: 1;
+  }
+}
+
+/* Animation Classes */
+.infinity-flow {
+  stroke-dasharray: 20 5;
+  animation: infinity-flow 6s ease-in-out infinite;
+}
+
+.scale {
+  animation: scale-pulse 4s ease-in-out infinite;
+}
+
+.scale:nth-child(1) { animation-delay: 0s; }
+.scale:nth-child(2) { animation-delay: 0.1s; }
+.scale:nth-child(3) { animation-delay: 0.2s; }
+.scale:nth-child(4) { animation-delay: 0.3s; }
+.scale:nth-child(5) { animation-delay: 0.4s; }
+.scale:nth-child(6) { animation-delay: 0.5s; }
+.scale:nth-child(7) { animation-delay: 0.6s; }
+.scale:nth-child(8) { animation-delay: 0.7s; }
+.scale:nth-child(9) { animation-delay: 0.8s; }
+.scale:nth-child(10) { animation-delay: 0.9s; }
+.scale:nth-child(11) { animation-delay: 1.0s; }
+.scale:nth-child(12) { animation-delay: 1.1s; }
+.scale:nth-child(13) { animation-delay: 1.2s; }
+.scale:nth-child(14) { animation-delay: 1.3s; }
+.scale:nth-child(15) { animation-delay: 1.4s; }
+.scale:nth-child(16) { animation-delay: 1.5s; }
+.scale:nth-child(17) { animation-delay: 1.6s; }
+.scale:nth-child(18) { animation-delay: 1.7s; }
+.scale:nth-child(19) { animation-delay: 1.8s; }
+.scale:nth-child(20) { animation-delay: 1.9s; }
+
+.third-eye {
+  animation: third-eye-glow 3s ease-in-out infinite;
+}
+
+.crown {
+  animation: crown-shimmer 2s ease-in-out infinite;
+}
+
+.particle {
+  animation: data-flow 8s ease-in-out infinite;
+}
+
+.particle:nth-child(1) { animation-delay: 0s; }
+.particle:nth-child(2) { animation-delay: 0.8s; }
+.particle:nth-child(3) { animation-delay: 1.6s; }
+.particle:nth-child(4) { animation-delay: 2.4s; }
+.particle:nth-child(5) { animation-delay: 3.2s; }
+.particle:nth-child(6) { animation-delay: 4.0s; }
+.particle:nth-child(7) { animation-delay: 4.8s; }
+.particle:nth-child(8) { animation-delay: 5.6s; }
+.particle:nth-child(9) { animation-delay: 6.4s; }
+.particle:nth-child(10) { animation-delay: 7.2s; }
+
+.orb-past {
+  animation: orb-pulse 3s ease-in-out infinite;
+  animation-delay: 0s;
+}
+
+.orb-present {
+  animation: orb-pulse 3s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+.orb-future {
+  animation: orb-pulse 3s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.tongue {
+  animation: tongue-flicker 2s ease-in-out infinite;
+}
+
+.circuit {
+  stroke-dasharray: 2 3;
+  animation: circuit-pattern 2s ease-in-out infinite;
+}
+
+.sacred-geometry {
+  animation: sacred-rotation 20s linear infinite;
+}
+
+/* Hover Effects */
+.vasukii-infinity-logo:hover .infinity-flow {
+  animation-duration: 3s;
+  filter: drop-shadow(0 0 20px hsl(262 80% 75%)) drop-shadow(0 0 30px hsl(192 80% 75%));
+}
+
+.vasukii-infinity-logo:hover .scale {
+  animation-duration: 2s;
+}
+
+.vasukii-infinity-logo:hover .third-eye {
+  animation-duration: 1.5s;
+}
+
+.vasukii-infinity-logo:hover .particle {
+  animation-duration: 4s;
+}
+
+/* Logo Hover Effect */
+.logo-hover {
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.logo-hover:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 25px hsl(262 80% 75%)) drop-shadow(0 0 35px hsl(192 80% 75%));
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .infinity-flow,
+  .scale,
+  .third-eye,
+  .crown,
+  .particle,
+  .orb-past,
+  .orb-present,
+  .orb-future,
+  .tongue,
+  .circuit,
+  .sacred-geometry {
+    animation: none;
+  }
+  
+  .vasukii-infinity-logo {
+    filter: drop-shadow(0 0 10px hsl(262 80% 55%));
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .vasukii-infinity-logo {
+    filter: contrast(150%) brightness(120%);
+  }
+  
+  .infinity-flow {
+    stroke-width: 3;
+  }
+  
+  .scale {
+    stroke-width: 2;
+  }
+}

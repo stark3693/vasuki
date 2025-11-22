@@ -1,0 +1,23 @@
+# VasukiiMicroblog Environment Configuration Template
+# Copy this to .env in the root directory and update the values
+
+# Database Configuration (REQUIRED for encryption features)
+# Option 1: Neon Database (Recommended)
+# Get your connection string from: https://neon.tech
+DATABASE_URL=postgresql://username:password@hostname/database?sslmode=require
+
+# Option 2: Local PostgreSQL
+# DATABASE_URL=postgresql://user:password@localhost:5432/vasukii_microblog
+
+# Web3 Configuration
+VITE_WALLET_CONNECT_PROJECT_ID=cf9dc37defde9f8e52b784cd7ebb1cdd
+VITE_VSK_TOKEN_ADDRESS=0x5CB7681Ce38c8bD8089DEd49E0B585596b423B1C
+VITE_PREDICTION_POLL_ADDRESS=
+
+# Server Configuration
+NODE_ENV=development
+PORT=3001
+SESSION_SECRET=your-very-secure-secret-key-change-in-production
+
+# Get your WalletConnect Project ID from: https://cloud.walletconnect.com/
+# Update contract addresses after deployment using: npx hardhat run scripts/deploy.ts

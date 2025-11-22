@@ -1,0 +1,30 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Simplified gradient for mobile -->
+    <linearGradient id="snakeGradientMobile" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B5CF6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#F59E0B;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06B6D4;stop-opacity:1" />
+    </linearGradient>
+    
+    <radialGradient id="eyeGradientMobile" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#FEF3C7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F59E0B;stop-opacity:1" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Simplified snake body for mobile -->
+  <path d="M20 5 C12 5, 6 11, 6 19 C6 27, 12 33, 20 33 C28 33, 34 27, 34 19 C34 11, 28 5, 20 5 Z" 
+        fill="url(#snakeGradientMobile)"/>
+  
+  <!-- Snake head -->
+  <ellipse cx="20" cy="13" rx="5" ry="4" fill="url(#snakeGradientMobile)"/>
+  
+  <!-- Snake eyes -->
+  <circle cx="17" cy="11" r="1.5" fill="url(#eyeGradientMobile)"/>
+  <circle cx="23" cy="11" r="1.5" fill="url(#eyeGradientMobile)"/>
+  
+  <!-- Snake pupils -->
+  <circle cx="17" cy="11" r="0.8" fill="#1F2937"/>
+  <circle cx="23" cy="11" r="0.8" fill="#1F2937"/>
+</svg>
