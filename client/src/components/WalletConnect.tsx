@@ -195,6 +195,7 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ className }) => {
                   size="sm"
                   onClick={() => handleSwitchNetwork(137)}
                   disabled={isLoading}
+                  className=""
                 >
                   Switch to Polygon
                 </Button>
@@ -211,6 +212,7 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({ className }) => {
                 size="sm"
                 onClick={handleRefreshBalance}
                 disabled={isRefreshing}
+                className=""
               >
                 <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
               </Button>

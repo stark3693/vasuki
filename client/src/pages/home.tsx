@@ -17,8 +17,6 @@ import { Plus, Target, MessageSquare, Wallet, Coins } from "lucide-react";
 import { useTheme } from "@/hooks/use-theme";
 import { Moon, Sun } from "lucide-react";
 import { usePolls } from "@/hooks/use-polls";
-import { useUserSuggestions } from "@/hooks/use-user-suggestions";
-import { UserSuggestions } from "@/components/ui/user-suggestions";
 import { ChatInvitationNotification } from "@/components/chat-invitation-notification";
 
 import type { VaskWithAuthor } from "@shared/schema";
@@ -42,7 +40,6 @@ export default function HomePage() {
   });
 
   const { polls, isLoadingPolls } = usePolls();
-  const { data: userSuggestions, isLoading: isLoadingSuggestions, refetch: refetchSuggestions } = useUserSuggestions(user?.id, 5);
 
   useEffect(() => {
     if (!isConnected) {
@@ -103,56 +100,56 @@ export default function HomePage() {
     <>
       <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row">
-        {/* Left Sidebar - Desktop */}
-        {!isMobile && <Sidebar />}
+          {/* Left Sidebar - Desktop */}
+          {!isMobile && <Sidebar />}
 
-        {/* Main Content */}
-        <main className="flex-1 lg:border-r border-border min-w-0 max-w-full overflow-hidden">
-          {/* Enhanced Header */}
-          <header className="sticky top-0 bg-background/95 backdrop-blur-xl border-b border-border/50 p-4 sm:p-6 z-10 shadow-sm">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-3 sm:space-x-4 min-w-0 flex-1">
-              <img 
-                src="/assets/finallogo.png" 
-                alt="Vasukii Logo" 
-                className="h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 logo-hover flex-shrink-0 rounded-lg"
-                onError={(e) => {
-                  e.currentTarget.style.display = 'none';
-                }}
-              />
-                <div className="min-w-0 flex-1">
-                  <h1 className="text-xl sm:text-2xl md:text-3xl font-bold gradient-text truncate" data-testid="page-title">
-                    Home
-                  </h1>
-                  <p className="text-sm text-muted-foreground hidden sm:block">
-                    Discover and participate in prediction markets
-                  </p>
+          {/* Main Content */}
+          <main className="flex-1 lg:border-r border-border min-w-0 max-w-full overflow-hidden">
+            {/* Enhanced Header */}
+            <header className="sticky top-0 bg-background/95 backdrop-blur-xl border-b border-border/50 p-4 sm:p-6 z-10 shadow-sm">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3 sm:space-x-4 min-w-0 flex-1">
+                  <img 
+                    src="/assets/finallogo.png" 
+                    alt="Vasukii Logo" 
+                    className="h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 logo-hover flex-shrink-0 rounded-lg"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                    }}
+                  />
+                  <div className="min-w-0 flex-1">
+                    <h1 className="text-xl sm:text-2xl md:text-3xl font-bold gradient-text truncate" data-testid="page-title">
+                      Home
+                    </h1>
+                    <p className="text-sm text-muted-foreground hidden sm:block">
+                      Discover and participate in prediction markets
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-2 flex-shrink-0">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={toggleTheme}
+                    data-testid="button-toggle-theme"
+                    className="h-10 w-10 sm:h-11 sm:w-11 hover:bg-accent transition-colors duration-200"
+                  >
+                    {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                  </Button>
                 </div>
               </div>
-              <div className="flex items-center space-x-2 flex-shrink-0">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={toggleTheme}
-                  data-testid="button-toggle-theme"
-                  className="h-10 w-10 sm:h-11 sm:w-11 hover:bg-accent transition-colors duration-200"
-                >
-                  {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-                </Button>
+            </header>
+
+            {/* Compose Vask - Desktop */}
+            {!isMobile && (
+              <div className="border-b border-border/50 p-6 bg-card/30">
+                <ComposeVask />
               </div>
-            </div>
-          </header>
+            )}
 
-          {/* Compose Vask - Desktop */}
-          {!isMobile && (
-            <div className="border-b border-border/50 p-6 bg-card/30">
-              <ComposeVask />
-            </div>
-          )}
-
-          {/* Enhanced Feed Tabs */}
-          <div className="border-b border-border/50 overflow-x-auto bg-card/20">
-            <div className="flex space-x-0 min-w-max px-4 sm:px-6">
+            {/* Enhanced Feed Tabs */}
+            <div className="border-b border-border/50 overflow-x-auto bg-card/20">
+              <div className="flex space-x-0 min-w-max px-4 sm:px-6">
               <button
                 onClick={() => setActiveTab('all')}
                 className={`px-4 sm:px-6 py-4 text-sm font-medium border-b-2 transition-all duration-200 whitespace-nowrap flex items-center space-x-2 ${
@@ -341,40 +338,29 @@ export default function HomePage() {
           <aside className="hidden xl:block w-80 p-6 space-y-6 flex-shrink-0 max-w-sm">
             {/* Enhanced Poll Statistics */}
             <Card className="card-elevated">
-              <CardHeader className="pb-4">
-                <CardTitle className="text-lg flex items-center gap-3">
-                  <div className="p-2 bg-primary/10 rounded-lg">
-                    <Target className="h-5 w-5 text-primary" />
+              <CardHeader className="pb-3">
+                <CardTitle className="text-base flex items-center gap-2">
+                  <div className="p-1.5 bg-primary/10 rounded-lg">
+                    <Target className="h-4 w-4 text-primary" />
                   </div>
                   Prediction Market
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="text-center p-6 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-xl border border-primary/10">
-                  <div className="text-3xl font-bold text-primary mb-2">{polls?.length || 0}</div>
-                  <div className="text-sm text-muted-foreground font-medium">Active Polls</div>
+              <CardContent className="space-y-3">
+                <div className="text-center p-3 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-lg border border-primary/10">
+                  <div className="text-2xl font-bold text-primary mb-1">{polls?.length || 0}</div>
+                  <div className="text-xs text-muted-foreground font-medium">Active Polls</div>
                 </div>
                 <Button 
                   onClick={() => setLocation('/prediction-polls')}
                   className="w-full btn-primary"
+                  size="sm"
                 >
-                  <Target className="h-4 w-4 mr-2" />
+                  <Target className="h-3.5 w-3.5 mr-2" />
                   View All Polls
                 </Button>
               </CardContent>
             </Card>
-
-
-            {/* User Suggestions */}
-            {userSuggestions && userSuggestions.length > 0 && (
-              <UserSuggestions 
-                suggestions={userSuggestions} 
-                currentUserId={user.id} 
-                onRefresh={refetchSuggestions}
-              />
-            )}
-
-
           </aside>
         )}
       </div>

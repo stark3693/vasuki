@@ -73,9 +73,9 @@ export default function UsernameProfilePage() {
   if (userLoading) {
     return (
       <div className="min-h-screen bg-background">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row">
           <Skeleton className="h-48 w-full" />
-          <div className="p-4 space-y-4">
+          <div className="responsive-padding space-y-4">
             <Skeleton className="h-32 w-32 rounded-full" />
             <Skeleton className="h-6 w-48" />
             <Skeleton className="h-4 w-96" />
@@ -87,20 +87,20 @@ export default function UsernameProfilePage() {
 
   if (error || !profile) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center max-w-md mx-auto p-6">
+      <div className="min-h-screen bg-background flex items-center justify-center responsive-container responsive-spacing">
+        <div className="text-center max-w-md mx-auto responsive-padding">
           <div className="w-16 h-16 bg-destructive/10 rounded-full flex items-center justify-center mx-auto mb-4">
             <User className="h-8 w-8 text-destructive" />
           </div>
-          <h1 className="text-2xl font-bold text-foreground mb-2">User Not Found</h1>
-          <p className="text-muted-foreground mb-4">
+          <h1 className="responsive-heading font-bold text-foreground mb-2">User Not Found</h1>
+          <p className="responsive-text text-muted-foreground mb-4">
             The username <strong>@{username}</strong> doesn't exist or may have been changed.
           </p>
           <div className="space-y-3">
-            <Button onClick={() => setLocation("/search")} className="w-full">
+            <Button onClick={() => setLocation("/search")} className="w-full mobile-touch-target">
               Search for Users
             </Button>
-            <Button variant="outline" onClick={() => setLocation("/home")} className="w-full">
+            <Button variant="outline" onClick={() => setLocation("/home")} className="w-full mobile-touch-target">
               Go Home
             </Button>
           </div>
@@ -110,8 +110,8 @@ export default function UsernameProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row">
+    <div className="min-h-screen bg-background responsive-container responsive-spacing">
+      <div className="responsive-flex">
         {/* Left Sidebar - Desktop */}
         {!isMobile && <Sidebar />}
 
@@ -171,8 +171,8 @@ export default function UsernameProfilePage() {
                     </div>
                   </div>
 
-                  <div className="flex-1 space-y-1 sm:space-y-2 min-w-0">
-                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between space-y-2 sm:space-y-0">
+                    <div className="flex-1 space-y-1 sm:space-y-2 min-w-0">
+                      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between space-y-2 sm:space-y-0">
                       <div className="min-w-0 flex-1">
                         <h1 className="text-xl sm:text-2xl font-bold truncate" data-testid="text-display-name">
                           {profile.displayName || profile.ensName || "Anonymous"}

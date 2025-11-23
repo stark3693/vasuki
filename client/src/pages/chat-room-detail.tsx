@@ -669,63 +669,64 @@ export default function ChatRoomDetailPage() {
           <Button 
             onClick={() => window.history.back()} 
             variant="glass" 
-            className="mb-4"
+            className="mb-3 sm:mb-4 hover:scale-105 transition-all duration-300 bg-slate-800/90 dark:bg-slate-900/90 hover:bg-slate-700/90 dark:hover:bg-slate-800/90 shadow-lg hover:shadow-xl backdrop-blur-xl border-slate-700 w-full sm:w-auto"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Chat Rooms
+            <span className="hidden sm:inline">Back to Chat Rooms</span>
+            <span className="sm:hidden">Back</span>
           </Button>
           
-          <Card className="glass-card">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-primary/10 rounded-lg">
-                    <MessageCircle className="h-6 w-6 text-primary" />
+          <Card className="glass-card bg-slate-800/95 dark:bg-slate-900/95 backdrop-blur-xl shadow-2xl border-slate-700/50">
+            <CardHeader className="border-b border-slate-700/50 p-3 sm:p-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <div className="p-2 sm:p-3 bg-gradient-to-br from-purple-600 to-pink-600 rounded-lg sm:rounded-xl shadow-lg hover:scale-110 transition-all duration-300 shrink-0">
+                    <MessageCircle className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                   </div>
-                  <div>
-                    <CardTitle className="text-xl flex items-center gap-2">
-                      {chatRoom.name}
+                  <div className="min-w-0 flex-1">
+                    <CardTitle className="text-lg sm:text-xl md:text-2xl flex items-center gap-2 text-white font-bold truncate">
+                      <span className="truncate">{chatRoom.name}</span>
                       {hasNewMessages && (
-                        <div className="h-2 w-2 bg-tertiary rounded-full animate-pulse" />
+                        <div className="h-2 sm:h-2.5 w-2 sm:w-2.5 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full animate-pulse shadow-lg shadow-green-500/50 shrink-0" />
                       )}
                     </CardTitle>
-                    <div className="flex items-center gap-2 mt-1">
-                      <Badge variant={chatRoom.type === 'public' ? 'default' : 'secondary'}>
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 mt-1 sm:mt-2">
+                      <Badge variant={chatRoom.type === 'public' ? 'default' : 'secondary'} className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 transition-all shadow-md text-white text-xs">
                         {chatRoom.type === 'public' ? (
                           <>
                             <Globe className="h-3 w-3 mr-1" />
-                            Public
+                            <span className="hidden xs:inline">Public</span>
                           </>
                         ) : (
                           <>
                             <Lock className="h-3 w-3 mr-1" />
-                            Private
+                            <span className="hidden xs:inline">Private</span>
                           </>
                         )}
                       </Badge>
-                      <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                        <Users className="h-3 w-3" />
-                        {chatRoom.participants}/{chatRoom.maxParticipants}
+                      <div className="flex items-center gap-1.5 text-xs sm:text-sm bg-blue-600/20 px-2 sm:px-3 py-1 rounded-full border border-blue-500/30">
+                        <Users className="h-3 w-3 sm:h-4 sm:w-4 text-blue-400" />
+                        <span className="font-medium text-blue-300">{chatRoom.participants}/{chatRoom.maxParticipants}</span>
                       </div>
                       {encryptionEnabled && (
-                        <Badge variant="outline" className="text-green-600 border-green-600">
+                        <Badge variant="outline" className="text-green-400 border-green-500/50 bg-green-500/20 shadow-sm text-xs">
                           <ShieldCheck className="h-3 w-3 mr-1" />
-                          Encrypted
+                          <span className="hidden xs:inline">Encrypted</span>
                         </Badge>
                       )}
                     </div>
                   </div>
                 </div>
-                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                <div className="flex flex-col xs:flex-row items-stretch xs:items-center gap-2 sm:gap-3 w-full sm:w-auto">
                   {/* Connection Status */}
-                  <div className="flex items-center gap-2">
-                    <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="flex items-center gap-1.5 sm:gap-2 bg-green-600/20 border border-green-500/30 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full">
                       {isOnline ? (
-                        <Wifi className="h-4 w-4 text-green-500" />
+                        <Wifi className="h-3 w-3 sm:h-4 sm:w-4 text-green-400 animate-pulse" />
                       ) : (
-                        <WifiOff className="h-4 w-4 text-red-500" />
+                        <WifiOff className="h-3 w-3 sm:h-4 sm:w-4 text-red-400" />
                       )}
-                      <span className="text-xs text-muted-foreground">
+                      <span className="text-xs sm:text-sm font-medium text-green-300">
                         {isOnline ? 'Live' : 'Offline'}
                       </span>
                     </div>
@@ -733,17 +734,17 @@ export default function ChatRoomDetailPage() {
                       onClick={() => loadMessages(false)}
                       size="sm"
                       variant="outline"
-                      className="text-xs mobile-touch-target"
+                      className="text-xs mobile-touch-target hover:scale-110 transition-all duration-300 bg-blue-600/20 border-blue-500/30 hover:bg-blue-600/30 text-blue-300"
                     >
-                      🔄 Refresh
+                      🔄 <span className="hidden sm:inline ml-1">Refresh</span>
                     </Button>
                   </div>
                   {chatRoom.isJoined ? (
-                    <Button onClick={leaveRoom} variant="outline" size="sm" className="mobile-touch-target">
+                    <Button onClick={leaveRoom} variant="outline" size="sm" className="mobile-touch-target border-red-500/50 text-red-400 hover:bg-red-600/20 hover:border-red-500 hover:scale-105 transition-all duration-300 shadow-md">
                       Leave Room
                     </Button>
                   ) : (
-                    <Button onClick={joinRoom} size="sm" className="mobile-touch-target">
+                    <Button onClick={joinRoom} size="sm" className="mobile-touch-target bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 text-white">
                       Join Room
                     </Button>
                   )}
@@ -760,33 +761,43 @@ export default function ChatRoomDetailPage() {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Messages Area */}
           <div className="lg:col-span-3">
-            <Card className="h-[600px] flex flex-col">
+            <Card className="h-[500px] sm:h-[600px] flex flex-col bg-slate-900/95 backdrop-blur-xl shadow-2xl border-slate-700/50">
               <CardContent className="flex-1 flex flex-col p-0">
                 {/* Messages */}
                 <div 
                   ref={messagesContainerRef}
-                  className="flex-1 overflow-y-auto p-4 relative"
+                  className="flex-1 overflow-y-auto p-3 sm:p-4 md:p-6 relative space-y-2 sm:space-y-3"
                   onScroll={handleScroll}
                 >
                   {messages.length === 0 ? (
-                    <div className="flex items-center justify-center h-full">
-                      <div className="text-center">
-                        <div className="relative mb-6">
-                          <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full blur-lg opacity-20"></div>
-                          <MessageCircle className="relative h-16 w-16 text-blue-500 mx-auto" />
+                    <div className="flex items-center justify-center h-full px-4">
+                      <div className="text-center max-w-md">
+                        <div className="relative mb-6 sm:mb-8">
+                          <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 rounded-full blur-2xl opacity-30 animate-pulse"></div>
+                          <div className="relative bg-gradient-to-br from-purple-600/20 to-pink-600/20 p-6 sm:p-8 rounded-full shadow-xl border border-purple-500/30">
+                            <MessageCircle className="relative h-16 w-16 sm:h-20 sm:w-20 text-purple-400 mx-auto" />
+                          </div>
                         </div>
-                        <h3 className="text-lg font-semibold mb-2">Welcome to {chatRoom?.name}!</h3>
-                        <p className="text-muted-foreground mb-4">Start the conversation by sending a message</p>
-                        <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-                          <Image className="h-4 w-4" />
-                          <Video className="h-4 w-4" />
-                          <FileText className="h-4 w-4" />
-                          <span>Share photos, videos, and files</span>
+                        <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-3 text-white">Welcome to {chatRoom?.name}! 🚀</h3>
+                        <p className="text-sm sm:text-base text-slate-400 mb-4 sm:mb-6">Start the conversation by sending a message</p>
+                        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-xs sm:text-sm bg-slate-800/50 p-3 sm:p-4 rounded-xl border border-slate-700/50">
+                          <div className="flex items-center gap-1 text-blue-400">
+                            <Image className="h-4 w-4 sm:h-5 sm:w-5" />
+                            <span className="font-medium">Photos</span>
+                          </div>
+                          <div className="flex items-center gap-1 text-purple-400">
+                            <Video className="h-4 w-4 sm:h-5 sm:w-5" />
+                            <span className="font-medium">Videos</span>
+                          </div>
+                          <div className="flex items-center gap-1 text-pink-400">
+                            <FileText className="h-4 w-4 sm:h-5 sm:w-5" />
+                            <span className="font-medium">Files</span>
+                          </div>
                         </div>
                       </div>
                     </div>
                   ) : (
-                    <div className="space-y-1">
+                    <div className="space-y-3">
                       {messages.map(renderMessage)}
                     </div>
                   )}
@@ -794,15 +805,16 @@ export default function ChatRoomDetailPage() {
                   
                   {/* Scroll to bottom button */}
                   {showScrollButton && (
-                    <div className="absolute bottom-4 right-4">
+                    <div className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 animate-bounce">
                       <Button
                         onClick={scrollToBottom}
                         size="sm"
                         variant="premium"
-                        className="rounded-full shadow-lg"
+                        className="rounded-full shadow-2xl hover:shadow-3xl bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 hover:scale-110 transition-all duration-300 text-white text-xs sm:text-sm"
                       >
-                        <MessageCircle className="h-4 w-4 mr-1" />
-                        New messages
+                        <MessageCircle className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
+                        <span className="hidden xs:inline">New messages</span>
+                        <span className="xs:hidden">New</span>
                       </Button>
                     </div>
                   )}
@@ -823,8 +835,8 @@ export default function ChatRoomDetailPage() {
                 {/* Message Input */}
                 {chatRoom.isJoined ? (
                   <div 
-                    className={`glass-card backdrop-blur-xl border-t border-border/50 p-4 transition-colors ${
-                      dragActive ? 'bg-primary/10' : ''
+                    className={`border-t border-slate-700/50 bg-slate-800/95 backdrop-blur-xl p-3 sm:p-4 md:p-5 transition-all duration-300 ${
+                      dragActive ? 'bg-gradient-to-br from-purple-600/30 to-pink-600/30 scale-[1.01]' : ''
                     }`}
                     onDragEnter={handleDrag}
                     onDragLeave={handleDrag}
@@ -833,31 +845,31 @@ export default function ChatRoomDetailPage() {
                   >
                     {/* Selected Files Preview */}
                     {selectedFiles.length > 0 && (
-                      <div className="mb-4 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="text-sm font-medium">Selected Files ({selectedFiles.length})</span>
+                      <div className="mb-3 sm:mb-4 p-3 sm:p-4 bg-slate-700/50 rounded-xl border border-slate-600/50 shadow-lg">
+                        <div className="flex items-center justify-between mb-2 sm:mb-3">
+                          <span className="text-xs sm:text-sm font-bold text-white">Selected Files ({selectedFiles.length})</span>
                           <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => setSelectedFiles([])}
-                            className="h-6 w-6 p-0"
+                            className="h-6 w-6 sm:h-7 sm:w-7 p-0 hover:bg-red-600/20 hover:scale-110 transition-all"
                           >
-                            <X className="h-3 w-3" />
+                            <X className="h-3 w-3 sm:h-4 sm:w-4 text-red-400" />
                           </Button>
                         </div>
-                        <div className="flex flex-wrap gap-2">
+                        <div className="flex flex-wrap gap-2 sm:gap-3">
                           {selectedFiles.map((file, index) => (
-                            <div key={index} className="flex items-center gap-2 bg-white dark:bg-gray-700 px-2 py-1 rounded-md text-xs">
+                            <div key={index} className="flex items-center gap-1.5 sm:gap-2 bg-slate-800/80 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm shadow-md hover:shadow-lg transition-all duration-300 border border-slate-600/50">
                               {getFileIcon(file)}
-                              <span className="truncate max-w-32">{file.name}</span>
-                              <span className="text-muted-foreground">{formatFileSize(file.size)}</span>
+                              <span className="truncate max-w-20 sm:max-w-32 font-medium text-slate-200">{file.name}</span>
+                              <span className="text-slate-400 text-xs">{formatFileSize(file.size)}</span>
                               <Button
                                 variant="ghost"
                                 size="sm"
                                 onClick={() => removeFile(index)}
-                                className="h-4 w-4 p-0 hover:bg-red-100"
+                                className="h-4 w-4 sm:h-5 sm:w-5 p-0 hover:bg-red-600/20 hover:scale-110 transition-all"
                               >
-                                <X className="h-3 w-3" />
+                                <X className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-red-400" />
                               </Button>
                             </div>
                           ))}
@@ -865,7 +877,7 @@ export default function ChatRoomDetailPage() {
                       </div>
                     )}
 
-                    <div className="flex flex-col sm:flex-row gap-2">
+                    <div className="flex flex-col xs:flex-row gap-2 sm:gap-3">
                       <div className="flex-1 relative">
                         <Input
                           value={newMessage}
@@ -873,13 +885,13 @@ export default function ChatRoomDetailPage() {
                           onKeyPress={handleKeyPress}
                           placeholder={dragActive ? "Drop files here..." : "Type your message..."}
                           disabled={sending || uploading}
-                          className="pr-20 mobile-touch-target"
+                          className="pr-20 mobile-touch-target h-11 sm:h-12 border-slate-600 focus:border-purple-500 bg-slate-700/80 text-white placeholder:text-slate-400 backdrop-blur-sm shadow-md focus:shadow-lg transition-all duration-300"
                         />
                         {dragActive && (
-                          <div className="absolute inset-0 flex items-center justify-center bg-primary/10 rounded-md border-2 border-dashed border-primary">
+                          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-purple-600/30 to-pink-600/30 rounded-lg border-2 border-dashed border-purple-400 backdrop-blur-sm animate-pulse">
                             <div className="text-center">
-                              <Upload className="h-8 w-8 text-primary mx-auto mb-2" />
-                              <p className="text-sm text-primary font-medium">Drop files here</p>
+                              <Upload className="h-8 w-8 sm:h-10 sm:w-10 text-purple-300 mx-auto mb-2 animate-bounce" />
+                              <p className="text-sm sm:text-base text-purple-200 font-bold">Drop files here</p>
                             </div>
                           </div>
                         )}
@@ -894,15 +906,15 @@ export default function ChatRoomDetailPage() {
                         className="hidden"
                       />
                       
-                      <div className="flex gap-2">
+                      <div className="flex gap-2 sm:gap-3">
                         <Button
                           variant="outline"
                           size="sm"
                           onClick={() => fileInputRef.current?.click()}
                           disabled={sending || uploading}
-                          className="px-3 mobile-touch-target"
+                          className="px-3 sm:px-4 mobile-touch-target h-11 sm:h-12 bg-blue-600/20 border-blue-500/50 hover:bg-blue-600/30 hover:border-blue-500 hover:scale-110 transition-all duration-300 shadow-md hover:shadow-lg"
                         >
-                          <Upload className="h-4 w-4" />
+                          <Upload className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400" />
                         </Button>
                         
                         <Button 
@@ -910,24 +922,24 @@ export default function ChatRoomDetailPage() {
                           disabled={(!newMessage.trim() && selectedFiles.length === 0) || sending || uploading}
                           size="sm"
                           variant="premium"
-                          className="mobile-touch-target"
+                          className="mobile-touch-target h-11 sm:h-12 px-4 sm:px-6 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 text-white"
                         >
                         {uploading ? (
-                          <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                          <div className="h-4 w-4 sm:h-5 sm:w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
                         ) : (
-                          <Send className="h-4 w-4" />
+                          <Send className="h-4 w-4 sm:h-5 sm:w-5" />
                         )}
                         </Button>
                       </div>
                     </div>
                     
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mt-2 text-xs text-muted-foreground">
-                      <div className="flex items-center gap-2 sm:gap-4">
-                        <span>📷 Photos</span>
-                        <span>🎥 Videos</span>
-                        <span>📄 Files</span>
+                    <div className="flex flex-col xs:flex-row xs:items-center xs:justify-between gap-2 mt-2 text-xs sm:text-sm">
+                      <div className="flex items-center gap-2 sm:gap-3 md:gap-5">
+                        <span className="flex items-center gap-1 text-blue-400 font-medium">📷 <span className="hidden xs:inline">Photos</span></span>
+                        <span className="flex items-center gap-1 text-purple-400 font-medium">🎥 <span className="hidden xs:inline">Videos</span></span>
+                        <span className="flex items-center gap-1 text-pink-400 font-medium">📄 <span className="hidden xs:inline">Files</span></span>
                       </div>
-                      <span className="text-xs">Max 50MB per file</span>
+                      <span className="text-xs bg-slate-700/50 border border-slate-600/50 px-2 sm:px-3 py-1 rounded-full font-medium text-slate-300">Max 50MB</span>
                     </div>
                   </div>
                 ) : (
@@ -943,44 +955,44 @@ export default function ChatRoomDetailPage() {
 
           {/* Room Info Sidebar */}
           <div className="lg:col-span-1">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Room Info</CardTitle>
+            <Card className="bg-slate-800/95 backdrop-blur-xl shadow-2xl border-slate-700/50">
+              <CardHeader className="border-b border-slate-700/50 p-4 sm:p-6">
+                <CardTitle className="text-lg sm:text-xl font-bold text-white">Room Info</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <h4 className="font-medium mb-2">Created by</h4>
-                  <div className="flex items-center gap-2">
-                    <Avatar className="h-8 w-8">
-                      <AvatarFallback className="text-xs">
+              <CardContent className="space-y-4 sm:space-y-5 pt-4 sm:pt-6 p-4 sm:p-6">
+                <div className="bg-slate-700/50 p-3 sm:p-4 rounded-xl border border-slate-600/50">
+                  <h4 className="font-semibold mb-2 sm:mb-3 text-purple-400 text-sm sm:text-base">Created by</h4>
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <Avatar className="h-9 w-9 sm:h-10 sm:w-10 ring-2 ring-purple-500/50 shadow-lg">
+                      <AvatarFallback className="text-xs sm:text-sm bg-gradient-to-br from-purple-600 to-pink-600 text-white font-bold">
                         {chatRoom.creator.name.charAt(0).toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
-                    <div>
-                      <p className="text-sm font-medium">{chatRoom.creator.name}</p>
-                      <p className="text-xs text-muted-foreground">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-bold text-white truncate">{chatRoom.creator.name}</p>
+                      <p className="text-xs text-slate-400 font-mono">
                         {chatRoom.creator.address.slice(0, 6)}...{chatRoom.creator.address.slice(-4)}
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div>
-                  <h4 className="font-medium mb-2">Room Details</h4>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Type:</span>
-                      <Badge variant={chatRoom.type === 'public' ? 'default' : 'secondary'} className="text-xs">
+                <div className="bg-slate-700/50 p-3 sm:p-4 rounded-xl border border-slate-600/50">
+                  <h4 className="font-semibold mb-2 sm:mb-3 text-blue-400 text-sm sm:text-base">Room Details</h4>
+                  <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm">
+                    <div className="flex justify-between items-center">
+                      <span className="text-slate-400 font-medium">Type:</span>
+                      <Badge variant={chatRoom.type === 'public' ? 'default' : 'secondary'} className="text-xs bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white">
                         {chatRoom.type}
                       </Badge>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Participants:</span>
-                      <span>{chatRoom.participants}/{chatRoom.maxParticipants}</span>
+                    <div className="flex justify-between items-center">
+                      <span className="text-slate-400 font-medium">Participants:</span>
+                      <span className="font-bold text-blue-300">{chatRoom.participants}/{chatRoom.maxParticipants}</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Created:</span>
-                      <span>{new Date(chatRoom.createdAt).toLocaleDateString()}</span>
+                    <div className="flex justify-between items-center">
+                      <span className="text-slate-400 font-medium">Created:</span>
+                      <span className="font-bold text-purple-300">{new Date(chatRoom.createdAt).toLocaleDateString()}</span>
                     </div>
                   </div>
                 </div>
