@@ -1,0 +1,521 @@
+/**
+ * VASUKII MICROBLOG DESIGN SYSTEM
+ * Centralized design tokens and utilities for consistent UI/UX
+ * Version: 1.0.0
+ */
+
+@layer base {
+:root {
+  /* ============================================
+     COLOR SYSTEM - Mystical Dark Theme (Default)
+     ============================================ */
+  
+  /* Primary Brand Colors */
+  --primary: 270 65% 55%;           /* Royal Purple - Brighter for better visibility */
+  --primary-hover: 270 65% 50%;     /* Darker Purple */
+  --primary-light: 270 65% 65%;     /* Lighter Purple */
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 45 95% 60%;          /* Cosmic Gold - Brighter */
+  --secondary-hover: 45 95% 55%;
+  --secondary-foreground: 0 0% 0%;
+  
+  --tertiary: 180 60% 50%;          /* Deep Teal - Brighter */
+  --tertiary-hover: 180 60% 45%;
+  --tertiary-foreground: 0 0% 100%;
+  
+  /* Background Hierarchy - Dark */
+  --background: 240 10% 10%;        /* Slightly lighter for better contrast */
+  --background-elevated: 240 10% 12%;
+  --card: 240 10% 14%;              /* Card backgrounds */
+  --card-elevated: 240 10% 16%;     /* Elevated cards */
+  --card-foreground: 0 0% 98%;
+  
+  /* Popover */
+  --popover: 240 10% 14%;
+  --popover-foreground: 0 0% 98%;
+  
+  /* Foreground Colors - Dark */
+  --foreground: 0 0% 98%;           /* Primary text - High contrast */
+  --foreground-muted: 0 0% 75%;     /* Secondary text - Better visibility */
+  --foreground-subtle: 0 0% 60%;    /* Tertiary text - Improved contrast */
+  
+  /* Borders & Dividers - Dark */
+  --border: 240 10% 25%;            /* More visible borders */
+  --border-strong: 240 10% 35%;     /* Strong borders */
+  --border-subtle: 240 10% 20%;
+  
+  /* Status Colors */
+  --success: 150 65% 55%;           /* Brighter green */
+  --success-foreground: 0 0% 100%;
+  --warning: 45 95% 60%;            /* Brighter warning */
+  --warning-foreground: 0 0% 0%;
+  --error: 0 80% 65%;               /* Brighter red */
+  --error-foreground: 0 0% 100%;
+  --info: 220 95% 65%;              /* Brighter blue */
+  --info-foreground: 0 0% 100%;
+  
+  /* Interactive Elements - Dark */
+  --muted: 240 10% 20%;
+  --muted-foreground: 0 0% 75%;     /* Better text visibility */
+  --accent: 240 10% 18%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 80% 65%;
+  --destructive-foreground: 0 0% 100%;
+  
+  /* Input Elements - Dark */
+  --input: 240 10% 25%;             /* More visible input borders */
+  --ring: 270 65% 55%;    /* ============================================
+       SPACING SCALE
+       ============================================ */
+    --spacing-0: 0;
+    --spacing-1: 0.25rem;   /* 4px */
+    --spacing-2: 0.5rem;    /* 8px */
+    --spacing-3: 0.75rem;   /* 12px */
+    --spacing-4: 1rem;      /* 16px */
+    --spacing-5: 1.25rem;   /* 20px */
+    --spacing-6: 1.5rem;    /* 24px */
+    --spacing-8: 2rem;      /* 32px */
+    --spacing-10: 2.5rem;   /* 40px */
+    --spacing-12: 3rem;     /* 48px */
+    --spacing-16: 4rem;     /* 64px */
+    
+    /* ============================================
+       TYPOGRAPHY SCALE
+       ============================================ */
+    --font-size-xs: 0.75rem;      /* 12px */
+    --font-size-sm: 0.875rem;     /* 14px */
+    --font-size-base: 1rem;       /* 16px */
+    --font-size-lg: 1.125rem;     /* 18px */
+    --font-size-xl: 1.25rem;      /* 20px */
+    --font-size-2xl: 1.5rem;      /* 24px */
+    --font-size-3xl: 1.875rem;    /* 30px */
+    --font-size-4xl: 2.25rem;     /* 36px */
+    --font-size-5xl: 3rem;        /* 48px */
+    
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    
+    --line-height-tight: 1.25;
+    --line-height-snug: 1.375;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.625;
+    --line-height-loose: 2;
+    
+    /* ============================================
+       BORDER RADIUS
+       ============================================ */
+    --radius-sm: 0.25rem;   /* 4px */
+    --radius-md: 0.375rem;  /* 6px */
+    --radius-lg: 0.5rem;    /* 8px */
+    --radius-xl: 0.75rem;   /* 12px */
+    --radius-2xl: 1rem;     /* 16px */
+    --radius-3xl: 1.5rem;   /* 24px */
+    --radius-full: 9999px;
+    
+    --radius: var(--radius-lg); /* Default radius */
+    
+    /* ============================================
+       SHADOW SYSTEM
+       ============================================ */
+    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    
+    /* Colored Shadows */
+    --shadow-primary: 0 8px 16px -4px hsla(270, 65%, 50%, 0.3);
+    --shadow-secondary: 0 8px 16px -4px hsla(45, 95%, 55%, 0.3);
+    --shadow-success: 0 8px 16px -4px hsla(150, 60%, 50%, 0.3);
+    --shadow-error: 0 8px 16px -4px hsla(0, 75%, 60%, 0.3);
+    
+    /* ============================================
+       Z-INDEX SCALE
+       ============================================ */
+    --z-base: 0;
+    --z-dropdown: 10;
+    --z-sticky: 20;
+    --z-fixed: 30;
+    --z-modal-backdrop: 40;
+    --z-modal: 50;
+    --z-popover: 60;
+    --z-tooltip: 70;
+    
+    /* ============================================
+       TRANSITION DURATIONS
+       ============================================ */
+    --duration-fast: 150ms;
+    --duration-base: 200ms;
+    --duration-medium: 300ms;
+    --duration-slow: 400ms;
+    
+    /* ============================================
+       EASING FUNCTIONS
+       ============================================ */
+    --ease-linear: linear;
+    --ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  
+  /* Light Theme Overrides */
+  .light {
+    /* Primary Brand Colors - Light Mode (Softer, less saturated) */
+    --primary: 270 50% 50%;           /* Softer purple for light bg */
+    --primary-hover: 270 55% 45%;
+    --primary-light: 270 45% 60%;
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 45 70% 50%;          /* Softer gold */
+    --secondary-hover: 45 75% 45%;
+    --secondary-foreground: 0 0% 15%;
+    
+    --tertiary: 180 45% 45%;          /* Softer teal */
+    --tertiary-hover: 180 50% 40%;
+    --tertiary-foreground: 0 0% 100%;
+    
+    /* Background Hierarchy - Light (Subtle grays) */
+    --background: 0 0% 98%;           /* Soft off-white, less harsh */
+    --background-elevated: 0 0% 96%;
+    --card: 0 0% 100%;
+    --card-elevated: 0 0% 99%;
+    --card-foreground: 240 8% 15%;    /* Softer black */
+    
+    /* Popover - Light */
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 8% 15%;
+    
+    /* Foreground Colors - Light (Better readability) */
+    --foreground: 240 8% 15%;         /* Dark gray text, not pure black */
+    --foreground-muted: 240 6% 45%;   /* Medium gray - readable */
+    --foreground-subtle: 240 5% 55%;  /* Light gray - still visible */
+    
+    /* Borders & Dividers - Light (Softer) */
+    --border: 240 6% 90%;             /* Softer borders */
+    --border-strong: 240 8% 80%;      /* Still visible but softer */
+    --border-subtle: 240 4% 94%;
+    
+    /* Status Colors - Light Mode (Softer, less intense) */
+    --success: 150 50% 45%;           /* Softer green */
+    --success-foreground: 0 0% 100%;
+    --warning: 45 70% 50%;            /* Softer orange/yellow */
+    --warning-foreground: 0 0% 15%;
+    --error: 0 65% 55%;               /* Softer red */
+    --error-foreground: 0 0% 100%;
+    --info: 220 70% 55%;              /* Softer blue */
+    --info-foreground: 0 0% 100%;
+    
+    /* Interactive Elements - Light (Softer backgrounds) */
+    --muted: 240 6% 96%;              /* Subtle gray background */
+    --muted-foreground: 240 6% 35%;   /* Darker text for contrast */
+    --accent: 240 6% 94%;
+    --accent-foreground: 240 8% 15%;
+    --destructive: 0 65% 55%;
+    --destructive-foreground: 0 0% 100%;
+    
+    /* Input Elements - Light (Softer) */
+    --input: 240 6% 90%;              /* Softer input borders */
+    --ring: 270 50% 50%;
+    
+    /* Adjust shadows for light theme (Softer shadows) */
+    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+    --shadow-sm: 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    
+    /* Colored shadows for light theme (Much softer) */
+    --shadow-primary: 0 8px 16px -4px hsla(270, 50%, 50%, 0.15);
+    --shadow-secondary: 0 8px 16px -4px hsla(45, 70%, 50%, 0.15);
+    --shadow-success: 0 8px 16px -4px hsla(150, 50%, 45%, 0.15);
+    --shadow-error: 0 8px 16px -4px hsla(0, 65%, 55%, 0.15);
+  }
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+@layer utilities {
+  /* Spacing Utilities */
+  .space-y-standard > * + * {
+    margin-top: var(--spacing-4);
+  }
+  
+  .space-y-comfortable > * + * {
+    margin-top: var(--spacing-6);
+  }
+  
+  .space-y-relaxed > * + * {
+    margin-top: var(--spacing-8);
+  }
+  
+  /* Container Utilities */
+  .container-standard {
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--spacing-4);
+    padding-right: var(--spacing-4);
+  }
+  
+  @media (min-width: 640px) {
+    .container-standard {
+      padding-left: var(--spacing-6);
+      padding-right: var(--spacing-6);
+    }
+  }
+  
+  /* Text Utilities */
+  .text-gradient-primary {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .text-gradient-success {
+    background: linear-gradient(135deg, hsl(var(--success)), hsl(var(--info)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  /* Background Utilities */
+  .bg-gradient-primary {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+  }
+  
+  .bg-gradient-success {
+    background: linear-gradient(135deg, hsl(var(--success)), hsl(var(--info)));
+  }
+  
+  .bg-gradient-error {
+    background: linear-gradient(135deg, hsl(var(--error)), hsl(var(--warning)));
+  }
+  
+  /* Shadow Utilities */
+  .shadow-primary {
+    box-shadow: var(--shadow-primary);
+  }
+  
+  .shadow-secondary {
+    box-shadow: var(--shadow-secondary);
+  }
+  
+  .shadow-success {
+    box-shadow: var(--shadow-success);
+  }
+  
+  .shadow-error {
+    box-shadow: var(--shadow-error);
+  }
+  
+  /* Interactive States */
+  .interactive-scale {
+    transition: transform var(--duration-base) var(--ease-out);
+  }
+  
+  .interactive-scale:hover {
+    transform: scale(1.02);
+  }
+  
+  .interactive-scale:active {
+    transform: scale(0.98);
+  }
+  
+  .interactive-lift {
+    transition: transform var(--duration-base) var(--ease-out),
+                box-shadow var(--duration-base) var(--ease-out);
+  }
+  
+  .interactive-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  /* Glass Morphism */
+  .glass {
+    background: hsla(var(--background), 0.8);
+    backdrop-filter: blur(12px);
+    border: 1px solid hsl(var(--border));
+  }
+  
+  .glass-strong {
+    background: hsla(var(--background), 0.95);
+    backdrop-filter: blur(16px);
+    border: 1px solid hsl(var(--border-strong));
+  }
+  
+  /* Focus States */
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+  }
+  
+  .focus-ring-strong {
+    @apply focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary focus-visible:ring-offset-2;
+  }
+}
+
+/* ============================================
+   COMPONENT PATTERNS
+   ============================================ */
+
+@layer components {
+  /* Button Patterns */
+  .btn-base {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-2);
+    font-weight: var(--font-weight-medium);
+    border-radius: var(--radius-lg);
+    transition: all var(--duration-base) var(--ease-out);
+    @apply focus-ring;
+  }
+  
+  .btn-sm {
+    height: 2.25rem; /* 36px */
+    padding-left: var(--spacing-3);
+    padding-right: var(--spacing-3);
+    font-size: var(--font-size-sm);
+  }
+  
+  .btn-md {
+    height: 2.5rem; /* 40px */
+    padding-left: var(--spacing-4);
+    padding-right: var(--spacing-4);
+    font-size: var(--font-size-base);
+  }
+  
+  .btn-lg {
+    height: 2.75rem; /* 44px - Mobile friendly */
+    padding-left: var(--spacing-5);
+    padding-right: var(--spacing-5);
+    font-size: var(--font-size-base);
+  }
+  
+  .btn-xl {
+    height: 3rem; /* 48px */
+    padding-left: var(--spacing-6);
+    padding-right: var(--spacing-6);
+    font-size: var(--font-size-lg);
+  }
+  
+  /* Card Patterns */
+  .card-base {
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+  }
+  
+  .card-elevated {
+    background: hsl(var(--card-elevated));
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+    transition: all var(--duration-base) var(--ease-out);
+  }
+  
+  .card-elevated:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+  }
+  
+  .card-interactive {
+    @apply card-elevated cursor-pointer;
+  }
+  
+  .card-interactive:hover {
+    border-color: hsl(var(--primary));
+    box-shadow: var(--shadow-primary);
+  }
+  
+  /* Input Patterns */
+  .input-base {
+    height: 2.5rem; /* 40px */
+    padding-left: var(--spacing-3);
+    padding-right: var(--spacing-3);
+    background: hsl(var(--background));
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-sm);
+    transition: all var(--duration-fast) var(--ease-out);
+    @apply focus-ring;
+  }
+  
+  .input-base:hover {
+    border-color: hsl(var(--border-strong));
+  }
+  
+  .input-base:focus {
+    border-color: hsl(var(--primary));
+  }
+  
+  /* Badge Patterns */
+  .badge-base {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--spacing-1) var(--spacing-3);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    border-radius: var(--radius-full);
+    border: 1px solid transparent;
+  }
+  
+  .badge-primary {
+    @apply badge-base;
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+  }
+  
+  .badge-success {
+    @apply badge-base;
+    background: hsl(var(--success));
+    color: hsl(var(--success-foreground));
+  }
+  
+  .badge-warning {
+    @apply badge-base;
+    background: hsl(var(--warning));
+    color: hsl(var(--warning-foreground));
+  }
+  
+  .badge-error {
+    @apply badge-base;
+    background: hsl(var(--error));
+    color: hsl(var(--error-foreground));
+  }
+}
+
+/* ============================================
+   RESPONSIVE DESIGN TOKENS
+   ============================================ */
+
+@media (max-width: 639px) {
+  :root {
+    --spacing-base: var(--spacing-3);
+    --spacing-comfortable: var(--spacing-4);
+  }
+}
+
+@media (min-width: 640px) {
+  :root {
+    --spacing-base: var(--spacing-4);
+    --spacing-comfortable: var(--spacing-6);
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --spacing-base: var(--spacing-6);
+    --spacing-comfortable: var(--spacing-8);
+  }
+}

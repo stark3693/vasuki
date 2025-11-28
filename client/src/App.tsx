@@ -21,6 +21,10 @@ import { PredictionPollsPage } from "@/pages/prediction-polls";
 import RevolutionaryPage from "@/pages/revolutionary";
 import ChatRoomsPage from "@/pages/chat-rooms";
 import ChatRoomDetailPage from "@/pages/chat-room-detail";
+import HashtagPage from "@/pages/hashtag-page";
+import ReactionLeaderboard from "@/pages/reaction-leaderboard";
+import BookmarksPage from "@/pages/bookmarks-page";
+import NotificationsPage from "@/pages/notifications-page";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -73,6 +77,26 @@ function Router() {
           <Route path="/chat-rooms/:roomId">
             <WalletAuthGuard>
               <ChatRoomDetailPage />
+            </WalletAuthGuard>
+          </Route>
+          <Route path="/hashtag/:tag">
+            <WalletAuthGuard>
+              <HashtagPage />
+            </WalletAuthGuard>
+          </Route>
+          <Route path="/leaderboard/reactions">
+            <WalletAuthGuard>
+              <ReactionLeaderboard />
+            </WalletAuthGuard>
+          </Route>
+          <Route path="/bookmarks">
+            <WalletAuthGuard>
+              <BookmarksPage />
+            </WalletAuthGuard>
+          </Route>
+          <Route path="/notifications">
+            <WalletAuthGuard>
+              <NotificationsPage />
             </WalletAuthGuard>
           </Route>
           <Route component={NotFound} />

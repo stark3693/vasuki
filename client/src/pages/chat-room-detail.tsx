@@ -437,16 +437,13 @@ export default function ChatRoomDetailPage() {
   const renderMessage = (message: Message) => {
     const isOwn = message.isOwn;
     
-    // Debug logging for message rendering
-    console.log(`🎨 Rendering message ${message.id}: isOwn=${isOwn}, senderId=${message.senderId}, currentUserId=${user?.id}`);
-    
     return (
-      <div key={message.id} className={`flex ${isOwn ? 'justify-end' : 'justify-start'} mb-4 transition-all duration-300 ease-out`}>
-        <div className={`max-w-[70%] ${isOwn ? 'order-2' : 'order-1'}`}>
+      <div key={message.id} className={`flex ${isOwn ? 'justify-end' : 'justify-start'} group`}>
+        <div className={`max-w-[85%] sm:max-w-[75%] ${isOwn ? '' : ''}`}>
           {!isOwn && (
-            <div className="flex items-center gap-2 mb-1">
-              <Avatar className="h-6 w-6">
-                <AvatarFallback className="text-xs">
+            <div className="flex items-center gap-2 mb-1.5 ml-1">
+              <Avatar className="h-6 w-6 ring-2 ring-border">
+                <AvatarFallback className="text-xs bg-muted">
                   {message.senderName.charAt(0).toUpperCase()}
                 </AvatarFallback>
               </Avatar>
@@ -456,33 +453,15 @@ export default function ChatRoomDetailPage() {
             </div>
           )}
           
-          {isOwn && (
-            <div className="flex items-center gap-2 mb-1 justify-end">
-              <span className="text-xs font-medium text-blue-600 dark:text-blue-400">
-                You
-              </span>
-            </div>
-          )}
-          
           <div
-            className={`rounded-2xl p-4 shadow-sm relative premium-hover transition-all duration-300 ease-out ${
+            className={`rounded-2xl px-4 py-3 shadow-md transition-all ${
               isOwn
-                ? 'bg-gradient-to-r from-primary to-secondary text-primary-foreground ml-auto border-l-4 border-primary/50 shadow-lg'
-                : 'glass-card text-foreground mr-auto border-l-4 border-border/50'
+                ? 'bg-primary text-primary-foreground'
+                : 'bg-muted text-foreground'
             }`}
           >
-            {isOwn && (
-              <div className="absolute -top-1 -right-1 w-3 h-3 bg-tertiary rounded-full border-2 border-white shadow-sm" title="Your message"></div>
-            )}
-            
-            {/* Debug indicator */}
-            <div className={`absolute -top-1 -left-1 text-xs px-1 py-0.5 rounded ${
-              isOwn ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
-            }`}>
-              {isOwn ? 'YOU' : 'OTHER'}
-            </div>
             {message.messageType === 'text' && message.content && (
-              <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+              <p className="text-sm leading-relaxed break-words">{message.content}</p>
             )}
             
             {message.messageType === 'image' && message.mediaUrl && (
@@ -490,7 +469,7 @@ export default function ChatRoomDetailPage() {
                 <img 
                   src={message.mediaUrl} 
                   alt={message.mediaFilename || 'Image'}
-                  className="max-w-full h-auto rounded-2xl cursor-pointer hover:opacity-90 transition-opacity shadow-lg premium-hover"
+                  className="max-w-full h-auto rounded-lg cursor-pointer hover:opacity-90 transition-opacity"
                   onClick={() => window.open(message.mediaUrl, '_blank')}
                 />
                 {message.content && (
@@ -504,8 +483,7 @@ export default function ChatRoomDetailPage() {
                 <video 
                   src={message.mediaUrl}
                   controls
-                  className="max-w-full h-auto rounded-2xl shadow-lg premium-hover"
-                  poster={message.mediaUrl}
+                  className="max-w-full h-auto rounded-lg"
                 />
                 {message.content && (
                   <p className="text-sm">{message.content}</p>
@@ -515,8 +493,8 @@ export default function ChatRoomDetailPage() {
             
             {message.messageType === 'file' && message.mediaUrl && (
               <div className="space-y-2">
-                <div className="flex items-center gap-2 p-3 glass-card rounded-2xl premium-hover">
-                  <FileText className="h-5 w-5 text-primary" />
+                <div className="flex items-center gap-2 p-2 bg-background/50 rounded-lg">
+                  <FileText className="h-5 w-5" />
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium truncate">
                       {message.mediaFilename || 'File'}
@@ -529,9 +507,9 @@ export default function ChatRoomDetailPage() {
                   </div>
                   <Button
                     size="sm"
-                    variant="glass"
+                    variant="ghost"
                     onClick={() => window.open(message.mediaUrl, '_blank')}
-                    className="h-8 w-8 p-0"
+                    className="h-7 w-7 p-0"
                   >
                     <Download className="h-4 w-4" />
                   </Button>
@@ -542,10 +520,8 @@ export default function ChatRoomDetailPage() {
               </div>
             )}
             
-            <p className={`text-xs mt-2 ${
-              isOwn ? 'text-blue-100' : 'text-gray-500'
-            }`}>
-              {new Date(message.timestamp).toLocaleTimeString()}
+            <p className={`text-xs mt-1.5 opacity-70`}>
+              {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
             </p>
           </div>
         </div>
@@ -663,170 +639,145 @@ export default function ChatRoomDetailPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-6">
-        {/* Header */}
-        <div className="mb-6">
-          <Button 
-            onClick={() => window.history.back()} 
-            variant="glass" 
-            className="mb-3 sm:mb-4 hover:scale-105 transition-all duration-300 bg-slate-800/90 dark:bg-slate-900/90 hover:bg-slate-700/90 dark:hover:bg-slate-800/90 shadow-lg hover:shadow-xl backdrop-blur-xl border-slate-700 w-full sm:w-auto"
-          >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            <span className="hidden sm:inline">Back to Chat Rooms</span>
-            <span className="sm:hidden">Back</span>
-          </Button>
-          
-          <Card className="glass-card bg-slate-800/95 dark:bg-slate-900/95 backdrop-blur-xl shadow-2xl border-slate-700/50">
-            <CardHeader className="border-b border-slate-700/50 p-3 sm:p-6">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div className="flex items-center gap-2 sm:gap-3">
-                  <div className="p-2 sm:p-3 bg-gradient-to-br from-purple-600 to-pink-600 rounded-lg sm:rounded-xl shadow-lg hover:scale-110 transition-all duration-300 shrink-0">
-                    <MessageCircle className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <CardTitle className="text-lg sm:text-xl md:text-2xl flex items-center gap-2 text-white font-bold truncate">
-                      <span className="truncate">{chatRoom.name}</span>
-                      {hasNewMessages && (
-                        <div className="h-2 sm:h-2.5 w-2 sm:w-2.5 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full animate-pulse shadow-lg shadow-green-500/50 shrink-0" />
-                      )}
-                    </CardTitle>
-                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 mt-1 sm:mt-2">
-                      <Badge variant={chatRoom.type === 'public' ? 'default' : 'secondary'} className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 transition-all shadow-md text-white text-xs">
-                        {chatRoom.type === 'public' ? (
-                          <>
-                            <Globe className="h-3 w-3 mr-1" />
-                            <span className="hidden xs:inline">Public</span>
-                          </>
-                        ) : (
-                          <>
-                            <Lock className="h-3 w-3 mr-1" />
-                            <span className="hidden xs:inline">Private</span>
-                          </>
-                        )}
-                      </Badge>
-                      <div className="flex items-center gap-1.5 text-xs sm:text-sm bg-blue-600/20 px-2 sm:px-3 py-1 rounded-full border border-blue-500/30">
-                        <Users className="h-3 w-3 sm:h-4 sm:w-4 text-blue-400" />
-                        <span className="font-medium text-blue-300">{chatRoom.participants}/{chatRoom.maxParticipants}</span>
-                      </div>
-                      {encryptionEnabled && (
-                        <Badge variant="outline" className="text-green-400 border-green-500/50 bg-green-500/20 shadow-sm text-xs">
-                          <ShieldCheck className="h-3 w-3 mr-1" />
-                          <span className="hidden xs:inline">Encrypted</span>
-                        </Badge>
-                      )}
-                    </div>
-                  </div>
+      {/* Header */}
+      <div className="sticky top-0 z-50 backdrop-blur-md bg-gradient-to-r from-background via-primary/5 to-background border-b border-primary/20 shadow-lg">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-4 py-4">
+            <Button 
+              onClick={() => window.history.back()} 
+              variant="ghost" 
+              size="icon"
+            >
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
+
+            
+            {/* Room Header Info */}
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 bg-gradient-to-br from-primary to-primary/50 rounded-xl shadow-lg">
+                  <MessageCircle className="h-6 w-6 text-primary-foreground" />
                 </div>
-                <div className="flex flex-col xs:flex-row items-stretch xs:items-center gap-2 sm:gap-3 w-full sm:w-auto">
-                  {/* Connection Status */}
-                  <div className="flex items-center gap-2 sm:gap-3">
-                    <div className="flex items-center gap-1.5 sm:gap-2 bg-green-600/20 border border-green-500/30 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full">
-                      {isOnline ? (
-                        <Wifi className="h-3 w-3 sm:h-4 sm:w-4 text-green-400 animate-pulse" />
-                      ) : (
-                        <WifiOff className="h-3 w-3 sm:h-4 sm:w-4 text-red-400" />
-                      )}
-                      <span className="text-xs sm:text-sm font-medium text-green-300">
-                        {isOnline ? 'Live' : 'Offline'}
-                      </span>
-                    </div>
-                    <Button
-                      onClick={() => loadMessages(false)}
-                      size="sm"
-                      variant="outline"
-                      className="text-xs mobile-touch-target hover:scale-110 transition-all duration-300 bg-blue-600/20 border-blue-500/30 hover:bg-blue-600/30 text-blue-300"
-                    >
-                      🔄 <span className="hidden sm:inline ml-1">Refresh</span>
-                    </Button>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2">
+                    <h1 className="text-xl font-bold truncate bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">{chatRoom.name}</h1>
+                    {hasNewMessages && (
+                      <div className="relative">
+                        <div className="h-2.5 w-2.5 bg-success rounded-full animate-pulse" />
+                        <div className="absolute inset-0 h-2.5 w-2.5 bg-success rounded-full animate-ping" />
+                      </div>
+                    )}
                   </div>
-                  {chatRoom.isJoined ? (
-                    <Button onClick={leaveRoom} variant="outline" size="sm" className="mobile-touch-target border-red-500/50 text-red-400 hover:bg-red-600/20 hover:border-red-500 hover:scale-105 transition-all duration-300 shadow-md">
-                      Leave Room
-                    </Button>
-                  ) : (
-                    <Button onClick={joinRoom} size="sm" className="mobile-touch-target bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 text-white">
-                      Join Room
-                    </Button>
-                  )}
+                  <div className="flex items-center gap-2 text-xs">
+                    <span className="flex items-center gap-1 px-2 py-1 bg-primary/10 rounded-md text-primary font-medium">
+                      {chatRoom.type === 'public' ? <Globe className="h-3 w-3" /> : <Lock className="h-3 w-3" />}
+                      {chatRoom.type}
+                    </span>
+                    <span className="flex items-center gap-1 px-2 py-1 bg-accent rounded-md font-medium">
+                      <Users className="h-3 w-3" />
+                      {chatRoom.participants}/{chatRoom.maxParticipants}
+                    </span>
+                    {encryptionEnabled && (
+                      <span className="flex items-center gap-1 px-2 py-1 bg-success/10 rounded-md text-success font-medium">
+                        <ShieldCheck className="h-3 w-3" />
+                        Secure
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
-              {chatRoom.description && (
-                <p className="text-muted-foreground text-sm mt-2">{chatRoom.description}</p>
-              )}
-            </CardHeader>
-          </Card>
-        </div>
+            </div>
 
-        {/* Chat Interface */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            {/* Action Buttons */}
+            <div className="flex items-center gap-2 shrink-0">
+              {chatRoom.isJoined ? (
+                <Button onClick={leaveRoom} variant="outline" size="sm" className="hover:bg-destructive hover:text-destructive-foreground transition-all">
+                  <ArrowLeft className="h-3 w-3 mr-1" />
+                  Leave
+                </Button>
+              ) : (
+                <Button onClick={joinRoom} size="sm" className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg hover:shadow-xl transition-all">
+                  Join Room
+                </Button>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Chat Container */}
+      <div className="container mx-auto px-3 sm:px-4 lg:px-6 py-4 lg:py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-6">
           {/* Messages Area */}
           <div className="lg:col-span-3">
-            <Card className="h-[500px] sm:h-[600px] flex flex-col bg-slate-900/95 backdrop-blur-xl shadow-2xl border-slate-700/50">
-              <CardContent className="flex-1 flex flex-col p-0">
-                {/* Messages */}
+            <Card className="h-[calc(100vh-200px)] flex flex-col shadow-xl border-2 border-primary/10 overflow-hidden">
+              <CardContent className="flex-1 flex flex-col p-0 overflow-hidden bg-gradient-to-b from-background via-background to-primary/5">
+                {/* Messages Container */}
                 <div 
                   ref={messagesContainerRef}
-                  className="flex-1 overflow-y-auto p-3 sm:p-4 md:p-6 relative space-y-2 sm:space-y-3"
+                  className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-3 sm:space-y-4 scroll-smooth"
                   onScroll={handleScroll}
                 >
                   {messages.length === 0 ? (
-                    <div className="flex items-center justify-center h-full px-4">
-                      <div className="text-center max-w-md">
-                        <div className="relative mb-6 sm:mb-8">
-                          <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 rounded-full blur-2xl opacity-30 animate-pulse"></div>
-                          <div className="relative bg-gradient-to-br from-purple-600/20 to-pink-600/20 p-6 sm:p-8 rounded-full shadow-xl border border-purple-500/30">
-                            <MessageCircle className="relative h-16 w-16 sm:h-20 sm:w-20 text-purple-400 mx-auto" />
+                    <div className="flex items-center justify-center h-full">
+                      <div className="text-center max-w-md space-y-4 p-8">
+                        <div className="relative inline-block">
+                          <div className="absolute inset-0 bg-primary/20 rounded-full blur-2xl" />
+                          <div className="relative p-6 bg-gradient-to-br from-primary/20 to-primary/5 rounded-full">
+                            <MessageCircle className="h-16 w-16 text-primary" />
                           </div>
                         </div>
-                        <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-3 text-white">Welcome to {chatRoom?.name}! 🚀</h3>
-                        <p className="text-sm sm:text-base text-slate-400 mb-4 sm:mb-6">Start the conversation by sending a message</p>
-                        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-xs sm:text-sm bg-slate-800/50 p-3 sm:p-4 rounded-xl border border-slate-700/50">
-                          <div className="flex items-center gap-1 text-blue-400">
-                            <Image className="h-4 w-4 sm:h-5 sm:w-5" />
+                        <div className="space-y-2">
+                          <h3 className="text-2xl font-bold">Welcome to {chatRoom?.name}! 🎉</h3>
+                          <p className="text-muted-foreground">Be the first to start the conversation</p>
+                        </div>
+                        <div className="flex items-center justify-center gap-4 pt-4">
+                          <div className="flex flex-col items-center gap-1 text-xs">
+                            <div className="p-2 bg-primary/10 rounded-lg">
+                              <Image className="h-5 w-5 text-primary" />
+                            </div>
                             <span className="font-medium">Photos</span>
                           </div>
-                          <div className="flex items-center gap-1 text-purple-400">
-                            <Video className="h-4 w-4 sm:h-5 sm:w-5" />
+                          <div className="flex flex-col items-center gap-1 text-xs">
+                            <div className="p-2 bg-primary/10 rounded-lg">
+                              <Video className="h-5 w-5 text-primary" />
+                            </div>
                             <span className="font-medium">Videos</span>
                           </div>
-                          <div className="flex items-center gap-1 text-pink-400">
-                            <FileText className="h-4 w-4 sm:h-5 sm:w-5" />
+                          <div className="flex flex-col items-center gap-1 text-xs">
+                            <div className="p-2 bg-primary/10 rounded-lg">
+                              <FileText className="h-5 w-5 text-primary" />
+                            </div>
                             <span className="font-medium">Files</span>
                           </div>
                         </div>
                       </div>
                     </div>
                   ) : (
-                    <div className="space-y-3">
-                      {messages.map(renderMessage)}
-                    </div>
+                    messages.map(renderMessage)
                   )}
                   <div ref={messagesEndRef} />
                   
                   {/* Scroll to bottom button */}
                   {showScrollButton && (
-                    <div className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 animate-bounce">
+                    <div className="sticky bottom-4 flex justify-center pointer-events-none">
                       <Button
                         onClick={scrollToBottom}
                         size="sm"
-                        variant="premium"
-                        className="rounded-full shadow-2xl hover:shadow-3xl bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 hover:scale-110 transition-all duration-300 text-white text-xs sm:text-sm"
+                        className="pointer-events-auto shadow-lg bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground animate-bounce hover:animate-none"
                       >
-                        <MessageCircle className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
-                        <span className="hidden xs:inline">New messages</span>
-                        <span className="xs:hidden">New</span>
+                        <MessageCircle className="h-4 w-4 mr-1" />
+                        New messages
                       </Button>
                     </div>
                   )}
                   
                   {/* Retry indicator */}
                   {isRetrying && (
-                    <div className="absolute top-4 right-4">
-                      <div className="bg-yellow-100 dark:bg-yellow-900 border border-yellow-300 dark:border-yellow-700 rounded-lg p-3 flex items-center gap-2">
-                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-yellow-600"></div>
-                        <span className="text-sm text-yellow-800 dark:text-yellow-200">
-                          Retrying connection... ({retryCount}/3)
-                        </span>
+                    <div className="sticky top-4 flex justify-center">
+                      <div className="bg-warning/10 border border-warning rounded-lg px-3 py-2 flex items-center gap-2 text-sm">
+                        <div className="animate-spin rounded-full h-4 w-4 border-2 border-warning border-t-transparent"></div>
+                        <span>Retrying... ({retryCount}/3)</span>
                       </div>
                     </div>
                   )}
@@ -835,8 +786,8 @@ export default function ChatRoomDetailPage() {
                 {/* Message Input */}
                 {chatRoom.isJoined ? (
                   <div 
-                    className={`border-t border-slate-700/50 bg-slate-800/95 backdrop-blur-xl p-3 sm:p-4 md:p-5 transition-all duration-300 ${
-                      dragActive ? 'bg-gradient-to-br from-purple-600/30 to-pink-600/30 scale-[1.01]' : ''
+                    className={`border-t border-primary/20 p-4 bg-gradient-to-r from-background via-primary/5 to-background transition-all ${
+                      dragActive ? 'bg-primary/10 border-primary/50' : ''
                     }`}
                     onDragEnter={handleDrag}
                     onDragLeave={handleDrag}
@@ -845,31 +796,34 @@ export default function ChatRoomDetailPage() {
                   >
                     {/* Selected Files Preview */}
                     {selectedFiles.length > 0 && (
-                      <div className="mb-3 sm:mb-4 p-3 sm:p-4 bg-slate-700/50 rounded-xl border border-slate-600/50 shadow-lg">
-                        <div className="flex items-center justify-between mb-2 sm:mb-3">
-                          <span className="text-xs sm:text-sm font-bold text-white">Selected Files ({selectedFiles.length})</span>
+                      <div className="mb-3 p-3 bg-gradient-to-r from-primary/10 to-primary/5 rounded-lg border border-primary/20 shadow-sm">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-sm font-semibold flex items-center gap-2">
+                            <Upload className="h-4 w-4 text-primary" />
+                            {selectedFiles.length} file{selectedFiles.length > 1 ? 's' : ''} selected
+                          </span>
                           <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => setSelectedFiles([])}
-                            className="h-6 w-6 sm:h-7 sm:w-7 p-0 hover:bg-red-600/20 hover:scale-110 transition-all"
+                            className="h-6 w-6 p-0"
                           >
-                            <X className="h-3 w-3 sm:h-4 sm:w-4 text-red-400" />
+                            <X className="h-4 w-4" />
                           </Button>
                         </div>
-                        <div className="flex flex-wrap gap-2 sm:gap-3">
+                        <div className="flex flex-wrap gap-2">
                           {selectedFiles.map((file, index) => (
-                            <div key={index} className="flex items-center gap-1.5 sm:gap-2 bg-slate-800/80 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm shadow-md hover:shadow-lg transition-all duration-300 border border-slate-600/50">
+                            <div key={index} className="flex items-center gap-2 bg-background px-2 py-1 rounded-md text-xs border">
                               {getFileIcon(file)}
-                              <span className="truncate max-w-20 sm:max-w-32 font-medium text-slate-200">{file.name}</span>
-                              <span className="text-slate-400 text-xs">{formatFileSize(file.size)}</span>
+                              <span className="truncate max-w-32">{file.name}</span>
+                              <span className="text-muted-foreground">{formatFileSize(file.size)}</span>
                               <Button
                                 variant="ghost"
                                 size="sm"
                                 onClick={() => removeFile(index)}
-                                className="h-4 w-4 sm:h-5 sm:w-5 p-0 hover:bg-red-600/20 hover:scale-110 transition-all"
+                                className="h-4 w-4 p-0"
                               >
-                                <X className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-red-400" />
+                                <X className="h-3 w-3" />
                               </Button>
                             </div>
                           ))}
@@ -877,21 +831,21 @@ export default function ChatRoomDetailPage() {
                       </div>
                     )}
 
-                    <div className="flex flex-col xs:flex-row gap-2 sm:gap-3">
+                    <div className="flex gap-2">
                       <div className="flex-1 relative">
                         <Input
                           value={newMessage}
                           onChange={(e) => setNewMessage(e.target.value)}
                           onKeyPress={handleKeyPress}
-                          placeholder={dragActive ? "Drop files here..." : "Type your message..."}
+                          placeholder={dragActive ? "Drop files here..." : "Type a message..."}
                           disabled={sending || uploading}
-                          className="pr-20 mobile-touch-target h-11 sm:h-12 border-slate-600 focus:border-purple-500 bg-slate-700/80 text-white placeholder:text-slate-400 backdrop-blur-sm shadow-md focus:shadow-lg transition-all duration-300"
+                          className="pr-10"
                         />
                         {dragActive && (
-                          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-purple-600/30 to-pink-600/30 rounded-lg border-2 border-dashed border-purple-400 backdrop-blur-sm animate-pulse">
+                          <div className="absolute inset-0 flex items-center justify-center bg-primary/10 rounded-lg border-2 border-dashed border-primary">
                             <div className="text-center">
-                              <Upload className="h-8 w-8 sm:h-10 sm:w-10 text-purple-300 mx-auto mb-2 animate-bounce" />
-                              <p className="text-sm sm:text-base text-purple-200 font-bold">Drop files here</p>
+                              <Upload className="h-8 w-8 text-primary mx-auto mb-1" />
+                              <p className="text-sm font-medium">Drop files here</p>
                             </div>
                           </div>
                         )}
@@ -906,45 +860,42 @@ export default function ChatRoomDetailPage() {
                         className="hidden"
                       />
                       
-                      <div className="flex gap-2 sm:gap-3">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => fileInputRef.current?.click()}
-                          disabled={sending || uploading}
-                          className="px-3 sm:px-4 mobile-touch-target h-11 sm:h-12 bg-blue-600/20 border-blue-500/50 hover:bg-blue-600/30 hover:border-blue-500 hover:scale-110 transition-all duration-300 shadow-md hover:shadow-lg"
-                        >
-                          <Upload className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400" />
-                        </Button>
-                        
-                        <Button 
-                          onClick={sendMessage} 
-                          disabled={(!newMessage.trim() && selectedFiles.length === 0) || sending || uploading}
-                          size="sm"
-                          variant="premium"
-                          className="mobile-touch-target h-11 sm:h-12 px-4 sm:px-6 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 text-white"
-                        >
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={() => fileInputRef.current?.click()}
+                        disabled={sending || uploading}
+                        title="Attach files"
+                      >
+                        <Upload className="h-4 w-4" />
+                      </Button>
+                      
+                      <Button 
+                        onClick={sendMessage} 
+                        disabled={(!newMessage.trim() && selectedFiles.length === 0) || sending || uploading}
+                        size="icon"
+                        className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg hover:shadow-xl hover:scale-105 transition-all"
+                      >
                         {uploading ? (
-                          <div className="h-4 w-4 sm:h-5 sm:w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                          <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary-foreground border-t-transparent" />
                         ) : (
-                          <Send className="h-4 w-4 sm:h-5 sm:w-5" />
+                          <Send className="h-4 w-4" />
                         )}
-                        </Button>
-                      </div>
+                      </Button>
                     </div>
                     
-                    <div className="flex flex-col xs:flex-row xs:items-center xs:justify-between gap-2 mt-2 text-xs sm:text-sm">
-                      <div className="flex items-center gap-2 sm:gap-3 md:gap-5">
-                        <span className="flex items-center gap-1 text-blue-400 font-medium">📷 <span className="hidden xs:inline">Photos</span></span>
-                        <span className="flex items-center gap-1 text-purple-400 font-medium">🎥 <span className="hidden xs:inline">Videos</span></span>
-                        <span className="flex items-center gap-1 text-pink-400 font-medium">📄 <span className="hidden xs:inline">Files</span></span>
+                    <div className="flex items-center justify-between mt-2 text-xs text-muted-foreground">
+                      <div className="flex items-center gap-3">
+                        <span>📷 Images</span>
+                        <span>🎥 Videos</span>
+                        <span>📄 Files</span>
                       </div>
-                      <span className="text-xs bg-slate-700/50 border border-slate-600/50 px-2 sm:px-3 py-1 rounded-full font-medium text-slate-300">Max 50MB</span>
+                      <span>Max 50MB</span>
                     </div>
                   </div>
                 ) : (
                   <div className="border-t p-4 text-center">
-                    <p className="text-muted-foreground text-sm">
+                    <p className="text-sm text-muted-foreground">
                       Join the room to start chatting
                     </p>
                   </div>
@@ -955,44 +906,49 @@ export default function ChatRoomDetailPage() {
 
           {/* Room Info Sidebar */}
           <div className="lg:col-span-1">
-            <Card className="bg-slate-800/95 backdrop-blur-xl shadow-2xl border-slate-700/50">
-              <CardHeader className="border-b border-slate-700/50 p-4 sm:p-6">
-                <CardTitle className="text-lg sm:text-xl font-bold text-white">Room Info</CardTitle>
+            <Card className="shadow-xl border-2 border-primary/10 overflow-hidden">
+              <CardHeader className="bg-gradient-to-r from-primary/10 to-primary/5 border-b border-primary/20">
+                <CardTitle className="flex items-center gap-2">
+                  <div className="p-1.5 bg-primary/20 rounded-lg">
+                    <MessageCircle className="h-4 w-4 text-primary" />
+                  </div>
+                  Room Info
+                </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4 sm:space-y-5 pt-4 sm:pt-6 p-4 sm:p-6">
-                <div className="bg-slate-700/50 p-3 sm:p-4 rounded-xl border border-slate-600/50">
-                  <h4 className="font-semibold mb-2 sm:mb-3 text-purple-400 text-sm sm:text-base">Created by</h4>
-                  <div className="flex items-center gap-2 sm:gap-3">
-                    <Avatar className="h-9 w-9 sm:h-10 sm:w-10 ring-2 ring-purple-500/50 shadow-lg">
-                      <AvatarFallback className="text-xs sm:text-sm bg-gradient-to-br from-purple-600 to-pink-600 text-white font-bold">
+              <CardContent className="space-y-4 pt-4">
+                <div className="space-y-2 p-3 bg-gradient-to-br from-primary/5 to-transparent rounded-lg border border-primary/10">
+                  <h4 className="text-xs font-semibold text-primary uppercase tracking-wide">Created by</h4>
+                  <div className="flex items-center gap-2">
+                    <Avatar className="h-9 w-9 ring-2 ring-primary/20">
+                      <AvatarFallback className="bg-gradient-to-br from-primary to-primary/50 text-primary-foreground font-bold">
                         {chatRoom.creator.name.charAt(0).toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm font-bold text-white truncate">{chatRoom.creator.name}</p>
-                      <p className="text-xs text-slate-400 font-mono">
+                      <p className="text-sm font-medium truncate">{chatRoom.creator.name}</p>
+                      <p className="text-xs text-muted-foreground font-mono">
                         {chatRoom.creator.address.slice(0, 6)}...{chatRoom.creator.address.slice(-4)}
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-slate-700/50 p-3 sm:p-4 rounded-xl border border-slate-600/50">
-                  <h4 className="font-semibold mb-2 sm:mb-3 text-blue-400 text-sm sm:text-base">Room Details</h4>
-                  <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm">
+                <div className="space-y-2 p-3 bg-gradient-to-br from-accent/50 to-transparent rounded-lg border border-border">
+                  <h4 className="text-xs font-semibold text-primary uppercase tracking-wide">Details</h4>
+                  <div className="space-y-2.5 text-sm">
                     <div className="flex justify-between items-center">
-                      <span className="text-slate-400 font-medium">Type:</span>
-                      <Badge variant={chatRoom.type === 'public' ? 'default' : 'secondary'} className="text-xs bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white">
+                      <span className="text-muted-foreground">Type:</span>
+                      <Badge variant={chatRoom.type === 'public' ? 'default' : 'secondary'}>
                         {chatRoom.type}
                       </Badge>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-slate-400 font-medium">Participants:</span>
-                      <span className="font-bold text-blue-300">{chatRoom.participants}/{chatRoom.maxParticipants}</span>
+                      <span className="text-muted-foreground">Participants:</span>
+                      <span className="font-medium">{chatRoom.participants}/{chatRoom.maxParticipants}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-slate-400 font-medium">Created:</span>
-                      <span className="font-bold text-purple-300">{new Date(chatRoom.createdAt).toLocaleDateString()}</span>
+                      <span className="text-muted-foreground">Created:</span>
+                      <span className="font-medium">{new Date(chatRoom.createdAt).toLocaleDateString()}</span>
                     </div>
                   </div>
                 </div>

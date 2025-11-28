@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
 @import './styles/logo-animations.css';
 @import './styles/vasukii-logo-animations.css';
+@import './styles/design-system.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -530,113 +531,7 @@
   animation: slide-up 1s ease-out 1s both;
 }
 
-:root {
-  /* Mystical Dark Theme - Deep cosmic background */
-  --background: hsl(240, 10%, 6%);
-  --foreground: hsl(0, 0%, 98%);
-  --card: hsl(240, 10%, 12%);
-  --card-foreground: hsl(0, 0%, 98%);
-  --popover: hsl(240, 10%, 12%);
-  --popover-foreground: hsl(0, 0%, 98%);
-  
-  /* Mystical Royal Purple - Primary brand color (Vasukii wisdom) */
-  --primary: hsl(270, 65%, 50%);
-  --primary-foreground: hsl(0, 0%, 98%);
-  
-  /* Cosmic Gold - Secondary (premium, success) */
-  --secondary: hsl(45, 95%, 55%);
-  --secondary-foreground: hsl(0, 0%, 0%);
-  
-  /* Deep Teal - Tertiary (trust, technology) */
-  --tertiary: hsl(180, 55%, 45%);
-  --tertiary-foreground: hsl(0, 0%, 98%);
-  
-  /* Enhanced Mystical Palette */
-  --muted: hsl(240, 10%, 18%);
-  --muted-foreground: hsl(0, 0%, 70%);
-  --accent: hsl(240, 10%, 15%);
-  --accent-foreground: hsl(0, 0%, 98%);
-  
-  /* Alert & Action Colors */
-  --destructive: hsl(0, 75%, 60%);
-  --destructive-foreground: hsl(0, 0%, 98%);
-  
-  /* Success & Growth - Emerald */
-  --success: hsl(150, 60%, 50%);
-  --success-foreground: hsl(0, 0%, 98%);
-  
-  /* Warning & Attention - Electric Blue */
-  --warning: hsl(220, 90%, 60%);
-  --warning-foreground: hsl(0, 0%, 98%);
-  
-  /* UI Elements with mystical definition */
-  --border: hsl(240, 10%, 20%);
-  --input: hsl(240, 10%, 20%);
-  --ring: hsl(270, 65%, 50%);
-  --radius: 0.5rem;
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', Menlo, monospace;
-  
-  /* Professional Spacing Scale */
-  --spacing-xs: 0.25rem;   /* 4px */
-  --spacing-sm: 0.5rem;    /* 8px */
-  --spacing-md: 0.75rem;   /* 12px */
-  --spacing-lg: 1rem;      /* 16px */
-  --spacing-xl: 1.5rem;    /* 24px */
-  --spacing-2xl: 2rem;     /* 32px */
-  --spacing-3xl: 3rem;     /* 48px */
-  
-  /* Shadow System */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-.light {
-  /* Mystical Light Theme - Clean cosmic aesthetic */
-  --background: hsl(0, 0%, 100%);
-  --foreground: hsl(240, 10%, 15%);
-  --card: hsl(0, 0%, 100%);
-  --card-foreground: hsl(240, 10%, 15%);
-  --popover: hsl(0, 0%, 100%);
-  --popover-foreground: hsl(240, 10%, 15%);
-  
-  /* Mystical Royal Purple - Primary brand color */
-  --primary: hsl(270, 65%, 45%);
-  --primary-foreground: hsl(0, 0%, 98%);
-  
-  /* Cosmic Gold - Secondary */
-  --secondary: hsl(45, 95%, 50%);
-  --secondary-foreground: hsl(0, 0%, 0%);
-  
-  /* Deep Teal - Tertiary */
-  --tertiary: hsl(180, 55%, 40%);
-  --tertiary-foreground: hsl(0, 0%, 98%);
-  
-  /* Enhanced Mystical Light Palette */
-  --muted: hsl(240, 10%, 96%);
-  --muted-foreground: hsl(240, 10%, 50%);
-  --accent: hsl(240, 10%, 98%);
-  --accent-foreground: hsl(240, 10%, 15%);
-  
-  /* Alert & Action */
-  --destructive: hsl(0, 75%, 55%);
-  --destructive-foreground: hsl(0, 0%, 98%);
-  
-  /* Success & Growth - Emerald */
-  --success: hsl(150, 60%, 45%);
-  --success-foreground: hsl(0, 0%, 98%);
-  
-  /* Warning & Attention - Electric Blue */
-  --warning: hsl(220, 90%, 55%);
-  --warning-foreground: hsl(0, 0%, 98%);
-  
-  /* UI Elements with mystical contrast */
-  --border: hsl(240, 10%, 88%);
-  --input: hsl(240, 10%, 88%);
-  --ring: hsl(270, 65%, 45%);
-}
+/* CSS Variables are now defined in design-system.css */
 
 @layer base {
   * {

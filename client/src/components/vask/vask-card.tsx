@@ -4,12 +4,15 @@ import { useLocation } from "wouter";
 import { apiRequest } from "@/lib/queryClient";
 import { useEncryption } from "@/hooks/use-encryption";
 import { decryptTextContent } from "@/lib/encryption";
+import { LinkifyContent } from "@/lib/linkify-content";
 import { Button } from "@/components/ui/button";
-import { Heart, MessageCircle, Share, MoreHorizontal, UserPlus, UserMinus, Trash2, Image, Video, FileText, Download } from "lucide-react";
+import { Heart, MessageCircle, Share, MoreHorizontal, UserPlus, UserMinus, Trash2, Image, Video, FileText, Download, Bookmark } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import CommentSection from "./comment-section";
 import RevolutionaryVaskCard from "./revolutionary-vask-card";
+import { ReactionPicker } from "@/components/reaction-picker";
+import { ReactionDisplay } from "@/components/reaction-display";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -55,6 +58,7 @@ const formatFileSize = (bytes: number) => {
 
 export default function VaskCard({ vask, currentUser }: VaskCardProps) {
   const [showComments, setShowComments] = useState(false);
+  const [showReactionPicker, setShowReactionPicker] = useState(false);
   const [isFollowing, setIsFollowing] = useState(vask.author.isFollowing || false);
   const [, setLocation] = useLocation();
   const { decryptText, isDataEncrypted } = useEncryption();
@@ -209,12 +213,125 @@ export default function VaskCard({ vask, currentUser }: VaskCardProps) {
     }
   });
 
+  const reactionMutation = useMutation({
+    mutationFn: async ({ emoji, isPremium }: { emoji: string; isPremium: boolean }) => {
+      // TODO: Add VSK token balance check and deduction for premium reactions
+      if (isPremium) {
+        // Check if user has enough VSK tokens (10 VSK required)
+        // const userBalance = await apiRequest('GET', `/api/users/${currentUser.id}/balance`);
+        // if (userBalance < 10) {
+        //   throw new Error('Insufficient VSK tokens');
+        // }
+        console.log('Premium reaction - 10 VSK will be deducted');
+      }
+      
+      return await apiRequest('POST', `/api/vasks/${vask.id}/react`, { 
+        userId: currentUser.id,
+        emoji,
+        isPremium
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/vasks'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/users', currentUser.id, 'vasks'] });
+      setShowReactionPicker(false);
+      toast({
+        title: "Reaction Added",
+        description: "Your reaction has been added successfully.",
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Reaction Failed",
+        description: error.message || "Failed to add reaction. Please try again.",
+        variant: "destructive",
+      });
+    }
+  });
+
+  const removeReactionMutation = useMutation({
+    mutationFn: async () => {
+      return await apiRequest('DELETE', `/api/vasks/${vask.id}/react`, { 
+        userId: currentUser.id
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/vasks'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/users', currentUser.id, 'vasks'] });
+      toast({
+        title: "Reaction Removed",
+        description: "Your reaction has been removed.",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Action Failed",
+        description: "Failed to remove reaction. Please try again.",
+        variant: "destructive",
+      });
+    }
+  });
+
   const handleLike = () => {
     likeMutation.mutate({ vaskId: vask.id, isLiked: vask.isLiked });
   };
 
   const handleFollow = () => {
     followMutation.mutate({ authorId: vask.authorId, isFollowing: isFollowing });
+  };
+
+  const [isBookmarked, setIsBookmarked] = useState(false);
+
+  // Check bookmark status on mount
+  useEffect(() => {
+    const checkBookmarkStatus = async () => {
+      try {
+        const response = await fetch(`/api/bookmarks/${vask.id}/status?userId=${currentUser.id}`);
+        const data = await response.json();
+        setIsBookmarked(data.isBookmarked);
+      } catch (error) {
+        console.error('Failed to check bookmark status:', error);
+      }
+    };
+    checkBookmarkStatus();
+  }, [vask.id, currentUser.id]);
+
+  const bookmarkMutation = useMutation({
+    mutationFn: async () => {
+      if (isBookmarked) {
+        return await apiRequest('DELETE', `/api/bookmarks/${vask.id}`, { userId: currentUser.id });
+      } else {
+        return await apiRequest('POST', `/api/bookmarks/${vask.id}`, { userId: currentUser.id });
+      }
+    },
+    onSuccess: () => {
+      setIsBookmarked(!isBookmarked);
+      toast({
+        title: isBookmarked ? "Bookmark Removed" : "Bookmark Added",
+        description: isBookmarked ? "Post removed from bookmarks." : "Post saved to bookmarks.",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Action Failed",
+        description: "Failed to update bookmark. Please try again.",
+        variant: "destructive",
+      });
+    }
+  });
+
+  const handleReaction = (emoji: string, isPremium: boolean) => {
+    reactionMutation.mutate({ emoji, isPremium });
+  };
+
+  const handleReactionClick = (emoji: string) => {
+    if (vask.userReaction === emoji) {
+      // Remove reaction if clicking the same one
+      removeReactionMutation.mutate();
+    } else {
+      // Toggle reaction picker to choose new one
+      setShowReactionPicker(true);
+    }
   };
 
   const handleAuthorClick = () => {
@@ -341,7 +458,7 @@ export default function VaskCard({ vask, currentUser }: VaskCardProps) {
           
           {displayContent && (
             <p className="text-foreground leading-relaxed text-base" data-testid={`text-content-${vask.id}`}>
-              {displayContent}
+              <LinkifyContent content={displayContent} />
             </p>
           )}
           
@@ -466,6 +583,39 @@ export default function VaskCard({ vask, currentUser }: VaskCardProps) {
               <Share className="h-5 w-5" />
             </Button>
 
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => bookmarkMutation.mutate()}
+              className={`engagement-button flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-accent transition-all duration-200 ${isBookmarked ? 'text-yellow-500' : ''}`}
+              data-testid={`button-bookmark-${vask.id}`}
+              disabled={bookmarkMutation.isPending}
+            >
+              <Bookmark className={`h-5 w-5 ${isBookmarked ? 'fill-current' : ''}`} />
+            </Button>
+
+            {/* Reactions Section */}
+            <div className="relative ml-auto">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowReactionPicker(!showReactionPicker)}
+                className="engagement-button px-4 py-2 rounded-lg hover:bg-accent transition-all duration-200"
+                data-testid={`button-react-${vask.id}`}
+              >
+                <span className="text-lg">😊</span>
+              </Button>
+              
+              {showReactionPicker && (
+                <div className="absolute bottom-full left-0 mb-2 z-10">
+                  <ReactionPicker
+                    onReact={handleReaction}
+                    currentReaction={vask.userReaction}
+                  />
+                </div>
+              )}
+            </div>
+
             {/* Delete button - only show for current user's vasks */}
             {vask.authorId === currentUser.id && (
               <AlertDialog>
@@ -500,6 +650,17 @@ export default function VaskCard({ vask, currentUser }: VaskCardProps) {
               </AlertDialog>
             )}
           </div>
+
+          {/* Display Reactions */}
+          {vask.reactions && Object.keys(vask.reactions).length > 0 && (
+            <div className="pt-3">
+              <ReactionDisplay
+                reactions={vask.reactions}
+                userReaction={vask.userReaction}
+                onReactionClick={handleReactionClick}
+              />
+            </div>
+          )}
           
           {showComments && (
             <CommentSection vaskId={vask.id} currentUser={currentUser} />

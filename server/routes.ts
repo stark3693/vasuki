@@ -1112,6 +1112,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const like = await storage.createLike(req.params.id, userId);
+      
+      // Create notification for vask author
+      await storage.createNotification({
+        userId: vask.authorId,
+        type: 'like',
+        actorId: userId,
+        vaskId: req.params.id
+      });
+      
       res.status(201).json(like);
     } catch (error) {
       console.error("Create like error:", error);
@@ -1143,6 +1152,222 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Get liked vasks error:", error);
       res.status(500).json({ message: "Failed to get liked vasks" });
+    }
+  });
+
+  // Reaction routes
+  app.post("/api/vasks/:id/react", async (req, res) => {
+    try {
+      const { userId, emoji, isPremium } = req.body;
+      if (!userId || !emoji) {
+        return res.status(400).json({ message: "User ID and emoji are required" });
+      }
+
+      // Check if user exists
+      const user = await storage.getUser(userId);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // Check if vask exists
+      const vask = await storage.getVask(req.params.id);
+      if (!vask) {
+        return res.status(404).json({ message: "Vask not found" });
+      }
+
+      const reaction = await storage.createReaction(req.params.id, userId, emoji, isPremium || false);
+      res.status(201).json(reaction);
+    } catch (error) {
+      console.error("Create reaction error:", error);
+      res.status(500).json({ message: "Failed to create reaction" });
+    }
+  });
+
+  app.delete("/api/vasks/:id/react", async (req, res) => {
+    try {
+      const { userId } = req.body;
+      if (!userId) {
+        return res.status(400).json({ message: "User ID is required" });
+      }
+
+      await storage.deleteReaction(req.params.id, userId);
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Delete reaction error:", error);
+      res.status(500).json({ message: "Failed to delete reaction" });
+    }
+  });
+
+  app.get("/api/vasks/:id/reactions", async (req, res) => {
+    try {
+      const reactions = await storage.getReactions(req.params.id);
+      res.json(reactions);
+    } catch (error) {
+      console.error("Get reactions error:", error);
+      res.status(500).json({ message: "Failed to get reactions" });
+    }
+  });
+
+  // Hashtag routes
+  app.get("/api/hashtags/trending", async (req, res) => {
+    try {
+      const limit = parseInt(req.query.limit as string) || 10;
+      const hashtags = await storage.getTrendingHashtags(limit);
+      res.json(hashtags);
+    } catch (error) {
+      console.error("Get trending hashtags error:", error);
+      res.status(500).json({ message: "Failed to get trending hashtags" });
+    }
+  });
+
+  app.get("/api/vasks/hashtag/:tag", async (req, res) => {
+    try {
+      const { tag } = req.params;
+      const limit = parseInt(req.query.limit as string) || 50;
+      const offset = parseInt(req.query.offset as string) || 0;
+      const currentUserId = req.query.currentUserId as string;
+      
+      const vasks = await storage.getVasksByHashtag(tag, limit, offset, currentUserId);
+      res.json(vasks);
+    } catch (error) {
+      console.error("Get vasks by hashtag error:", error);
+      res.status(500).json({ message: "Failed to get vasks by hashtag" });
+    }
+  });
+
+  // Mention routes
+  app.get("/api/mentions", async (req, res) => {
+    try {
+      const userId = req.query.userId as string;
+      if (!userId) {
+        return res.status(400).json({ message: "User ID is required" });
+      }
+
+      const limit = parseInt(req.query.limit as string) || 50;
+      const offset = parseInt(req.query.offset as string) || 0;
+      
+      const mentions = await storage.getMentionsForUser(userId, limit, offset);
+      res.json(mentions);
+    } catch (error) {
+      console.error("Get mentions error:", error);
+      res.status(500).json({ message: "Failed to get mentions" });
+    }
+  });
+
+  app.post("/api/mentions/:id/read", async (req, res) => {
+    try {
+      await storage.markMentionAsRead(req.params.id);
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Mark mention as read error:", error);
+      res.status(500).json({ message: "Failed to mark mention as read" });
+    }
+  });
+
+  // Leaderboard routes
+  app.get("/api/leaderboard/reactions", async (req, res) => {
+    try {
+      const emoji = req.query.emoji as string;
+      const limit = parseInt(req.query.limit as string) || 20;
+      
+      const leaderboard = await storage.getReactionLeaderboard(emoji, limit);
+      res.json(leaderboard);
+    } catch (error) {
+      console.error("Get reaction leaderboard error:", error);
+      res.status(500).json({ message: "Failed to get reaction leaderboard" });
+    }
+  });
+
+  // Bookmark routes
+  app.post("/api/bookmarks/:vaskId", async (req, res) => {
+    try {
+      const { userId } = req.body;
+      const { vaskId } = req.params;
+      
+      await storage.createBookmark(userId, vaskId);
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Create bookmark error:", error);
+      res.status(500).json({ message: "Failed to create bookmark" });
+    }
+  });
+
+  app.delete("/api/bookmarks/:vaskId", async (req, res) => {
+    try {
+      const { userId } = req.body;
+      const { vaskId } = req.params;
+      
+      await storage.deleteBookmark(userId, vaskId);
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Delete bookmark error:", error);
+      res.status(500).json({ message: "Failed to delete bookmark" });
+    }
+  });
+
+  app.get("/api/bookmarks", async (req, res) => {
+    try {
+      const userId = req.query.userId as string;
+      const limit = parseInt(req.query.limit as string) || 50;
+      const offset = parseInt(req.query.offset as string) || 0;
+      
+      const bookmarks = await storage.getBookmarksForUser(userId, limit, offset);
+      res.json(bookmarks);
+    } catch (error) {
+      console.error("Get bookmarks error:", error);
+      res.status(500).json({ message: "Failed to get bookmarks" });
+    }
+  });
+
+  app.get("/api/bookmarks/:vaskId/status", async (req, res) => {
+    try {
+      const userId = req.query.userId as string;
+      const { vaskId } = req.params;
+      
+      const isBookmarked = await storage.isBookmarked(userId, vaskId);
+      res.json({ isBookmarked });
+    } catch (error) {
+      console.error("Check bookmark status error:", error);
+      res.status(500).json({ message: "Failed to check bookmark status" });
+    }
+  });
+
+  // Notification routes
+  app.get("/api/notifications", async (req, res) => {
+    try {
+      const userId = req.query.userId as string;
+      const limit = parseInt(req.query.limit as string) || 50;
+      const offset = parseInt(req.query.offset as string) || 0;
+      
+      const notifications = await storage.getNotificationsForUser(userId, limit, offset);
+      res.json(notifications);
+    } catch (error) {
+      console.error("Get notifications error:", error);
+      res.status(500).json({ message: "Failed to get notifications" });
+    }
+  });
+
+  app.post("/api/notifications/:id/read", async (req, res) => {
+    try {
+      const { id } = req.params;
+      
+      await storage.markNotificationAsRead(id);
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Mark notification as read error:", error);
+      res.status(500).json({ message: "Failed to mark notification as read" });
+    }
+  });
+
+  app.get("/api/notifications/unread-count", async (req, res) => {
+    try {
+      const userId = req.query.userId as string;
+      
+      const count = await storage.getUnreadNotificationCount(userId);
+      res.json({ count });
+    } catch (error) {
+      console.error("Get unread notification count error:", error);
+      res.status(500).json({ message: "Failed to get unread notification count" });
     }
   });
 
@@ -1205,6 +1430,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
           req.ip,
           req.get('User-Agent')
         );
+      }
+      
+      // Get vask to find author
+      const vask = await storage.getVask(req.params.id);
+      if (vask) {
+        // Create notification for vask author
+        await storage.createNotification({
+          userId: vask.authorId,
+          type: 'comment',
+          actorId: authorId,
+          vaskId: req.params.id,
+          commentId: comment.id
+        });
       }
       
       res.status(201).json(comment);
@@ -1287,6 +1525,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log('✅ Creating follow relationship:', { followerId, followingId: req.params.id });
       await storage.followUser(followerId, req.params.id);
       console.log('✅ Follow relationship created successfully');
+      
+      // Create notification for followed user
+      await storage.createNotification({
+        userId: req.params.id,
+        type: 'follow',
+        actorId: followerId
+      });
+      
       res.status(201).json({ success: true });
     } catch (error) {
       console.error("Follow user error:", error);

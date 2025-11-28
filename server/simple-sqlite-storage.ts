@@ -378,6 +378,12 @@ export class SimpleSQLiteStorage {
       JSON.stringify(vaskData.mediaSizes || [])
     );
     
+    // Process hashtags and mentions if content exists
+    if (vaskData.content) {
+      await this.processHashtags(id, vaskData.content);
+      await this.processMentions(id, vaskData.authorId, vaskData.content);
+    }
+    
     const vask = await this.getVask(id);
     if (!vask) throw new Error('Failed to create vask');
     return vask;
@@ -436,40 +442,47 @@ export class SimpleSQLiteStorage {
       currentUserId
     })));
     
-    return rows.map(row => ({
-      id: row.vask_id,
-      authorId: row.author_id,
-      content: row.content,
-      contentEncrypted: row.content_encrypted,
-      imageUrl: row.image_url,
-      imageHash: row.image_hash,
-      ipfsHash: row.ipfs_hash,
-      createdAt: new Date(row.vask_created_at),
-      isPinned: Boolean(row.is_pinned),
-      isEncrypted: Boolean(row.is_encrypted),
-      mediaUrls: row.media_urls ? JSON.parse(row.media_urls) : [],
-      mediaTypes: row.media_types ? JSON.parse(row.media_types) : [],
-      mediaFilenames: row.media_filenames ? JSON.parse(row.media_filenames) : [],
-      mediaSizes: row.media_sizes ? JSON.parse(row.media_sizes) : [],
-      author: {
-        id: row.user_id,
-        uniqueId: row.unique_id,
-        walletAddress: row.wallet_address,
-        ensName: row.ens_name,
-        displayName: row.display_name,
-        displayNameEncrypted: row.display_name_encrypted,
-        bio: row.bio,
-        bioEncrypted: row.bio_encrypted,
-        profileImage: row.profile_image,
-        coverImage: row.cover_image,
-        createdAt: new Date(row.user_created_at),
+    return rows.map(row => {
+      const reactions = this.getReactionsSync(row.vask_id);
+      const userReaction = currentUserId ? this.getReactionSync(row.vask_id, currentUserId) : null;
+      
+      return {
+        id: row.vask_id,
+        authorId: row.author_id,
+        content: row.content,
+        contentEncrypted: row.content_encrypted,
+        imageUrl: row.image_url,
+        imageHash: row.image_hash,
+        ipfsHash: row.ipfs_hash,
+        createdAt: new Date(row.vask_created_at),
+        isPinned: Boolean(row.is_pinned),
         isEncrypted: Boolean(row.is_encrypted),
-        isFollowing: Boolean(row.is_following)
-      },
-      likeCount: row.like_count || 0,
-      commentCount: row.comment_count || 0,
-      isLiked: Boolean(row.is_liked)
-    }));
+        mediaUrls: row.media_urls ? JSON.parse(row.media_urls) : [],
+        mediaTypes: row.media_types ? JSON.parse(row.media_types) : [],
+        mediaFilenames: row.media_filenames ? JSON.parse(row.media_filenames) : [],
+        mediaSizes: row.media_sizes ? JSON.parse(row.media_sizes) : [],
+        author: {
+          id: row.user_id,
+          uniqueId: row.unique_id,
+          walletAddress: row.wallet_address,
+          ensName: row.ens_name,
+          displayName: row.display_name,
+          displayNameEncrypted: row.display_name_encrypted,
+          bio: row.bio,
+          bioEncrypted: row.bio_encrypted,
+          profileImage: row.profile_image,
+          coverImage: row.cover_image,
+          createdAt: new Date(row.user_created_at),
+          isEncrypted: Boolean(row.is_encrypted),
+          isFollowing: Boolean(row.is_following)
+        },
+        likeCount: row.like_count || 0,
+        commentCount: row.comment_count || 0,
+        isLiked: Boolean(row.is_liked),
+        reactions: reactions,
+        userReaction: userReaction?.emoji || null
+      };
+    });
   }
 
   async getVasksByUser(userId: string, limit: number = 50, offset: number = 0, currentUserId?: string): Promise<VaskWithAuthor[]> {
@@ -616,6 +629,503 @@ export class SimpleSQLiteStorage {
       commentCount: row.comment_count || 0,
       isLiked: true
     }));
+  }
+
+  // Reaction methods
+  async createReaction(vaskId: string, userId: string, emoji: string, isPremium: boolean = false): Promise<any> {
+    const id = randomUUID();
+    const now = new Date();
+    
+    // Delete any existing reaction from this user on this vask (one reaction per user per vask)
+    const deleteStmt = sqlite.prepare('DELETE FROM reactions WHERE vask_id = ? AND user_id = ?');
+    deleteStmt.run(vaskId, userId);
+    
+    // Insert new reaction
+    const stmt = sqlite.prepare(`
+      INSERT INTO reactions (id, vask_id, user_id, emoji, is_premium, created_at)
+      VALUES (?, ?, ?, ?, ?, ?)
+    `);
+    
+    stmt.run(id, vaskId, userId, emoji, isPremium ? 1 : 0, now.getTime());
+    
+    return {
+      id,
+      vaskId,
+      userId,
+      emoji,
+      isPremium,
+      createdAt: now
+    };
+  }
+
+  async deleteReaction(vaskId: string, userId: string): Promise<boolean> {
+    const stmt = sqlite.prepare('DELETE FROM reactions WHERE vask_id = ? AND user_id = ?');
+    const result = stmt.run(vaskId, userId);
+    return result.changes > 0;
+  }
+
+  async getReaction(vaskId: string, userId: string): Promise<any> {
+    const stmt = sqlite.prepare('SELECT * FROM reactions WHERE vask_id = ? AND user_id = ?');
+    const row = stmt.get(vaskId, userId) as any;
+    
+    if (!row) return null;
+    
+    return {
+      id: row.id,
+      vaskId: row.vask_id,
+      userId: row.user_id,
+      emoji: row.emoji,
+      isPremium: Boolean(row.is_premium),
+      createdAt: new Date(row.created_at)
+    };
+  }
+
+  getReactionsSync(vaskId: string): { [emoji: string]: number } {
+    const stmt = sqlite.prepare(`
+      SELECT emoji, COUNT(*) as count
+      FROM reactions
+      WHERE vask_id = ?
+      GROUP BY emoji
+    `);
+    
+    const rows = stmt.all(vaskId) as any[];
+    
+    const reactions: { [emoji: string]: number } = {};
+    rows.forEach(row => {
+      reactions[row.emoji] = row.count;
+    });
+    
+    return reactions;
+  }
+
+  async getReactions(vaskId: string): Promise<{ [emoji: string]: number }> {
+    return this.getReactionsSync(vaskId);
+  }
+
+  getReactionSync(vaskId: string, userId: string): { emoji: string; isPremium: boolean } | null {
+    const stmt = sqlite.prepare(`
+      SELECT emoji, is_premium
+      FROM reactions
+      WHERE vask_id = ? AND user_id = ?
+    `);
+    
+    const row = stmt.get(vaskId, userId) as any;
+    
+    if (!row) return null;
+    
+    return {
+      emoji: row.emoji,
+      isPremium: Boolean(row.is_premium)
+    };
+  }
+
+  // Hashtag methods
+  private parseHashtags(content: string): string[] {
+    const hashtagRegex = /#(\w+)/g;
+    const matches = content.match(hashtagRegex) || [];
+    return matches.map(tag => tag.toLowerCase());
+  }
+
+  async processHashtags(vaskId: string, content: string): Promise<void> {
+    const hashtags = this.parseHashtags(content);
+    const now = Date.now();
+
+    for (const tag of hashtags) {
+      // Check if hashtag exists
+      let hashtagStmt = sqlite.prepare('SELECT id FROM hashtags WHERE tag = ?');
+      let hashtag = hashtagStmt.get(tag) as any;
+
+      let hashtagId: string;
+      if (hashtag) {
+        // Update existing hashtag
+        hashtagId = hashtag.id;
+        const updateStmt = sqlite.prepare(`
+          UPDATE hashtags 
+          SET count = count + 1, last_used = ?
+          WHERE id = ?
+        `);
+        updateStmt.run(now, hashtagId);
+      } else {
+        // Create new hashtag
+        hashtagId = randomUUID();
+        const insertStmt = sqlite.prepare(`
+          INSERT INTO hashtags (id, tag, count, last_used, created_at)
+          VALUES (?, ?, 1, ?, ?)
+        `);
+        insertStmt.run(hashtagId, tag, now, now);
+      }
+
+      // Link hashtag to vask
+      const linkStmt = sqlite.prepare(`
+        INSERT OR IGNORE INTO vask_hashtags (vask_id, hashtag_id, created_at)
+        VALUES (?, ?, ?)
+      `);
+      linkStmt.run(vaskId, hashtagId, now);
+    }
+  }
+
+  async getTrendingHashtags(limit: number = 10): Promise<any[]> {
+    const stmt = sqlite.prepare(`
+      SELECT id, tag, count, last_used
+      FROM hashtags
+      ORDER BY count DESC, last_used DESC
+      LIMIT ?
+    `);
+
+    const rows = stmt.all(limit) as any[];
+    return rows.map(row => ({
+      id: row.id,
+      tag: row.tag,
+      count: row.count,
+      lastUsed: new Date(row.last_used)
+    }));
+  }
+
+  async getVasksByHashtag(tag: string, limit: number = 50, offset: number = 0, currentUserId?: string): Promise<any[]> {
+    const normalizedTag = tag.toLowerCase().replace(/^#/, '');
+    
+    const stmt = sqlite.prepare(`
+      SELECT v.id as vask_id, v.author_id, v.content, v.content_encrypted, v.image_url, 
+             v.image_hash, v.ipfs_hash, v.created_at as vask_created_at, v.is_pinned, v.is_encrypted,
+             v.media_urls, v.media_types, v.media_filenames, v.media_sizes,
+             u.id as user_id, u.unique_id, u.wallet_address, u.ens_name, u.display_name, 
+             u.display_name_encrypted, u.bio, u.bio_encrypted, u.profile_image, u.cover_image, 
+             u.created_at as user_created_at,
+             (SELECT COUNT(*) FROM likes l WHERE l.vask_id = v.id) as like_count,
+             (SELECT COUNT(*) FROM comments c WHERE c.vask_id = v.id) as comment_count,
+             ${currentUserId ? `(SELECT COUNT(*) FROM likes l WHERE l.vask_id = v.id AND l.user_id = ?) as is_liked,
+             (SELECT COUNT(*) FROM follows f WHERE f.follower_id = ? AND f.following_id = v.author_id) as is_following` : '0 as is_liked, 0 as is_following'}
+      FROM vasks v
+      LEFT JOIN users u ON v.author_id = u.id
+      INNER JOIN vask_hashtags vh ON v.id = vh.vask_id
+      INNER JOIN hashtags h ON vh.hashtag_id = h.id
+      WHERE h.tag = ?
+      ORDER BY v.created_at DESC
+      LIMIT ? OFFSET ?
+    `);
+
+    const params = currentUserId ? [currentUserId, currentUserId, normalizedTag, limit, offset] : [normalizedTag, limit, offset];
+    const rows = stmt.all(...params) as any[];
+
+    return rows.map(row => {
+      const reactions = this.getReactionsSync(row.vask_id);
+      const userReaction = currentUserId ? this.getReactionSync(row.vask_id, currentUserId) : null;
+
+      return {
+        id: row.vask_id,
+        authorId: row.author_id,
+        content: row.content,
+        contentEncrypted: row.content_encrypted,
+        imageUrl: row.image_url,
+        imageHash: row.image_hash,
+        ipfsHash: row.ipfs_hash,
+        createdAt: new Date(row.vask_created_at),
+        isPinned: Boolean(row.is_pinned),
+        isEncrypted: Boolean(row.is_encrypted),
+        mediaUrls: row.media_urls ? JSON.parse(row.media_urls) : [],
+        mediaTypes: row.media_types ? JSON.parse(row.media_types) : [],
+        mediaFilenames: row.media_filenames ? JSON.parse(row.media_filenames) : [],
+        mediaSizes: row.media_sizes ? JSON.parse(row.media_sizes) : [],
+        author: {
+          id: row.user_id,
+          uniqueId: row.unique_id,
+          walletAddress: row.wallet_address,
+          ensName: row.ens_name,
+          displayName: row.display_name,
+          displayNameEncrypted: row.display_name_encrypted,
+          bio: row.bio,
+          bioEncrypted: row.bio_encrypted,
+          profileImage: row.profile_image,
+          coverImage: row.cover_image,
+          createdAt: new Date(row.user_created_at),
+          isEncrypted: Boolean(row.is_encrypted),
+          isFollowing: Boolean(row.is_following)
+        },
+        likeCount: row.like_count || 0,
+        commentCount: row.comment_count || 0,
+        isLiked: Boolean(row.is_liked),
+        reactions: reactions,
+        userReaction: userReaction?.emoji || null
+      };
+    });
+  }
+
+  // Mention methods
+  private parseMentions(content: string): string[] {
+    const mentionRegex = /@(\w+)/g;
+    const matches = content.match(mentionRegex) || [];
+    return matches.map(mention => mention.slice(1)); // Remove @ symbol
+  }
+
+  async processMentions(vaskId: string, mentionerId: string, content: string): Promise<void> {
+    const mentions = this.parseMentions(content);
+    const now = Date.now();
+
+    for (const uniqueId of mentions) {
+      // Find user by uniqueId
+      const userStmt = sqlite.prepare('SELECT id FROM users WHERE unique_id = ? COLLATE NOCASE');
+      const user = userStmt.get(uniqueId) as any;
+
+      if (user && user.id !== mentionerId) {
+        // Create mention notification
+        const mentionId = randomUUID();
+        const insertStmt = sqlite.prepare(`
+          INSERT INTO mentions (id, vask_id, mentioner_id, mentioned_id, created_at, is_read)
+          VALUES (?, ?, ?, ?, ?, 0)
+        `);
+        insertStmt.run(mentionId, vaskId, mentionerId, user.id, now);
+      }
+    }
+  }
+
+  async getMentionsForUser(userId: string, limit: number = 50, offset: number = 0): Promise<any[]> {
+    const stmt = sqlite.prepare(`
+      SELECT m.id, m.vask_id, m.mentioner_id, m.mentioned_id, m.created_at, m.is_read,
+             v.content, v.created_at as vask_created_at,
+             u.unique_id, u.display_name, u.profile_image
+      FROM mentions m
+      LEFT JOIN vasks v ON m.vask_id = v.id
+      LEFT JOIN users u ON m.mentioner_id = u.id
+      WHERE m.mentioned_id = ?
+      ORDER BY m.created_at DESC
+      LIMIT ? OFFSET ?
+    `);
+
+    const rows = stmt.all(userId, limit, offset) as any[];
+    return rows.map(row => ({
+      id: row.id,
+      vaskId: row.vask_id,
+      mentionerId: row.mentioner_id,
+      mentionedId: row.mentioned_id,
+      createdAt: new Date(row.created_at),
+      isRead: Boolean(row.is_read),
+      vask: {
+        content: row.content,
+        createdAt: new Date(row.vask_created_at)
+      },
+      mentioner: {
+        uniqueId: row.unique_id,
+        displayName: row.display_name,
+        profileImage: row.profile_image
+      }
+    }));
+  }
+
+  async markMentionAsRead(mentionId: string): Promise<void> {
+    const stmt = sqlite.prepare('UPDATE mentions SET is_read = 1 WHERE id = ?');
+    stmt.run(mentionId);
+  }
+
+  // Leaderboard methods
+  async getReactionLeaderboard(emoji?: string, limit: number = 20): Promise<any[]> {
+    let query = `
+      SELECT v.id as vask_id, v.content, v.created_at, v.author_id,
+             u.unique_id, u.display_name, u.profile_image,
+             COUNT(r.id) as reaction_count,
+             GROUP_CONCAT(DISTINCT r.emoji) as emojis
+      FROM vasks v
+      LEFT JOIN reactions r ON v.id = r.vask_id
+      LEFT JOIN users u ON v.author_id = u.id
+    `;
+
+    if (emoji) {
+      query += ` WHERE r.emoji = ?`;
+    }
+
+    query += `
+      GROUP BY v.id
+      HAVING reaction_count > 0
+      ORDER BY reaction_count DESC, v.created_at DESC
+      LIMIT ?
+    `;
+
+    const stmt = sqlite.prepare(query);
+    const rows = emoji ? stmt.all(emoji, limit) : stmt.all(limit) as any[];
+
+    return rows.map(row => ({
+      vask: {
+        id: row.vask_id,
+        content: row.content ? row.content.substring(0, 100) : '',
+        createdAt: new Date(row.created_at),
+        authorId: row.author_id
+      },
+      author: {
+        uniqueId: row.unique_id,
+        displayName: row.display_name,
+        profileImage: row.profile_image
+      },
+      reactionCount: row.reaction_count,
+      emojis: row.emojis ? row.emojis.split(',') : []
+    }));
+  }
+
+  // Bookmark methods
+  async createBookmark(userId: string, vaskId: string): Promise<void> {
+    const stmt = sqlite.prepare(`
+      INSERT OR IGNORE INTO bookmarks (user_id, vask_id)
+      VALUES (?, ?)
+    `);
+    stmt.run(userId, vaskId);
+  }
+
+  async deleteBookmark(userId: string, vaskId: string): Promise<void> {
+    const stmt = sqlite.prepare('DELETE FROM bookmarks WHERE user_id = ? AND vask_id = ?');
+    stmt.run(userId, vaskId);
+  }
+
+  async getBookmarksForUser(userId: string, limit: number = 50, offset: number = 0): Promise<any[]> {
+    const stmt = sqlite.prepare(`
+      SELECT v.id as vask_id, v.author_id, v.content, v.content_encrypted, v.image_url, v.image_hash, v.ipfs_hash, 
+             v.created_at as vask_created_at, v.is_pinned, v.is_encrypted,
+             v.media_urls, v.media_types, v.media_filenames, v.media_sizes,
+             u.id as user_id, u.unique_id, u.wallet_address, u.ens_name, u.display_name, u.display_name_encrypted, 
+             u.bio, u.bio_encrypted, u.profile_image, u.cover_image, u.created_at as user_created_at,
+             (SELECT COUNT(*) FROM likes l WHERE l.vask_id = v.id) as like_count,
+             (SELECT COUNT(*) FROM comments c WHERE c.vask_id = v.id) as comment_count,
+             (SELECT COUNT(*) FROM likes l WHERE l.vask_id = v.id AND l.user_id = ?) as is_liked,
+             (SELECT COUNT(*) FROM follows f WHERE f.follower_id = ? AND f.following_id = v.author_id) as is_following,
+             b.created_at as bookmarked_at
+      FROM bookmarks b
+      JOIN vasks v ON b.vask_id = v.id
+      JOIN users u ON v.author_id = u.id
+      WHERE b.user_id = ?
+      ORDER BY b.created_at DESC
+      LIMIT ? OFFSET ?
+    `);
+    
+    const rows = stmt.all(userId, userId, userId, limit, offset) as any[];
+    
+    return rows.map(row => {
+      const reactions = this.getReactionsSync(row.vask_id);
+      const userReaction = this.getReactionSync(row.vask_id, userId);
+      
+      return {
+        id: row.vask_id,
+        authorId: row.author_id,
+        content: row.content,
+        contentEncrypted: row.content_encrypted,
+        imageUrl: row.image_url,
+        imageHash: row.image_hash,
+        ipfsHash: row.ipfs_hash,
+        createdAt: new Date(row.vask_created_at),
+        isPinned: Boolean(row.is_pinned),
+        isEncrypted: Boolean(row.is_encrypted),
+        mediaUrls: row.media_urls ? JSON.parse(row.media_urls) : [],
+        mediaTypes: row.media_types ? JSON.parse(row.media_types) : [],
+        mediaFilenames: row.media_filenames ? JSON.parse(row.media_filenames) : [],
+        mediaSizes: row.media_sizes ? JSON.parse(row.media_sizes) : [],
+        author: {
+          id: row.user_id,
+          uniqueId: row.unique_id,
+          walletAddress: row.wallet_address,
+          ensName: row.ens_name,
+          displayName: row.display_name,
+          displayNameEncrypted: row.display_name_encrypted,
+          bio: row.bio,
+          bioEncrypted: row.bio_encrypted,
+          profileImage: row.profile_image,
+          coverImage: row.cover_image,
+          createdAt: new Date(row.user_created_at),
+          isEncrypted: Boolean(row.is_encrypted),
+          isFollowing: Boolean(row.is_following)
+        },
+        likeCount: row.like_count || 0,
+        commentCount: row.comment_count || 0,
+        isLiked: Boolean(row.is_liked),
+        reactions: reactions,
+        userReaction: userReaction?.emoji || null,
+        bookmarkedAt: new Date(row.bookmarked_at)
+      };
+    });
+  }
+
+  async isBookmarked(userId: string, vaskId: string): Promise<boolean> {
+    const stmt = sqlite.prepare('SELECT 1 FROM bookmarks WHERE user_id = ? AND vask_id = ? LIMIT 1');
+    const result = stmt.get(userId, vaskId);
+    return !!result;
+  }
+
+  // Notification methods
+  async createNotification(notificationData: {
+    userId: string;
+    type: 'like' | 'comment' | 'follow' | 'mention';
+    actorId: string;
+    vaskId?: string;
+    commentId?: number;
+  }): Promise<void> {
+    // Don't create notification if user is acting on their own content
+    if (notificationData.userId === notificationData.actorId) {
+      return;
+    }
+
+    const stmt = sqlite.prepare(`
+      INSERT INTO notifications (user_id, type, actor_id, vask_id, comment_id)
+      VALUES (?, ?, ?, ?, ?)
+    `);
+    
+    stmt.run(
+      notificationData.userId,
+      notificationData.type,
+      notificationData.actorId,
+      notificationData.vaskId || null,
+      notificationData.commentId || null
+    );
+  }
+
+  async getNotificationsForUser(userId: string, limit: number = 50, offset: number = 0): Promise<any[]> {
+    const stmt = sqlite.prepare(`
+      SELECT n.*, 
+             u.unique_id as actor_unique_id, 
+             u.display_name as actor_display_name, 
+             u.profile_image as actor_profile_image,
+             v.content as vask_content,
+             c.content as comment_content
+      FROM notifications n
+      JOIN users u ON n.actor_id = u.id
+      LEFT JOIN vasks v ON n.vask_id = v.id
+      LEFT JOIN comments c ON n.comment_id = c.id
+      WHERE n.user_id = ?
+      ORDER BY n.created_at DESC
+      LIMIT ? OFFSET ?
+    `);
+
+    const rows = stmt.all(userId, limit, offset) as any[];
+    
+    return rows.map(row => ({
+      id: row.id,
+      userId: row.user_id,
+      type: row.type,
+      actorId: row.actor_id,
+      vaskId: row.vask_id,
+      commentId: row.comment_id,
+      isRead: Boolean(row.is_read),
+      createdAt: new Date(row.created_at),
+      actor: {
+        id: row.actor_id,
+        uniqueId: row.actor_unique_id,
+        displayName: row.actor_display_name,
+        profileImage: row.actor_profile_image
+      },
+      vask: row.vask_id ? {
+        id: row.vask_id,
+        content: row.vask_content ? row.vask_content.substring(0, 100) : ''
+      } : undefined,
+      comment: row.comment_id ? {
+        id: row.comment_id,
+        content: row.comment_content ? row.comment_content.substring(0, 100) : ''
+      } : undefined
+    }));
+  }
+
+  async markNotificationAsRead(notificationId: string): Promise<void> {
+    const stmt = sqlite.prepare('UPDATE notifications SET is_read = 1 WHERE id = ?');
+    stmt.run(notificationId);
+  }
+
+  async getUnreadNotificationCount(userId: string): Promise<number> {
+    const stmt = sqlite.prepare('SELECT COUNT(*) as count FROM notifications WHERE user_id = ? AND is_read = 0');
+    const result = stmt.get(userId) as any;
+    return result.count;
   }
 
   // Comment methods

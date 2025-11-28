@@ -99,6 +99,15 @@ export const follows = sqliteTable("follows", {
   createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
 });
 
+export const reactions = sqliteTable("reactions", {
+  id: text("id").primaryKey().$defaultFn(() => randomUUID()),
+  vaskId: text("vask_id").notNull().references(() => vasks.id),
+  userId: text("user_id").notNull().references(() => users.id),
+  emoji: text("emoji").notNull(), // 👍, ❤️, 🔥, 😂, 🤔, 💯, 🚀, 💎, ⚡, 🎯, 👑
+  isPremium: integer("is_premium", { mode: "boolean" }).default(false),
+  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+});
+
 export const adminUsers = sqliteTable("admin_users", {
   id: text("id").primaryKey().$defaultFn(() => randomUUID()),
   username: text("username").notNull().unique(),
@@ -159,6 +168,14 @@ export const insertFollowSchema = createInsertSchema(follows).omit({
   createdAt: true,
 });
 
+export const insertReactionSchema = createInsertSchema(reactions).omit({
+  id: true,
+  createdAt: true,
+}).extend({
+  emoji: z.string().min(1).max(10),
+  isPremium: z.boolean().default(false),
+});
+
 export const insertPollSchema = createInsertSchema(polls).omit({
   id: true,
   createdAt: true,
@@ -207,6 +224,8 @@ export type InsertUserSettings = z.infer<typeof insertUserSettingsSchema>;
 export type UserSettings = typeof userSettings.$inferSelect;
 export type InsertFollow = z.infer<typeof insertFollowSchema>;
 export type Follow = typeof follows.$inferSelect;
+export type InsertReaction = z.infer<typeof insertReactionSchema>;
+export type Reaction = typeof reactions.$inferSelect;
 export type InsertPoll = z.infer<typeof insertPollSchema>;
 export type Poll = typeof polls.$inferSelect;
 export type InsertPollVote = z.infer<typeof insertPollVoteSchema>;
@@ -222,6 +241,8 @@ export type VaskWithAuthor = Vask & {
   likeCount: number;
   commentCount: number;
   isLiked: boolean;
+  reactions?: { [emoji: string]: number };
+  userReaction?: string | null;
 };
 
 export type CommentWithAuthor = Comment & {

@@ -12,12 +12,23 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>('dark');
+  // Initialize from localStorage first, then IndexedDB
+  const [theme, setThemeState] = useState<Theme>(() => {
+    try {
+      const saved = localStorage.getItem('vasukii-theme');
+      if (saved === 'light' || saved === 'dark') return saved;
+    } catch (e) {
+      console.log('localStorage not available, using dark mode');
+    }
+    return 'dark';
+  });
+  
   const { isReady: isDbReady, getItem, setItem } = useIndexedDB();
 
+  // Load theme from IndexedDB when ready
   useEffect(() => {
     const loadTheme = async () => {
-      if (!isDbReady) return; // Wait for database to be ready
+      if (!isDbReady) return;
       
       try {
         const savedTheme = await getItem('theme');
@@ -32,16 +43,25 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     loadTheme();
   }, [isDbReady, getItem]);
 
+  // Apply theme to DOM and save
   useEffect(() => {
     const root = document.documentElement;
     
     if (theme === 'light') {
+      root.classList.remove('dark');
       root.classList.add('light');
     } else {
       root.classList.remove('light');
+      root.classList.add('dark');
     }
     
-    // Only save to database if it's ready
+    // Save to both localStorage (instant) and IndexedDB (persistent)
+    try {
+      localStorage.setItem('vasukii-theme', theme);
+    } catch (e) {
+      console.error('Failed to save to localStorage:', e);
+    }
+    
     if (isDbReady) {
       setItem('theme', theme).catch(console.error);
     }

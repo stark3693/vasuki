@@ -2,9 +2,10 @@ import { useLocation } from "wouter";
 import { useWallet } from "@/hooks/use-wallet";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Home, User, Settings, Search, Image, TrendingUp, Sparkles, MessageCircle, Clock, ShoppingCart } from "lucide-react";
+import { Home, User, Settings, Search, Image, TrendingUp, Sparkles, MessageCircle, Clock, ShoppingCart, Bookmark } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
+import NotificationCenter from "@/components/notification-center";
 
 export default function Sidebar() {
   const [location, setLocation] = useLocation();
@@ -68,6 +69,12 @@ export default function Sidebar() {
         notificationCount: pendingInvitations
       },
     {
+      name: "Bookmarks",
+      icon: Bookmark,
+      path: "/bookmarks",
+      testId: "nav-bookmarks"
+    },
+    {
       name: "Profile",
       icon: User,
       path: `/profile/${user?.id}`,
@@ -87,13 +94,17 @@ export default function Sidebar() {
       <aside className="w-64 border-r border-border/50 bg-background/95 backdrop-blur-xl p-4 lg:p-6 min-h-screen flex flex-col shadow-lg">
       <div className="space-y-6 lg:space-y-8">
         <div className="text-center">
-          <div className="flex items-center justify-center mb-3">
-        <img 
-          src="/assets/finallogo.png" 
-          alt="Vasukii Logo" 
-          className="h-16 w-16 lg:h-20 lg:w-20 logo-hover rounded-lg"
-          data-testid="app-logo"
-        />
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex-1"></div>
+            <img 
+              src="/assets/finallogo.png" 
+              alt="Vasukii Logo" 
+              className="h-16 w-16 lg:h-20 lg:w-20 logo-hover rounded-lg"
+              data-testid="app-logo"
+            />
+            <div className="flex-1 flex justify-end">
+              <NotificationCenter />
+            </div>
           </div>
           <h1 className="text-2xl lg:text-3xl font-bold gradient-text">
             Vasukii

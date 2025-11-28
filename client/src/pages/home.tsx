@@ -18,6 +18,7 @@ import { useTheme } from "@/hooks/use-theme";
 import { Moon, Sun } from "lucide-react";
 import { usePolls } from "@/hooks/use-polls";
 import { ChatInvitationNotification } from "@/components/chat-invitation-notification";
+import TrendingHashtags from "@/components/trending-hashtags";
 
 import type { VaskWithAuthor } from "@shared/schema";
 
@@ -37,6 +38,7 @@ export default function HomePage() {
       return response.json();
     },
     enabled: isConnected,
+    refetchInterval: 10000, // Auto-refresh every 10 seconds
   });
 
   const { polls, isLoadingPolls } = usePolls();
@@ -336,6 +338,9 @@ export default function HomePage() {
         {/* Enhanced Right Sidebar - Desktop */}
         {!isMobile && (
           <aside className="hidden xl:block w-80 p-6 space-y-6 flex-shrink-0 max-w-sm">
+            {/* Trending Hashtags */}
+            <TrendingHashtags />
+            
             {/* Enhanced Poll Statistics */}
             <Card className="card-elevated">
               <CardHeader className="pb-3">
